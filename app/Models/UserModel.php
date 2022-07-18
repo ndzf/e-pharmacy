@@ -12,7 +12,7 @@ class UserModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
-    protected $returnType       = \App\Entities\User::class;
+    protected $returnType       = \App\Entities\UserEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = ["username", "password", "name", "phone_number", "role", "status"];
@@ -48,5 +48,15 @@ class UserModel extends Model
         $builder->where("username", $username);
         $data = $builder->get();
         return $data->getCustomRowObject(1, "\App\Entities\UserEntity");
+    }
+
+    public function search(?string $keyword)
+    {
+        $builder = $this->table("users");
+        $builder->select("id, username, role, phone_number");
+        if ($keyword) {
+            $builder->like("username", $keyword);
+        }
+        return $builder;
     }
 }
