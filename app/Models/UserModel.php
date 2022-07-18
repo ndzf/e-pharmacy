@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Entities\UserEntity;
 
 class UserModel extends Model
 {
@@ -39,4 +40,13 @@ class UserModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getByUsername(string $username)
+    {
+        $builder = $this->table("users");
+        $builder->select("id, username, password, role");
+        $builder->where("username", $username);
+        $data = $builder->get();
+        return $data->getCustomRowObject(1, "\App\Entities\UserEntity");
+    }
 }
