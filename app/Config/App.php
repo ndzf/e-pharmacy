@@ -8,7 +8,7 @@ use CodeIgniter\Session\Handlers\FileHandler;
 class App extends BaseConfig
 {
 
-    public $appName = "E-Pharmacy"
+    public $appName = "E-Pharmacy";
 
     /**
      * --------------------------------------------------------------------------
