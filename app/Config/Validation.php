@@ -41,4 +41,15 @@ class Validation extends BaseConfig
     //--------------------------------------------------------------------
     // Rules
     //--------------------------------------------------------------------
+
+    public $attemptLogin = [
+        "username"          => [
+            "field"         => "User.username",
+            "rules"         => "required|min_length[4]",
+        ],
+        "password"          => [
+            "field"         => "User.password",
+            "rules"         => "required|min_length[5]",
+        ]
+    ];
 }
