@@ -47,6 +47,7 @@ $routes->group("/login", function($routes) {
 $routes->group("/users", ["filter" => "isLoggedIn:admin"],function($routes) {
 
     $routes->get("/", "UserController::index");
+    $routes->post("/", "UserController::create");
 
 });
 
