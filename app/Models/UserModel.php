@@ -53,7 +53,7 @@ class UserModel extends Model
     public function search(?string $keyword)
     {
         $builder = $this->table("users");
-        $builder->select("id, username, role, phone_number");
+        $builder->select("id, username, role, phone_number, name, status");
         if ($keyword) {
             $builder->like("username", $keyword);
         }
