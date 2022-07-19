@@ -462,6 +462,15 @@ a.dropdown-item:hover {
     box-shadow: none;
 }
 
+.form-control.solid.is-invalid, .was-validated .form-control.solid:invalid {
+    background-image: none;
+    border-color: var(--danger);
+}
+
+.invalid-feedback {
+    color: var(--danger);
+}
+
 /* Footer */
 
 .sticky-footer {
