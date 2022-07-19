@@ -74,7 +74,7 @@
                         <a href="javascript:void(0)" id="sidebar-toggle" class="text-danger me-2">
                             <i class="fas fa-bars"></i>
                         </a>
-                        <a class="navbar-brand text-dark" href="#">Home</a>
+                        <a class="navbar-brand text-dark" href="#"><?= ($title ?? config("App")->appName)  ?></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
