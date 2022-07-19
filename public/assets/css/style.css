@@ -926,6 +926,20 @@ a.dropdown-item:hover {
     }
 }
 
+/* Sweetalert2 */
+
+.swal2-popup {
+    padding: 0 0 1rem !important;
+}
+
+.swal2-html-container {
+    padding: .6rem 1rem 0 !important;
+    text-align: left !important;
+    font-size: 1rem !important; 
+    margin: 0 !important;
+    font-weight: 500 !important;
+}
+
 /* Table */
 
 .table-dashed thead th {
