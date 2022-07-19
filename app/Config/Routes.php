@@ -43,6 +43,13 @@ $routes->group("/login", function($routes) {
     $routes->post("/", "AuthController::attemptLogin");
 
 });
+
+$routes->group("/users", ["filter" => "isLoggedIn:admin"],function($routes) {
+
+    $routes->get("/", "UserController::index");
+
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
