@@ -73,6 +73,11 @@ a {
     color: var(--danger);
 }
 
+.badge-light-success {
+    background-color: var(--success-light);
+    color: var(--success);
+}
+
 /* Button */
 
 .btn:focus {
