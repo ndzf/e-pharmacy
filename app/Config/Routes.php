@@ -44,7 +44,7 @@ $routes->group("/login", function($routes) {
 
 });
 
-$routes->group("/users", ["filter" => "isLoggedIn:admin"],function($routes) {
+$routes->group("/users", ["filter" => "isLoggedIn:admin"], function($routes) {
 
     $routes->get("/", "UserController::index");
     $routes->post("/", "UserController::create");
@@ -52,6 +52,16 @@ $routes->group("/users", ["filter" => "isLoggedIn:admin"],function($routes) {
     $routes->put("(:num)", "UserController::update/$1");
     $routes->delete("(:num)", "UserController::delete/$1");
     
+});
+
+$routes->group("/categories", function($routes) {
+
+    $routes->get("/", "CategoryController::index", ["filter" => "isLoggedIn:admin, cashier"]);
+    $routes->post("/", "CategoryController::create", ["filter" => "isLoggedIn:admin"]);
+    $routes->put("(:num)", "CategoryController::update/$1", ["filter" => "isLoggedIn:admin"]);
+    $routes->get("(:num)/edit", "CategoryController::edit/$1", ["filter" => "isLoggedIn:admin"]);
+    $routes->delete("(:num)", "CategoryController::delete/$1", ["filter" => "isLoggedIn:admin"]);
+
 });
 
 /*

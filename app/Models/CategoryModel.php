@@ -39,4 +39,14 @@ class CategoryModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function search(?string $keyword)
+    {
+        $builder = $this->table("categories");
+        $builder->select("id, name");
+        if ($keyword) {
+            $builder->like("name", $keyword);
+        }
+        return $builder;
+    }
 }

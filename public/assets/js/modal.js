@@ -9,7 +9,9 @@ function clearValidation(...forms) {
             return false;
         }
         for (inputElement of inputElements) {
-            inputElement.value = "";
+            if (inputElement.name != "_method") {
+                inputElement.value = "";
+            }
             if (inputElement.classList.contains("is-invalid")) {
                 inputElement.classList.remove("is-invalid");
             }

@@ -71,4 +71,18 @@ class Validation extends BaseConfig
             "rules"         => "required",
         ]
     ];
+
+    public $createCategory = [
+        "name"              => [
+            "label"         => "Category.name",
+            "rules"         => "required"
+        ]
+    ];
+
+    public $updateCategory = [
+        "name"              => [
+            "label"         => "Category.name",
+            "rules"         => "required"
+        ]
+    ];
 }
