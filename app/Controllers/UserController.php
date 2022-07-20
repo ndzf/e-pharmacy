@@ -55,4 +55,62 @@ class UserController extends BaseController
         // redirect to '/users'
         return redirect()->to("/users")->withInput()->with("successMessage", lang("User.messages.success.create"));
     }
+
+    public function edit(int $id)
+    {
+        $user = $this->userModel->find($id);
+        // Throw 404 if user not found
+        if (empty($user)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(lang("User.messages.error.userNotFound"));
+        }
+
+        return json_encode($user);
+    }
+
+    public function update(int $id)
+    {
+        $user = $this->userModel->find($id);
+
+        if (empty($user)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(lang("User.messages.error.userNotFound"));
+        }
+
+        $inputs = esc($this->request->getPost());
+        // Validation Rules 
+        $rules = [
+            "role"              => [
+                "label"         => "User.role",
+                "rules"         => "required"
+            ],
+            "status"            => [
+                "label"         => "User.status",
+                "rules"         => "required"
+            ],
+            "name"              => [
+                "label"         => "User.name",
+                "rules"         => "required"
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->to("/users")->withInput()->with("validationErrorUpdate", $id);
+        }
+
+        // Updating properties 
+        $user->name = $inputs["name"];
+        $user->status = $inputs["status"];
+        $user->role = $inputs["role"];
+        $user->phone_number = $inputs["phoneNumber"];
+
+        // Updating user 
+        $this->userModel->save($user);
+        // Redirect to users
+        return redirect()->to("/users")->with("successMessage", lang("User.messages.success.update"));
+    }
+
+    public function delete(int $id)
+    {
+        $this->userModel->where("id", $id)->delete();
+        return redirect()->to("/users")->with("successMessage", lang("User.messages.success.delete"));
+    }
 }

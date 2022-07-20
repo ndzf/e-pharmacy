@@ -48,7 +48,10 @@ $routes->group("/users", ["filter" => "isLoggedIn:admin"],function($routes) {
 
     $routes->get("/", "UserController::index");
     $routes->post("/", "UserController::create");
-
+    $routes->get("(:num)/edit", "UserController::edit/$1");
+    $routes->put("(:num)", "UserController::update/$1");
+    $routes->delete("(:num)", "UserController::delete/$1");
+    
 });
 
 /*
