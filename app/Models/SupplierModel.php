@@ -39,4 +39,16 @@ class SupplierModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function search($keyword)
+    {
+        $builder = $this->table("suppliers");
+        $builder->select("id, name, phone_number, email");
+        if ($keyword) {
+            $builder->like("name", $keyword);
+            $builder->orLike("phone_number", $keyword);
+            $builder->orLike("email", $keyword);
+        }
+        return $builder;
+    }
 }

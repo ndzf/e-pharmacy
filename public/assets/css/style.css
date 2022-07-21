@@ -974,6 +974,18 @@ a.dropdown-item:hover {
     color: var(--gray-400) !important;
 }
 
+.text-gray-500 {
+    color: var(--gray-500) !important;
+}
+
+.text-gray-600 {
+    color: var(--gray-600) !important;
+}
+
+.text-gray-700 {
+    color: var(--gray-700) !important;
+}
+
 .text-gray-800 {
     color: var(--gray-800) !important;
 }

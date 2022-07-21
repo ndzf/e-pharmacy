@@ -56,11 +56,21 @@ $routes->group("/users", ["filter" => "isLoggedIn:admin"], function($routes) {
 
 $routes->group("/categories", function($routes) {
 
-    $routes->get("/", "CategoryController::index", ["filter" => "isLoggedIn:admin, cashier"]);
+    $routes->get("/", "CategoryController::index", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->post("/", "CategoryController::create", ["filter" => "isLoggedIn:admin"]);
     $routes->put("(:num)", "CategoryController::update/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->get("(:num)/edit", "CategoryController::edit/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->delete("(:num)", "CategoryController::delete/$1", ["filter" => "isLoggedIn:admin"]);
+
+});
+
+$routes->group("/suppliers", function($routes) {
+
+    $routes->get("/", "SupplierController::index", ["filter" => "isLoggedIn:admin,cashier"]);
+    $routes->post("/", "SupplierController::create", ["filter" => "isLoggedIn:admin"]);
+    $routes->get("(:num)/edit", "SupplierController::edit/$1", ["filter" => "isLoggedIn:admin"]);
+    $routes->put("(:num)", "SupplierController::update/$1", ["filter" => "isLoggedIn:admin"]);
+    $routes->delete("(:num)", "SupplierController::delete/$1", ["filter" => "isLoggedIn:admin"]);
 
 });
 

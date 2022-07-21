@@ -85,4 +85,19 @@ class Validation extends BaseConfig
             "rules"         => "required"
         ]
     ];
+
+    public $createSupplier = [
+        "name"              => [
+            "label"         => "Supplier.name",
+            "rules"         => "required"
+        ]
+    ];
+
+    public $updateSupplier = [
+        "name"              => [
+            "label"         => "Supplier.name",
+            "rules"         => "required"
+        ]
+    ];
+
 }
