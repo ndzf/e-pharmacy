@@ -230,8 +230,7 @@
             }
             editModal.show();
         }).catch(error => {
-            // errorAlert(error.response.data.message);
-            console.log(error);
+            errorAlert(error.response.data.message);
         });
     }
 
