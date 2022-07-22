@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-body pt-0">
                     <div class="table-responsive">
-                        <table class="table table-borderless table-dashed">
+                        <table class="table table-borderless table-dashed text-nowrap">
                             <thead class="text-gray-400 text-uppercase fw-600">
                                 <tr>
                                     <th><?= lang("Supplier.name")  ?></th>
