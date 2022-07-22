@@ -10,5 +10,6 @@ return [
     "title"                 => [
         "index"             => "Data Supplier",
         "create"            => "Tambah Data Supplier",
+        "edit"              => "Edti Data Supplier"
     ],
 ];

@@ -75,24 +75,24 @@ class CustomerController extends BaseController
 
         $inputs = esc($this->request->getPost());
 
-        if (!$this->validate($inputs)) {
+        if (!$this->validate("updateCustomer")) {
             return redirect()->to("/customers")->withInput()->with("validationErrorUpdate", $id);
         }
 
         $customer->name = $inputs["name"];
-        $customer->phone_number = $inputs["phone_number"];
+        $customer->phone_number = $inputs["phoneNumber"];
         $customer->email = $inputs["email"];
         $customer->role = $inputs["role"];
         $customer->address = $inputs["address"];
 
         $this->customerModel->save($customer);
 
-        return redirect()->to("/customers")->with("successMessage", lang("Message.success.update", [$this->title]));
+        return redirect()->to("/customers")->with("successMessage", lang("Message.success.update", [strtolower($this->title)]));
     }
 
     public function delete(int $id)
     {
         $this->customerModel->where("id", $id)->delete();
-        return redirect()->to("/customers")->with("successMessage", lang("Message.success.update", [$this->title]));
+        return redirect()->to("/customers")->with("successMessage", lang("Message.success.delete", [strtolower($this->title)]));
     }
 }
