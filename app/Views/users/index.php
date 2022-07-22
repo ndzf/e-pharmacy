@@ -121,7 +121,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form action="s" method="post" id="form-edit">
+            <form action="" method="post" id="form-edit">
                 <input type="hidden" name="currentUsername" id="current-username">
                 <input type="hidden" name="_method" value="PUT">
                 <div class="mb-2">
