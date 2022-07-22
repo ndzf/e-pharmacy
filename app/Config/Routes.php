@@ -77,6 +77,10 @@ $routes->group("/suppliers", function($routes) {
 $routes->group("/members", function($routes) {
 
     $routes->get("/", "CustomerController::index", ["filter" => "isLoggedIn:admin,cashier"]);
+    $routes->get("(:num)/edit", "CustomerController::edit/$1", ["filter" => "isLoggedIn:admin"]);
+    $routes->post("/", "CustomerController::create", ["filter" => "isLoggedIn:admin"]);
+    $routes->put("(:num)", "CustomerController::update/$1", ["filter" => "isLoggedIn:admin"]);
+    $routes->delete("(:num)", "CustomerController::delete/$1", ["filter" => "isLoggedIn:admin"]);
 
 });
 
