@@ -78,6 +78,16 @@ a {
     color: var(--success);
 }
 
+.badge-light-warning {
+    background-color: var(--warning-light);
+    color: var(--warning);
+}
+
+.badge-light-info {
+    background-color: var(--info-light);
+    color: var(--info);
+}
+
 /* Button */
 
 .btn:focus {
