@@ -100,4 +100,26 @@ class Validation extends BaseConfig
         ]
     ];
 
+    public $createCustomer = [
+        "name"              => [
+            "label"         => "Customer.name",
+            "rules"         => "required"
+        ],
+        "role"              => [
+            "label"         => "Customer.role",
+            "rules"         => "required"
+        ]
+    ];
+
+    public $updateCustomer = [
+        "name"              => [
+            "label"         => "Customer.name",
+            "rules"         => "required"
+        ],
+        "role"              => [
+            "label"         => "Customer.role",
+            "rules"         => "required"
+        ]
+    ];
+
 }
