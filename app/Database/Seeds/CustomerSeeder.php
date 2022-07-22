@@ -21,7 +21,7 @@ class CustomerSeeder extends Seeder
                 "phone_number"  => "620123908",
                 "email"         => "",
                 "address"       => "Franc",
-                "role"          => "members",
+                "role"          => "customer",
             ],
             [
                 "name"          => "Donny Van De Beek",
