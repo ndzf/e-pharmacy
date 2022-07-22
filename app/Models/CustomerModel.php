@@ -39,4 +39,17 @@ class CustomerModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function search(?string $keyword)
+    {
+        $builder = $this->table("customers");
+        $builder->select("id, name, phone_number, email, role");
+        if ($keyword) {
+            $builder->like("name", $keyword);
+            $builder->orLike("phone_number", $keyword);
+            $builder->orLike("email", $keyword);
+            $builder->orLike("role", $keyword);
+        }
+        return $builder;
+    }
 }
