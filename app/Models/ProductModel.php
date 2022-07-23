@@ -39,4 +39,18 @@ class ProductModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function search(?string $keyword)
+    {
+        $builder = $this->table("products");
+        $builder->select("products.id, categories.name as category, products.code, products.name, products.qty, products.minimum_qty, products.original_price, products.selling_price");
+        $builder->join("categories", "categories.id = products.supplier_id", "LEFT");
+        if ($keyword) {
+            $builder->like("products.name", $keyword);
+            $builder->orLike("products.code", $keyword);
+            $builder->orLike("categories.name", $keyword);
+        }
+        $builder->orderBy("products.created_at", "DESC");
+        return $builder;
+    }
 }
