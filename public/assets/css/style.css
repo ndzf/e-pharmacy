@@ -629,7 +629,7 @@ a.dropdown-item:hover {
     background-color: var(--white);
     border-radius: 3px;
     margin: 0 3px;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .page-item.active .page-link {
