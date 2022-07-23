@@ -84,6 +84,12 @@ $routes->group("/customers", function($routes) {
 
 });
 
+$routes->group("/products", function($routes) {
+
+    $routes->get("/", "ProductController::index", ["filter" => "isLoggedIn:admin,cashier"]);
+
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
