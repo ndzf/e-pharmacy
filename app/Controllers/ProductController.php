@@ -19,6 +19,22 @@ class ProductController extends BaseController
 
     public function index()
     {
-        //
+        $keyword = esc($this->request->getVar("q"));
+        $validation = service("validation");
+        $products = $this->productModel->search($keyword);
+        $categoryModel = new \App\Models\CategoryModel();
+        $supplierModel = new \App\Models\SupplierModel();
+
+        $data = [
+            "title"             => $this->title,
+            "keyword"           => $keyword,
+            "validation"        => $validation,
+            "products"          => $products->paginate(10, "products"),
+            "pager"             => $products->pager->links("products", "default"),
+            "suppliers"         => $supplierModel->getNames(),
+            "categories"        => $categoryModel->getNames(),
+        ];
+
+        return view("products/index", $data);
     }
 }
