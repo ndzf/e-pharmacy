@@ -49,4 +49,12 @@ class CategoryModel extends Model
         }
         return $builder;
     }
+
+    public function getNames()
+    {
+        $builder = $this->table("categories");
+        $builder->select("id, name");
+        $data = $builder->get();
+        return $data->getCustomResultObject("\App\Entities\CategoryEntity");
+    }
 }
