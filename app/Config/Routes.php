@@ -84,6 +84,17 @@ $routes->group("/customers", function($routes) {
 
 });
 
+
+$routes->group("/products", function($routes) {
+
+    $routes->get("/", "ProductController::index", ["filter" => "isLoggedIn:admin,cashier"]);
+    $routes->post("/", "ProductController::create", ["filter" => "isLoggedIn:admin"]);
+    $routes->get("(:num)", "ProductController::edit/$1", ["filter" => "isLoggedIn:admin"]);
+    $routes->put("(:num)", "ProductController::update/$1", ["filter" => "isLoggedIn:admin"]);
+    $routes->delete("(:num)", "ProductController::delete/$1", ["filter" => "isLoggedIn:admin"]);
+
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
