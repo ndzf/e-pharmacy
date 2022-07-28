@@ -51,4 +51,12 @@ class SupplierModel extends Model
         }
         return $builder;
     }
+
+    public function getNames()
+    {
+        $builder = $this->table("suppliers");
+        $builder->select("id, name");
+        $data = $builder->get();
+        return $data->getCustomResultObject("\App\Entities\SupplierEntity");
+    }
 }
