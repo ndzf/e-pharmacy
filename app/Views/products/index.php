@@ -100,7 +100,7 @@
                                         <td><?= esc($product->name) ?></td>
                                         <td><?= esc($product->category) ?></td>
                                         <td><?= esc($product->type) ?></td>
-                                        <td><?= esc($product->original_price) ?></td>
+                                        <td class="format-rupiah" data-format="<?= esc($product->original_price) ?>"><?= esc($product->original_price) ?></td>
                                         <td><?= esc($product->qty) ?></td>
                                         <td></td>
                                     </tr>
@@ -185,19 +185,19 @@
                     </div>
                     <div class="mb-2">
                         <label for="create-original-price" class="col-form-label text-gray-700 fw-500"><?= lang("Product.originalPrice") ?></label>
-                        <input type="text" name="originalPrice" id="create-original-price" class="form-control solid fw-500" value="<?= old("originalPrice") ?>">
+                        <input type="text" name="originalPrice" id="create-original-price" class="form-control solid fw-500 format-rupiah-input" value="<?= old("originalPrice") ?>">
                     </div>
                     <div class="mb-2">
                         <label for="create-selling-price" class="col-form-label text-gray-700 fw-500"><?= lang("Product.sellingPrice") ?></label>
-                        <input type="text" name="sellingPrice" id="create-selling-price" class="form-control solid fw-500" value="<?= old("sellingPrice") ?>">
+                        <input type="text" name="sellingPrice" id="create-selling-price" class="form-control solid fw-500 format-rupiah-input" value="<?= old("sellingPrice") ?>">
                     </div>
                     <div class="mb-2">
                         <label for="create-member-price" class="col-form-label text-gray-700 fw-500"><?= lang("Product.memberPrice") ?></label>
-                        <input type="text" name="memberPrice" id="create-member-price" class="form-control solid fw-500" value="<?= old("memberPrice") ?>">
+                        <input type="text" name="memberPrice" id="create-member-price" class="form-control solid fw-500 format-rupiah-input" value="<?= old("memberPrice") ?>">
                     </div>
                     <div class="mb-4">
                         <label for="create-wholesale-price" class="col-form-label text-gray-700 fw-500"><?= lang("Product.wholesalePrice") ?></label>
-                        <input type="text" name="wholesalePrice" id="create-wholesale-price" class="form-control solid" value="<?= old("wholesalePrice") ?>">
+                        <input type="text" name="wholesalePrice" id="create-wholesale-price" class="form-control solid fw-500 format-rupiah-input" value="<?= old("wholesalePrice") ?>">
                     </div>
                     <div class="mb-4 d-flex justify-content-end">
                         <button class="btn btn-primary fw-500">
@@ -220,6 +220,8 @@
 <script src="<?= base_url("/assets/js/alert.js") ?>"></script>
 <!-- Forms -->
 <script src="<?= base_url("/assets/js/forms.js") ?>"></script>
+<!-- Currency -->
+<script src="<?= base_url("/assets/js/currency.js") ?>"></script>
 
 <script>
     function resetFormFilter() {
@@ -247,20 +249,24 @@
 
 </script>
 
+<?php if(session("successMessage")): ?>
+    <script>
+        successAlert(`<?= session("successMessage") ?>`);
+    </script>
+<?php endif; ?>
+
 <?php if(session("validationErrorCreate")): ?>
     <script>
         // Form Lens Details
         const createType = document.querySelector("#create-type");
         setCreateLensType(createType.value);
+        formatRupiahInput("#create-original-price");
+        formatRupiahInput("#create-selling-price");
+        formatRupiahInput("#create-member-price");
+        formatRupiahInput("#create-wholesale-price");
 
         const modalCreate = new bootstrap.Modal(document.querySelector("#modal-create"));
         modalCreate.show();
-    </script>
-<?php endif; ?>
-
-<?php if(session("successMessage")): ?>
-    <script>
-        successAlert(`<?= session("successMessage") ?>`);
     </script>
 <?php endif; ?>
 
