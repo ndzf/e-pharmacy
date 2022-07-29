@@ -122,4 +122,8 @@ class Validation extends BaseConfig
         ]
     ];
 
+    public $createProduct = [
+        "name"              => ["label" => "Product.name", "rules" => "required"],
+    ];
+
 }
