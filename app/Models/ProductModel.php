@@ -69,4 +69,48 @@ class ProductModel extends Model
 
         return $builder;
     }
+
+    public function create($inputs)
+    {
+        $productBuilder = $this->table("products");
+
+        $product = [
+            "supplier_id"           => $inputs["supplier"],
+            "category_id"           => $inputs["category"],
+            "code"                  => $inputs["code"],
+            "name"                  => $inputs["name"],
+            "type"                  => $inputs["type"],
+            "qty"                   => $inputs["qty"],
+            "minimum_qty"           => $inputs["minimumQty"],
+            "original_price"        => $inputs["originalPrice"],
+            "selling_price"         => $inputs["sellingPrice"],
+            "member_price"          => $inputs["memberPrice"],
+            "wholesale_price"       => $inputs["wholesalePrice"],
+        ];
+
+        $productBuilder->insert($product);
+        $productID = $productBuilder->insertID();
+
+        if ($inputs["type"] == "lens") {
+            $lensDetailModel = new \App\Models\LensDetailModel();
+            $lensDetails = [
+                [
+                    "product_id"            => $productID,
+                    "lens_type"             => "R",
+                    "sph"                   => $inputs["createRSph"],
+                    "cyl"                   => $inputs["createRCyl"],
+                    "add"                   => $inputs["createRAdd"],
+                ],
+                [
+                    "product_id"            => $productID,
+                    "lens_type"             => "L",
+                    "sph"                   => $inputs["createLSph"],
+                    "cyl"                   => $inputs["createLCyl"],
+                    "add"                   => $inputs["createLAdd"],
+                ],
+            ];
+
+            $lensDetailModel->insertBatch($lensDetails);
+        }
+    }
 }
