@@ -39,4 +39,34 @@ class ProductModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function search(?string $keyword, ?string $type, ?string $category)
+    {
+        $builder = $this->table("products");
+        $builder->select("products.id, products.name, products.qty, products.type, products.minimum_qty, products.selling_price, products.original_price, categories.name as category");
+        $builder->join("categories", "categories.id = products.category_id", "LEFT");
+        if ($keyword) {
+            $builder->like("products.name", $keyword);
+
+            if ($type) {
+                $builder->having("products.type", $type);
+                $builder->groupBy("products.type");
+            }
+
+            if ($category) {
+                $builder->having("products.category_id", $category);
+                $builder->groupBy("products.category_id");
+            }
+        }
+
+        if ($type) {
+            $builder->where("products.type", $type);
+        }
+
+        if ($category) {
+            $builder->where("products.category_id", $category);
+        }
+
+        return $builder;
+    }
 }
