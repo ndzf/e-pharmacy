@@ -10,7 +10,12 @@ return [
     "originalPrice"         => "Harga Asli",
     "sellingPrice"          => "Harga Jual",
     "memberPrice"           => "Harga Member",
-    "wholesalePrice"        => "Harga Jual",
+    "wholesalePrice"        => "Harga Grosir",
+
+    "types"                 => [
+        "general"           => "General",
+        "lens"              => "Lensa",
+    ],
 
     "title"                 => [
         "index"             => "Data Produk",
