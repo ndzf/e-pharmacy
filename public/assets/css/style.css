@@ -405,33 +405,8 @@ a {
 
 /* Dropdown */
 
-.dropdown {
-    position: static !important;
-    /* transition: transform 0.3s ease-in-out; */
-}
-
 .dropdown-menu {
-    /* width: 100%; */
-    box-shadow: 0 3px 10px 0 rgb(34 41 47 / 10%);
-}
-
-.dropdown.excel {
-    position: relative !important;
-}
-
-.dropdown-menu.excel {
-    width: unset;
-    box-shadow: 0 3px 10px 0 rgb(34 41 47 / 10%);
-}
-
-a.dropdown-item {
-    color: #6e6b7b;
-    font-weight: 600;
-}
-a.dropdown-item:hover {
-    color: #2FDD92;
-    font-weight: 600;
-    background-color: #EEF2FF;
+    min-width: 18rem;
 }
 
 /* Form */
