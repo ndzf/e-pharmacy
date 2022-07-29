@@ -82,10 +82,10 @@ class ProductModel extends Model
             "type"                  => $inputs["type"],
             "qty"                   => $inputs["qty"],
             "minimum_qty"           => $inputs["minimumQty"],
-            "original_price"        => $inputs["originalPrice"],
-            "selling_price"         => $inputs["sellingPrice"],
-            "member_price"          => $inputs["memberPrice"],
-            "wholesale_price"       => $inputs["wholesalePrice"],
+            "original_price"        => str_replace(".", "", $inputs["originalPrice"]),
+            "selling_price"         => str_replace(".", "", $inputs["sellingPrice"]),
+            "member_price"          => str_replace(".", "", $inputs["memberPrice"]),
+            "wholesale_price"       => str_replace(".", "", $inputs["wholesalePrice"]),
         ];
 
         $productBuilder->insert($product);
