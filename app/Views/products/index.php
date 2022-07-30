@@ -83,7 +83,7 @@
                 </div>
                 <div class="card-body pt-0">
                     <div class="table-responsive">
-                        <table class="table table-borderless table-dashed">
+                        <table class="table table-borderless table-dashed text-nowrap align-items-center">
                             <thead class="text-gray-400 fw-500 text-uppercase">
                                 <tr>
                                     <th><?= lang("Product.name") ?></th>
@@ -98,11 +98,24 @@
                                 <?php foreach ($products as $product) : ?>
                                     <tr>
                                         <td><?= esc($product->name) ?></td>
-                                        <td><?= esc($product->category) ?></td>
+                                        <td>
+                                            <?= isset($product->category) ? esc($product->category) : "-" ?>
+                                        </td>
                                         <td><?= esc($product->type) ?></td>
                                         <td class="format-rupiah" data-format="<?= esc($product->original_price) ?>"><?= esc($product->original_price) ?></td>
-                                        <td><?= esc($product->qty) ?></td>
-                                        <td></td>
+                                        <td>
+                                            <div class="badge fw-600 badge-table <?= ($product->qty <= $product->minimum_qty) ? "badge-light-danger" : "badge-light-primary" ?>">
+                                                <?= esc($product->qty) ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-light-light fw-500 btn-sm me-2" title="<?= lang("Product.title.edit") ?>">
+                                                Edit
+                                            </button>
+                                            <button class="btn btn-sm btn-light-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -267,6 +280,7 @@
 
         const modalCreate = new bootstrap.Modal(document.querySelector("#modal-create"));
         modalCreate.show();
+
     </script>
 <?php endif; ?>
 
