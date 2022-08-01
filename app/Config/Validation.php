@@ -126,4 +126,8 @@ class Validation extends BaseConfig
         "name"              => ["label" => "Product.name", "rules" => "required"],
     ];
 
+    public $updateProduct = [
+        "name"              => ["label" => "Product.name", "rules" => "required"],
+    ];
+
 }

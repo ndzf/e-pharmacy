@@ -14,7 +14,7 @@ class ProductModel extends Model
     protected $returnType       = \App\Entities\ProductEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["supplier_id", "category_id", "code", "name", "type", "qty", "minimum_qty", "original_price", "selling_price", "member_price", "wholesale_price"];
+    protected $allowedFields    = ["supplier_id", "category_id", "code", "name", "type", "r_sph", "r_cyl", "r_add", "l_sph", "l_cyl", "l_add", "qty", "minimum_qty", "original_price", "selling_price", "member_price", "wholesale_price"];
 
     // Dates
     protected $useTimestamps = true;
@@ -68,49 +68,5 @@ class ProductModel extends Model
         }
 
         return $builder;
-    }
-
-    public function create($inputs)
-    {
-        $productBuilder = $this->table("products");
-
-        $product = [
-            "supplier_id"           => $inputs["supplier"],
-            "category_id"           => $inputs["category"],
-            "code"                  => $inputs["code"],
-            "name"                  => $inputs["name"],
-            "type"                  => $inputs["type"],
-            "qty"                   => $inputs["qty"],
-            "minimum_qty"           => $inputs["minimumQty"],
-            "original_price"        => str_replace(".", "", $inputs["originalPrice"]),
-            "selling_price"         => str_replace(".", "", $inputs["sellingPrice"]),
-            "member_price"          => str_replace(".", "", $inputs["memberPrice"]),
-            "wholesale_price"       => str_replace(".", "", $inputs["wholesalePrice"]),
-        ];
-
-        $productBuilder->insert($product);
-        $productID = $productBuilder->insertID();
-
-        if ($inputs["type"] == "lens") {
-            $lensDetailModel = new \App\Models\LensDetailModel();
-            $lensDetails = [
-                [
-                    "product_id"            => $productID,
-                    "lens_type"             => "R",
-                    "sph"                   => $inputs["createRSph"],
-                    "cyl"                   => $inputs["createRCyl"],
-                    "add"                   => $inputs["createRAdd"],
-                ],
-                [
-                    "product_id"            => $productID,
-                    "lens_type"             => "L",
-                    "sph"                   => $inputs["createLSph"],
-                    "cyl"                   => $inputs["createLCyl"],
-                    "add"                   => $inputs["createLAdd"],
-                ],
-            ];
-
-            $lensDetailModel->insertBatch($lensDetails);
-        }
     }
 }

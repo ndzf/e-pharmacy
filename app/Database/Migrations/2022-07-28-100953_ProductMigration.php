@@ -21,6 +21,12 @@ class ProductMigration extends Migration
             "selling_price"     => ["type" => "int", "constraint" => 11],
             "member_price"      => ["type" => "int", "constraint" => 11, "null" => true, "default" => 0],
             "wholesale_price"   => ["type" => "int", "constraint" => 11, "null" => true, "default" => 0],
+            "r_sph"             => ["type" => "varchar", "constraint" => 15, "null" => true],
+            "r_cyl"             => ["type" => "varchar", "constraint" => 15, "null" => true],
+            "r_add"             => ["type" => "varchar", "constraint" => 15, "null" => true],
+            "l_sph"             => ["type" => "varchar", "constraint" => 15, "null" => true],
+            "l_cyl"             => ["type" => "varchar", "constraint" => 15, "null" => true],
+            "l_add"             => ["type" => "varchar", "constraint" => 15, "null" => true],
             "created_at"        => ["type" => "timestamp"],
             "updated_at"        => ["type" => "timestamp", "null" => true],
         ]);
