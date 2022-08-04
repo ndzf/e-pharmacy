@@ -7,6 +7,7 @@ use CodeIgniter\Entity\Entity;
 class TransactionEntity extends Entity
 {
     protected $datamap = [];
-    protected $dates   = ['created_at', 'updated_at'];
+    protected $dates   = ['created_at', 'updated_at', 'date'];
     protected $casts   = [];
+
 }
