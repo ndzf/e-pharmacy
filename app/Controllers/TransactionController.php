@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\TransactionModel;
 use App\Entities\TransactionEntity;
+use App\Models\TransactionPaymentModel;
 use CodeIgniter\I18n\Time;
 
 class TransactionController extends BaseController
@@ -141,6 +142,24 @@ class TransactionController extends BaseController
 			"transaction"			=> $transaction,
 			"payments"				=> $transactionPaymentModel->getByTransaction($id),
 			"transactionDetails"	=> $transactionDetailModel->getProductsByTransaction($id),
+		];
+
+		return json_encode($data);
+	}
+
+	public function payments(int $id)
+	{
+		$transaction = $this->transactionModel->select("id, grand_total, status")->where("id", $id)->get()->getRowArray();
+		
+		if (empty($transaction)) {
+			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Transaksi Tidak Ditemukan");
+		}
+
+		$transactionPaymentModel = new TransactionPaymentModel();
+
+		$data = [
+			"transaction"		=> $transaction,
+			"payments"			=> $transactionPaymentModel->getByTransaction($id),
 		];
 
 		return json_encode($data);
