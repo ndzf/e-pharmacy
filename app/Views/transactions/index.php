@@ -88,9 +88,17 @@
 											</span>
 										</td>
 										<td>
-											<button class="btn btn-light-light fw-500 btn-sm" onclick="showTransactionDetail(`<?= esc($transaction->id) ?>`)">
-												Detail
+											<button class="btn btn-light btn-sm me-2" onclick="showTransactionDetail(`<?= esc($transaction->id) ?>`)">
+												<i class="fas fa-search"></i>
 											</button>
+											<button class="btn btn-light btn-sm me-2">
+												<i class="fas fa-print"></i>
+											</button>
+											<?php if($transaction->payment_status == "debt"): ?>
+												<button class="btn btn-light btn-sm" onclick="createPayment(`<?= $transaction->id ?>`)">
+													<i class="fas fa-dollar"></i>
+												</button>
+											<?php endif; ?>
 										</td>
 									</tr>
 								<?php endforeach; ?>
@@ -186,6 +194,45 @@
 	</div>
 </div>
 
+<!-- Modal Create Payment -->
+<div class="modal modal-outer right-modal fade" id="modal-create-payment" tabindex="-1" aria-labelledby="modal-create-payment-label" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title text-gray-600 fw-500 py-3" id="modal-create-payment-label">Tambah Pembayaran</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body pt-0">
+				
+				
+				<form action="<?= site_url("transaction-payments") ?>" method="post">
+					<input type="hidden" name="transactionID" id="create-payment-transaction-id">
+					<div class="mb-2">
+						<label for="create-payment-grand-total" class="col-form-label text-gray-600 fw-500">Grand Total</label>
+						<input type="text" name="grandTotal" id="create-payment-grand-total" class="form-control fw-500 solid" readonly>
+					</div>
+					<div class="mb-4">
+						<label for="create-payment-nominal" class="col-form-label text-gray-600 fw-500">Nominal</label>
+						<input type="text" name="nominal" required value="<?= old("nominal") ?>" id="create-payment-nominal" class="form-control solid fw-500 format-rupiah-input">
+					</div>
+					<div class="mb-4 d-flex">
+						<div class="ms-auto">
+							<button class="btn btn-primary fw-500">
+								<?= lang("General.save") ?>
+							</button>
+						</div>
+					</div>
+				</form>
+
+				<div id="payment-history-wrapper">
+					<div id="payments-history-title"></div>
+					<div id="payments-history"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <?= $this->endSection() ?>
 
 <?= $this->section("script") ?>
@@ -194,6 +241,10 @@
 <script src="<?= base_url("/assets/plugins/jquery/jquery.min.js") ?>"></script>
 <!-- Selectize -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.6/js/standalone/selectize.min.js"></script>
+<!-- Sweetalert -->
+<script src="<?= base_url("/assets/plugins/sweetalert2/js/sweetalert2.all.min.js") ?>"></script>
+<!-- Alert -->
+<script src="<?= base_url("/assets/js/alert.js") ?>"></script>
 <!-- Format Rupiah -->
 <script src="<?= base_url("/assets/js/currency.js") ?>"></script>
 <!-- Transactions -->
@@ -256,10 +307,8 @@
 
 
 <!-- Details -->
-
 <script>
 	function showTransactionDetail(id) {
-		console.log(baseURL);
 		$.ajax({
 			"method": "GET",
 			"url": `${baseURL}transactions/${id}`,
@@ -278,6 +327,32 @@
 		modalDetail.show();
 	}
 </script>
+
+<script>
+	// Create payment
+	function createPayment(id) {
+		$.ajax({
+			"method": "GET",
+			"url": `${baseURL}transactions/${id}/payments`,
+			"dataType": "JSON",
+			"headers": {
+				"X-Requested-With": "XMLHttpRequest",
+				"Content-Type": "application/json"
+			},
+			"success": fillCreatePayment,
+			"error": function(error) {
+				errorAlert(`${error.responseJSON.message}`);
+			}
+		});
+	}
+
+</script>
+
+<?php if(session("successMessage")): ?>
+	<script>
+		successAlert(`<?= session("successMessage") ?>`);
+	</script>
+<?php endif; ?>
 
 <?= $this->endSection() ?>
 

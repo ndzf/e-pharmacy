@@ -75,10 +75,10 @@ function getProductCard(product) {
     return card;
 }
 
-function getPaymentCard(payment) {
+function getPaymentCard(payment, border = false) {
     let card = "";
     card += `<div class="mb-3">`;
-    card += `<div class="card border-0 shadow">`;
+    card += `<div class="card ${(border == true) ? "" : "border-0 shadow"}">`;
     card += `<div class="card-body px-3 py-2">`;
     card += `<div class="product-title text-gray-700 fw-500">Rp. ${formatRupiah(payment.nominal)}</div>`;
     card += `</div>`;
@@ -114,4 +114,34 @@ function fillDetails(res) {
     
     document.getElementById("details-products").innerHTML = productCards;
     document.getElementById("details-payments").innerHTML = paymentCards;
+}
+
+function fillCreatePayment(res) {
+    const transaction = res.transaction;
+    const payments = res.payments;
+
+    document.querySelector("#create-payment-transaction-id").value = transaction.id;
+    document.querySelector("#create-payment-grand-total").value = formatRupiah(transaction.grand_total);
+
+    if (payments) {
+        let paymentCards = "";
+        let currentNominal = 0;
+        payments.forEach(payment => {
+            paymentCards += getPaymentCard(payment, true);
+            currentNominal += payment.nominal;
+        });
+        document.querySelector("#payments-history").innerHTML = paymentCards;
+
+        const titleEl = document.createElement("h5");
+        titleEl.classList.add("text-gray-600", "fw-500", "mb-3");
+        const title = document.createTextNode("Riwayat Pembayaran");
+        titleEl.append(title);
+
+        document.querySelector("#payments-history-title").append(titleEl);
+
+        // document.querySelector("#create-payment-nominal").setAttribute("max", (parseInt(transaction.grand_total) - parseInt(currentNominal)));
+    }
+
+    const modalCreatePayment = new bootstrap.Modal(document.querySelector("#modal-create-payment"));
+    modalCreatePayment.show();
 }

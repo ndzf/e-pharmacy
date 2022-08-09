@@ -118,6 +118,12 @@ $routes->group("transaction-details", function($routes) {
     $routes->get("(:num)", "TransactionDetailController::show/$1", ["filter" => "transaction:admin,cashier"]); 
 });
 
+$routes->group("transaction-payments", function($routes) {
+
+    $routes->post("/", "TransactionPaymentController::create", ["filter" =>"isLoggedIn:admin,cashier"]);
+
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
