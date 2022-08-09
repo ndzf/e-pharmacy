@@ -53,7 +53,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="<?= site_url("transactions") ?>">
+                <a class="nav-link" href="<?= site_url("transactions") ?>" title="Data Penjualan">
                     <i class="fas fa-table me-2"></i>
                     <span>Penjualan</span></a>
             </li>
