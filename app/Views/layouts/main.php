@@ -12,51 +12,64 @@
     <?= $this->renderSection("style")  ?>
     <!-- Custom Style -->
     <link rel="stylesheet" href="<?= base_url("/assets/css/style.css")  ?>">
-    <title><?= $title ?? config("App")->appName  ?></title>
+    <title><?= $title ?? config("App")->appName ?></title>
 </head>
 <body>
     <div id="wrapper">
         <!-- Sidebar -->
         <ul class="navbar-nav sidebar accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
             </a>
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item">
+                <a class="nav-link" href="<?= site_url("") ?>" title="Dashboard">
                     <i class="fas fa-fire me-2"></i>
                     <span>Dashboard</span></a>
             </li>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="categories.html">
+                <a class="nav-link" href="<?= site_url("categories") ?>" title="<?= lang("Category.title.index") ?>">
                     <i class="fas fa-tag me-2"></i>
                     <span>Kategori</span></a>
             </li>
 
             <li class="nav-item">
-                <a href="supplier.html" class="nav-link">
+                <a href="<?= site_url("suppliers") ?>" class="nav-link" title="<?= lang("Supplier.title.index") ?>">
                     <i class="fas fa-truck-ramp-box me-2"></i>
                     <span>Supplier</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="products.html">
+                <a class="nav-link" href="<?= site_url("products") ?>" title="<?= lang("Product.title.index") ?>" >
                     <i class="fas fa-boxes me-1"></i>
                     <span>Produk</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="<?= site_url("transactions") ?>">
                     <i class="fas fa-table me-2"></i>
-                    <span>Tables</span></a>
+                    <span>Penjualan</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a href="<?= site_url("users") ?>" class="nav-link" title="<?= lang("User.title.index")  ?>">
+                    <i class="fas fa-user me-2"></i>
+                    <span><?= lang("User.title.index") ?></span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="<?= site_url("customers") ?>" class="nav-link" title="<?= lang("Customer.title.index") ?>">
+                    <i class="fas fa-address-card me-1"></i>
+                    <span><?= lang("Customer.title.index") ?></span>
+                </a>
             </li>
 
         </ul>
@@ -74,7 +87,7 @@
                         <a href="javascript:void(0)" id="sidebar-toggle" class="text-danger me-2">
                             <i class="fas fa-bars"></i>
                         </a>
-                        <a class="navbar-brand text-dark" href="#"><?= ($title ?? config("App")->appName)  ?></a>
+                        <a class="navbar-brand text-gray-700 fw-500" href="#"><?= ($title ?? config("App")->appName)  ?></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -133,6 +146,14 @@
         const copyrightYear = document.querySelector("#copyright-year");
         const date = new Date;
         copyrightYear.textContent = date.getFullYear();
+
+        const pathname = window.location.pathname.split("/")[1];
+        const sidebarItems = document.querySelectorAll("li.nav-item a");
+        for (sidebarItem of sidebarItems) {
+            if (sidebarItem.href.split("/")[3] == pathname) {
+                sidebarItem.parentNode.classList.toggle("active");
+            }
+        }
     </script>
     <!-- Custom script -->
     <?= $this->renderSection("script")  ?>

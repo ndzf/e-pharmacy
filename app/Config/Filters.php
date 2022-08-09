@@ -9,6 +9,7 @@ use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\AuthFilter;
+use App\Filters\TransactionFilter;
 
 class Filters extends BaseConfig
 {
@@ -25,6 +26,7 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'isLoggedIn'    => AuthFilter::class,
+        "transaction"   => TransactionFilter::class,
     ];
 
     /**

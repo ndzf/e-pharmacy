@@ -35,7 +35,8 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Home::index', ["filter" => "isLoggedIn:admin,cashier"]);
+
 
 $routes->group("/login", function($routes) {
 
@@ -90,9 +91,30 @@ $routes->group("/products", function($routes) {
     $routes->get("/", "ProductController::index", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->post("/", "ProductController::create", ["filter" => "isLoggedIn:admin"]);
     $routes->get("(:num)/edit", "ProductController::edit/$1", ["filter" => "isLoggedIn:admin"]);
+    $routes->get("(:num)/details", "ProductController::details/$1", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->put("(:num)", "ProductController::update/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->delete("(:num)", "ProductController::delete/$1", ["filter" => "isLoggedIn:admin"]);
+    $routes->get("search", "ProductController::search", ["filter" => "isLoggedIn:admin,cashier"]);
+    
+});
 
+$routes->group("transactions", function($routes) {
+
+	$routes->get("/", "TransactionController::index", ["filter" => "isLoggedIn:admin,cashier"]);
+	$routes->post("/", "TransactionController::store");
+	$routes->get("create", "TransactionController::create", ["filter" => "transaction:admin,cashier"]);
+	$routes->get("check-current-transaction", "TransactionController::checkCurrentTransaction");
+    // FIXME: change destroy to DELETE HTTP Method
+    $routes->get("destroy", "TransactionController::destroy", ["filter" => "transaction:admin,cashier"]);
+    $routes->get("(:num)", "TransactionController::show/$1", ["filter" => "isLoggedIn:admin,cashier"]);
+    $routes->put("(:num)/checkout", "TransactionController::checkout/$1", ["filter" => "transaction:admin,cashier"]);
+
+});
+
+$routes->group("transaction-details", function($routes) {
+    $routes->post("/", "TransactionDetailController::create", ["filter" => "transaction:admin,cashier"]);
+    $routes->delete("(:num)", "TransactionDetailController::delete/$1", ["filter" => "transaction:admin,cashier"]);
+    $routes->get("(:num)", "TransactionDetailController::show/$1", ["filter" => "transaction:admin,cashier"]); 
 });
 
 /*

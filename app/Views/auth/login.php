@@ -12,24 +12,25 @@
     <link rel="stylesheet" href="<?= base_url("/assets/css/style.css")  ?>">
     <title>Login</title>
 </head>
-<body>
-    <?php d($validation) ?>
+<body style="background-color: var(--app-background)">
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-4 col-md-6 mt-4">
-                <div class="card">
+                <div class="card rounded-4 border-0 shadow">
                     <div class="card-body">
                         <form action="<?= site_url("/login")  ?>" method="post">
                             <div class="mb-3">
-                                <label for="" class="col-form-label text-dark fs-6"><?= lang("User.username")  ?></label>
+                                <label for="" class="col-form-label fw-500 text-gray-600 fs-6"><?= lang("User.username")  ?></label>
                                 <input type="text" name="username" id="username" class="form-control solid">
                             </div>
                             <div class="mb-4">
-                                <label for="" class="col-form-label text-dark fs-6"><?= lang("User.password")  ?></label>
+                                <label for="" class="col-form-label fw-500 text-gray-600 fs-6"><?= lang("User.password")  ?></label>
                                 <input type="password" name="password" id="password" class="form-control solid">
                             </div>
-                            <div class="mb-3">
-                                <button class="btn btn-primary" type="submit">Login</button>
+                            <div class="mb-3 d-flex">
+                                <div class="ms-auto">
+                                    <button class="btn btn-primary" type="submit">Login</button>
+                                </div>
                             </div>
                         </form>
                     </div>

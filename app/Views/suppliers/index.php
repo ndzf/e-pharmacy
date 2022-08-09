@@ -23,7 +23,7 @@
                 <div class="card-body pt-0">
                     <div class="table-responsive">
                         <table class="table table-borderless table-dashed text-nowrap">
-                            <thead class="text-gray-400 text-uppercase fw-600">
+                            <thead class="text-gray-500 text-uppercase fw-600">
                                 <tr>
                                     <th><?= lang("Supplier.name")  ?></th>
                                     <th><?= lang("Supplier.phoneNumber")  ?></th>
@@ -31,7 +31,7 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody class="text-dark fw-500">
+                            <tbody class="text-gray-700 fw-500">
                                 <?php foreach($suppliers as $supplier): ?>
                                     <tr>
                                         <td><?= esc($supplier->name);  ?></td>

@@ -49,5 +49,6 @@ class AuthController extends BaseController
         ];
 
         session()->set($payload);
+        return redirect()->to("/");
     }
 }

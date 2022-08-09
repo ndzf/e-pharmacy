@@ -4,20 +4,20 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CustomerModel extends Model
+class TransactionPaymentModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'customers';
+    protected $table            = 'transaction_payments';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
-    protected $returnType       = \App\Entities\CustomerEntity::class;
+    protected $returnType       = \App\Entities\TransactionPaymentEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["name", "phone_number", "email", "address", "role"];
+    protected $allowedFields    = ["transaction_id", "user_id", "nominal", "date"];
 
     // Dates
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -40,27 +40,12 @@ class CustomerModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function search(?string $keyword)
+    public function getByTransaction($transactionID)
     {
-        $builder = $this->table("customers");
-        $builder->select("id, name, phone_number, email, role");
-        if ($keyword) {
-            $builder->like("name", $keyword);
-            $builder->orLike("phone_number", $keyword);
-            $builder->orLike("email", $keyword);
-            $builder->orLike("role", $keyword);
-        }
-        return $builder;
+        $builder = $this->table("transaction_payments");
+        $builder->select("id, date, nominal");
+        $builder->where("transaction_id", $transactionID);
+        $data = $builder->get();
+        return $data->getCustomResultObject("\App\Entities\TransactionPaymentEntity");
     }
-
-	public function getNames(?string ...$roles)
-	{
-		$builder = $this->table("customers");
-		$builder->select("id, name, role");
-		if (!empty($roles)) {
-			$builder->whereIn("role", $roles);
-		}
-		$data = $builder->get();
-		return $data->getCustomResultObject("\App\Entities\CustomerEntity");
-	}
 }

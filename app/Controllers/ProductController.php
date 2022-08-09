@@ -122,4 +122,28 @@ class ProductController extends BaseController
 	$this->productModel->where("id", $id)->delete();
 	return redirect()->to("/products")->with("successMessage", lang("Message.success.delete", [strtolower($this->title)]));
     }
+
+    public function search()
+    {
+        $keyword = esc($this->request->getVar("keyword"));
+        $inputs = [
+            "keyword"           => esc($this->request->getVar("keyword")),
+            "type"              => esc($this->request->getVar("type")),
+            "category"          => esc($this->request->getVar("category")),
+        ];
+        $query = $this->productModel->search($inputs["keyword"], $inputs["type"], $inputs["category"]);
+        $products = $query->get(3);
+        return json_encode($products->getResultArray());
+    }
+
+    public function details($id)
+    {
+        $product = $this->productModel->find($id);
+
+        if (empty($product)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(lang("Message.error.notFound", [ucwords($this->title)]));
+        }
+
+        return json_encode($product);
+    }
 }

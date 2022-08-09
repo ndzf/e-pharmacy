@@ -130,4 +130,8 @@ class Validation extends BaseConfig
         "name"              => ["label" => "Product.name", "rules" => "required"],
     ];
 
+
+    public $createTransaction = [
+        "customer"          => ["label" => "Transaction.customer", "rules" => "required"],
+    ];
 }
