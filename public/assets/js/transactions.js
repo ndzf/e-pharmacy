@@ -49,6 +49,7 @@ function getProductCard(product) {
     card += `<th>SPH</th>`;
     card += `<th>CYL</th>`;
     card += `<th>ADD</th>`;
+    card += `<th>Axis</th>`;
     card += `</tr>`;
     card += `</thead>`;
     card += `<tbody class="text-gray-700 fw-500">`;
@@ -57,12 +58,14 @@ function getProductCard(product) {
     card += `<td>${product.r_sph}</td>`;
     card += `<td>${product.r_cyl}</td>`;
     card += `<td>${product.r_add}</td>`;
+    card += `<td>${product.r_axis}</td>`;
     card += `</tr>`;
     card += `<tr>`;
     card += `<td class="text-primary">L</td>`;
     card += `<td>${product.l_sph}</td>`;
     card += `<td>${product.l_cyl}</td>`;
     card += `<td>${product.l_add}</td>`;
+    card += `<td>${product.l_axis}</td>`;
     card += `</tr>`;
     card += `</tbody>`;
     card += `</table>`;
