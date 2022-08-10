@@ -26,6 +26,18 @@ class PurchaseController extends BaseController
 
     public function create()
     {
+        $purchaseID = session("purchaseID");
+        $purchase = $this->purchaseModel->find($purchaseID);
+
+        if (empty($purchase)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Data Penjualan Tidak Ditemukan");
+        }
+
+        $data = [
+            "purchase"          => $purchase,
+        ];
+
+        return view("purchases/create", $data);
 
     }
 
