@@ -124,6 +124,10 @@ $routes->group("transaction-payments", function($routes) {
 
 });
 
+$routes->group("purchases", function($routes) {
+    $routes->get("/", "PurchaseController::index", ["filter" => "isLoggedIn:admin,cashier"]);
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
