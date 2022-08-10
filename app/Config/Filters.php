@@ -10,6 +10,7 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\AuthFilter;
 use App\Filters\TransactionFilter;
+use App\Filters\PurchaseFilter;
 
 class Filters extends BaseConfig
 {
@@ -27,6 +28,7 @@ class Filters extends BaseConfig
         'secureheaders' => SecureHeaders::class,
         'isLoggedIn'    => AuthFilter::class,
         "transaction"   => TransactionFilter::class,
+        "purchase"      => PurchaseFilter::class,
     ];
 
     /**
