@@ -35,4 +35,11 @@ class PurchaseDetailController extends BaseController
         $this->purchaseDetailModel->insert($purchase);
         return redirect()->to("/purchases/create")->with("successMessage", "Berhasil menambah produk");
     }
+
+    public function delete($id)
+    {
+        $this->purchaseDetailModel->where("id", $id)->delete();
+        return redirect()->to("/purchases/create")->with("successMessage", "Berhasil menghapus produk");
+    }
+
 }

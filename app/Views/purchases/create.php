@@ -65,7 +65,7 @@
                 </div>
                 <div class="card-body pt-0">
                     <div class="table-responsive">
-                        <table class="table table-borderless table-dashed text-nowrap">
+                        <table class="table table-borderless table-dashed text-nowrap align-middle">
                             <thead class="text-gray-500 fw-500 text-uppercase">
                                 <tr>
                                     <th>Produk</th>
@@ -87,7 +87,14 @@
                                         <td class="format-rupiah" data-format="<?= esc($total) ?>">
                                             <?= esc($total) ?>
                                         </td>
-                                        <td></td>
+                                        <td>
+                                            <button class="btn btn-light-light fw-500 me-2 btn-sm">
+                                                Detail
+                                            </button>
+                                            <button class="btn btn-light-danger btn-sm" onclick="deletePurchaseDetail(`<?= $purchaseDetail->id ?>`)" title="Hapus">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -187,6 +194,10 @@
 </div>
 
 <form action="" method="post" id="form-cancel">
+    <input type="hidden" name="_method" value="DELETE">
+</form>
+
+<form action="" method="post" id="form-delete-purchase-detail">
     <input type="hidden" name="_method" value="DELETE">
 </form>
 
@@ -297,6 +308,20 @@
         const formCancel = document.forms["form-cancel"];
         formCancel.action = `${baseURL}purchases/${id}`;
         formCancel.submit();
+    }
+</script>
+
+<?php if(session("successMessage")): ?>
+    <script>
+        successAlert(`<?= session("successMessage") ?>`);
+    </script>
+<?php endif; ?>
+
+<script>
+    function deletePurchaseDetail(id) {
+        const formDeletePurchaseDetail = document.forms["form-delete-purchase-detail"];
+        formDeletePurchaseDetail.action = `${baseURL}purchase-details/${id}`;
+        formDeletePurchaseDetail.submit();
     }
 </script>
 
