@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\PurchaseModel;
 use \CodeIgniter\I18n\Time;
+use App\Models\PurchaseDetailModel;
 
 class PurchaseController extends BaseController
 {
@@ -17,8 +18,10 @@ class PurchaseController extends BaseController
 
     public function index()
     {
+        $purchaseID = session("purchaseID");
+
         $data = [
-            "title"         => "Data Pembelian",
+            "title"             => "Data Pembelian",
         ];
 
         return view("purchases/index", $data);
@@ -26,6 +29,7 @@ class PurchaseController extends BaseController
 
     public function create()
     {
+        $purchaseDetailModel = new PurchaseDetailModel();
         $purchaseID = session("purchaseID");
         $purchase = $this->purchaseModel->find($purchaseID);
 
@@ -34,6 +38,7 @@ class PurchaseController extends BaseController
         }
 
         $data = [
+            "purchaseDetails"   => $purchaseDetailModel->getProductsByPurchaseID($purchaseID),
             "purchase"          => $purchase,
         ];
 
@@ -62,5 +67,22 @@ class PurchaseController extends BaseController
     {
         session()->remove("createPurchase");
         session()->remove("purchaseID");
+    }
+
+    public function checkout($id)
+    {
+        $purchase = $this->purchaseModel->find($id);
+        $inputs = esc($this->request->getPost());
+        $nominal = str_replace(".", "", $inputs["nominal"]);
+        $grandTotal = str_replace(".", "", $inputs["grandTotal"]);
+        $payment = [
+            "purchase_id"       => $id,
+            "nominal"           => ($nominal >= $grandTotal) ? $grandTotal : $nominal,
+            "user_id"           => session("userID"),
+            "date"              => Time::now("Asia/Jakarta")->toDateString(),
+        ];
+
+        $this->purchaseModel->checkout($id, $inputs, $payment);
+        dd("oke");
     }
 }

@@ -127,8 +127,13 @@ $routes->group("transaction-payments", function($routes) {
 $routes->group("purchases", function($routes) {
     $routes->get("/", "PurchaseController::index", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->post("/", "PurchaseController::store", ["filter" => "isLoggedIn:admin,cashier"]);
+    $routes->put("(:num)/checkout", "PurchaseController::checkout/$1", ["filter" => "purchase:admin,cashier"]);
     $routes->get("create", "PurchaseController::create", ["filter" => "purchase:admin,cashier"]);
     $routes->get("clear", "PurchaseController::clear", ["filter" => "isLoggedIn:admin,cashier"]);
+});
+
+$routes->group("purchase-details", function($routes) {
+    $routes->post("/", "PurchaseDetailController::create", ["filter" => "purchase:admin,cashier"]);
 });
 
 /*

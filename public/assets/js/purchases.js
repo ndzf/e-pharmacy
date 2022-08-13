@@ -60,3 +60,23 @@ function showSearchSpinner() {
 function hideSearchSpinner() {
     searchSpinner.setAttribute("hidden", true);
 }
+
+function getOption(title, price) {
+    const option = document.createElement("option");
+    option.setAttribute("value", price);
+    option.textContent = `${title}: Rp. ${formatRupiah(price)}`;
+    return option;
+}
+
+function fillAddProduct(res) {
+    console.log(res.id);
+    document.querySelector("#create-product-name").value = res.name;
+    document.querySelector("#create-product-id").value = res.id;
+    const createPrice = document.querySelector("#create-price");
+    const originalPriceOption = getOption("Harga Asli", res.original_price);
+    const sellingPriceOption = getOption("Harga Jual", res.selling_price);
+    const memberPriceOption = getOption("Harga Member", res.member_price);
+    const wholesalePriceOption = getOption("Harga Grosir", res.wholesale_price);
+    createPrice.append(originalPriceOption, sellingPriceOption, memberPriceOption, wholesalePriceOption);
+
+}

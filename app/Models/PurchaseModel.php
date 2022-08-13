@@ -39,4 +39,38 @@ class PurchaseModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function checkout($id, $inputs, $payment)
+    {
+        $this->db->transStart();
+
+        // Update purchase
+        $purchase = [
+            "discount"              => $inputs["discount"],
+            "grand_total"           => str_replace(".", "", $inputs["grandTotal"]),
+            "payment_status"        => (intval(str_replace(".", "", $inputs["nominal"])) - intval(str_replace(".", "", $inputs["grandTotal"])) < 0) ? "debt" : "cash",
+            "status"                => "done",
+        ];
+
+        $builder = $this->table("purchases");
+        $builder->where("id", $id)->set($purchase)->update();
+
+        // Update products.qty
+        $purchaseDetailModel = new \App\Models\PurchaseDetailModel();
+        $purchaseDetails = $purchaseDetailModel->getProductsByPurchaseID($id);
+        $productModel = new \App\Models\ProductModel();
+
+        foreach ($purchaseDetails as $purchaseDetail) {
+            $product = $productModel->find($purchaseDetail->product_id);
+            $qty = $product->qty + $purchaseDetail->qty;
+            $productModel->set("qty", $qty)->where("id", $purchaseDetail->product_id)->update();
+        }
+
+        // Payment 
+
+        $purchasePaymentModel = new \App\Models\PurchasePaymentModel();
+        $purchasePaymentModel->save($payment);
+
+        $this->db->transComplete();
+    }
 }
