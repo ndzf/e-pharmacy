@@ -39,4 +39,13 @@ class PurchasePaymentModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getByPurchaseID(int $purchaseID)
+    {
+        $builder = $this->table("purchase_payments");
+        $builder->select("id, date, nominal");
+        $builder->where("purchase_id", $purchaseID);
+        $data = $builder->get();
+        return $data->getCustomResultObject("\App\Entities\PurchasePaymentEntity");
+    }
 }

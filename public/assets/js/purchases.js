@@ -99,3 +99,86 @@ function fillPurchaseDetailModal(res) {
     const lensTypeDetailsEl = document.querySelector("#lens-type-details");
     (res.type == "general") ? lensTypeDetailsEl.setAttribute("hidden", true) : lensTypeDetailsEl.removeAttribute("hidden");
 }
+
+function getProductCard(product) {
+    let card = "";
+    card += `<div class="mb-3">`;
+    card += `<div class="card border-0 shadow">`;
+    card += `<div class="card-body px-3 py-2">`;
+    card += `<div class="product-title text-gray-700 fw-500">${product.product_name}</div>`;
+    card += `<div class="product-title text-gray-700 fw-500 d-flex fs-7"><span class="me-1">${product.qty}</span><span class="me-1">@</span><span>Rp. ${formatRupiah(product.price)}</span></div>`;
+    card += `<div class="footer mt-2" ${(product.type == "general") ? "hidden" : ""}>`;
+    card += `<div class="table-responsive">`;
+    card += `<table class="table table table-borderless table-dashed">`;
+    card += `<thead class="text-gray-500 fw-500 text-uppercase">`;
+    card += `<tr>`;
+    card += `<th></th>`;
+    card += `<th>SPH</th>`;
+    card += `<th>CYL</th>`;
+    card += `<th>ADD</th>`;
+    card += `</tr>`;
+    card += `</thead>`;
+    card += `<tbody class="text-gray-700 fw-500">`;
+    card += `<tr>`;
+    card += `<td class="text-primary">R</td>`;
+    card += `<td>${product.r_sph}</td>`;
+    card += `<td>${product.r_cyl}</td>`;
+    card += `<td>${product.r_add}</td>`;
+    card += `</tr>`;
+    card += `<tr>`;
+    card += `<td class="text-primary">L</td>`;
+    card += `<td>${product.l_sph}</td>`;
+    card += `<td>${product.l_cyl}</td>`;
+    card += `<td>${product.l_add}</td>`;
+    card += `</tr>`;
+    card += `</tbody>`;
+    card += `</table>`;
+    card += `</div>`;
+    card += `</div>`;
+    card += `</div>`;
+    card += `</div>`;
+    card += `</div>`;
+
+    return card;
+}
+
+function getPaymentCard(payment, border = false) {
+    let card = "";
+    card += `<div class="mb-3">`;
+    card += `<div class="card ${(border == true) ? "" : "border-0 shadow"}">`;
+    card += `<div class="card-body px-3 py-2">`;
+    card += `<div class="product-title text-gray-700 fw-500">Rp. ${formatRupiah(payment.nominal)}</div>`;
+    card += `</div>`;
+    card += `</div>`;
+    card += `</div>`;
+
+    return card;
+}
+
+function fillPurchase(res) {
+    const purchase = res.purchase;
+    const payments = res.payments;
+    const purchaseDetails = res.purchaseDetails;
+
+    document.getElementById("detail-date").value = purchase.formattedDate;
+    document.getElementById("detail-user").value = purchase.user;
+    document.getElementById("detail-status").value = purchase.status;
+    document.getElementById("detail-discount").value = purchase.discount;
+    document.getElementById("detail-grand-total").value = formatRupiah(purchase.grand_total);
+    document.getElementById("detail-payment-status").value = purchase.payment_status;
+
+    let productCards = "";
+    purchaseDetails.forEach(product => {
+        productCards += getProductCard(product);
+    });
+
+    console.dir(purchaseDetails);
+
+    let paymentCards = "";
+    payments.forEach(payment => {
+        paymentCards += getPaymentCard(payment);
+    });
+    
+    document.getElementById("details-products").innerHTML = productCards;
+    document.getElementById("details-payments").innerHTML = paymentCards;
+}

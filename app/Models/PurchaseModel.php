@@ -14,7 +14,7 @@ class PurchaseModel extends Model
     protected $returnType       = \App\Entities\PurchaseEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["user_id", "status", "payment_status", "grand_total", "date"];
+    protected $allowedFields    = ["user_id", "status", "payment_status", "grand_total", "discount", "date"];
 
     // Dates
     protected $useTimestamps = true;
@@ -46,6 +46,16 @@ class PurchaseModel extends Model
         $builder->select("purchases.id, purchases.grand_total, purchases.status, purchases.payment_status, purchases.user_id, purchases.date, users.name as user");
         $builder->join("users", "users.id = purchases.user_id", "LEFT");
         return $builder;
+    }
+
+    public function getPurchase(int $id)
+    {
+        $builder = $this->table("purchases");
+        $builder->select("purchases.id, purchases.grand_total, purchases.status, purchases.payment_status, purchases.discount, purchases.user_id, purchases.date, users.name as user");
+        $builder->join("users", "users.id = purchases.user_id", "LEFT");
+        $builder->where("purchases.id", $id);
+        $data = $builder->get();
+        return $data->getCustomRowObject(1, "\App\Entities\PurchaseEntity");
     }
 
     public function checkout($id, $inputs, $payment)

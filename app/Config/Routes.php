@@ -131,6 +131,7 @@ $routes->group("purchases", function($routes) {
     $routes->get("create", "PurchaseController::create", ["filter" => "purchase:admin,cashier"]);
     $routes->get("clear", "PurchaseController::clear", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->delete("(:num)", "PurchaseController::destroy/$1", ["filter" => "purchase:admin,cashier"]);
+    $routes->get("(:num)", "PurchaseController::show/$1", ["filter" => "isLoggedIn:admin,cashier"]);
 });
 
 $routes->group("purchase-details", function($routes) {

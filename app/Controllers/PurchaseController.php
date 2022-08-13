@@ -111,4 +111,26 @@ class PurchaseController extends BaseController
 
 		return redirect()->to('/purchases')->with("successMessage", "Berhasil membatalkan pembelian");
     }
+
+    public function show($id)
+    {
+        $purchase = $this->purchaseModel->getPurchase($id);
+
+        if (empty($purchase)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Pembelian tidak ditemukan");
+        }
+
+		$purchase->formattedDate = $purchase->date->toLocalizedString("dd MMM yyyy");
+
+        $purchaseDetailModel = new \App\Models\PurchaseDetailModel();
+        $purchasePaymentModel = new \App\Models\PurchasePaymentModel();
+
+        $data = [
+            "purchase"          => $purchase,
+            "purchaseDetails"   => $purchaseDetailModel->getProductsByPurchaseID($id),
+            "payments"          => $purchasePaymentModel->getByPurchaseID($id),
+        ];
+
+        return json_encode($data);
+    }
 }

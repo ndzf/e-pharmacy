@@ -14,6 +14,7 @@ class PurchasesMigration extends Migration
             "status"            => ["type" => "enum", "constraint" => ["open", "done"], "default" => "open"],
             "payment_status"    => ["type" => "enum", "constraint" => ["cash", "debt"], "null" => true],
             "grand_total"       => ["type" => "int", "constraint" => 11, "null" => true],
+            "discount"          => ["type" => "int", "constraint" => 11, "null" => true],
             "date"              => ["type" => "date"],
             "created_at"        => ["type" => "timestamp"],
             "updated_at"        => ["type" => "timestamp", "null" => true],
