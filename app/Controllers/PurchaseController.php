@@ -83,6 +83,10 @@ class PurchaseController extends BaseController
         ];
 
         $this->purchaseModel->checkout($id, $inputs, $payment);
-        dd("oke");
+
+        session()->remove("createPurchase");
+        session()->remove("purchaseID");
+
+		return redirect()->to('/purchases')->with("successMessage", "Berhasil membuat transaksi pembelian");
     }
 }
