@@ -67,7 +67,7 @@ class TransactionController extends BaseController
 
 		// Check session
 		if (session("createTransaction") && session("transactionID")) {
-			return redirect()->to("/transactions/store");
+			return redirect()->to("/transactions/create");
 		}
 
 		$transaction = [
