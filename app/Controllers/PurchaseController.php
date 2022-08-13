@@ -48,6 +48,12 @@ class PurchaseController extends BaseController
 
     public function store()
     {
+
+        // Check session 
+        if (session("createPurchase") || session("purchaseID")) {
+            return redirect()->to("/purchases/create");
+        }
+
         $purchase = new \App\Entities\PurchaseEntity();
         $purchase->user_id = session("userID");
         $purchase->status = "open";
