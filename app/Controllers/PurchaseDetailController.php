@@ -36,10 +36,19 @@ class PurchaseDetailController extends BaseController
         return redirect()->to("/purchases/create")->with("successMessage", "Berhasil menambah produk");
     }
 
+    public function show(int $id)
+    {
+        $purchase = $this->purchaseDetailModel->getProduct($id);
+        if (empty($purchase)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Produk tidak ditemukan");
+        }
+
+        return json_encode($purchase);
+    }
+
     public function delete($id)
     {
         $this->purchaseDetailModel->where("id", $id)->delete();
         return redirect()->to("/purchases/create")->with("successMessage", "Berhasil menghapus produk");
     }
-
 }

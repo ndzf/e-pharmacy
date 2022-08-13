@@ -136,6 +136,7 @@ $routes->group("purchases", function($routes) {
 $routes->group("purchase-details", function($routes) {
     $routes->post("/", "PurchaseDetailController::create", ["filter" => "purchase:admin,cashier"]);
     $routes->delete("(:num)", "PurchaseDetailController::delete/$1", ["filter" => "purchase:admin,cashier"]);
+    $routes->get("(:num)", "PurchaseDetailController::show/$1", ["filter" => "purchase:admin,cashier"]);
 });
 
 /*

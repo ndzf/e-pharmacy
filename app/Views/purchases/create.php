@@ -88,7 +88,7 @@
                                             <?= esc($total) ?>
                                         </td>
                                         <td>
-                                            <button class="btn btn-light-light fw-500 me-2 btn-sm">
+                                            <button class="btn btn-light-light fw-500 me-2 btn-sm" onclick="detail(`<?= $purchaseDetail->id ?>`)">
                                                 Detail
                                             </button>
                                             <button class="btn btn-light-danger btn-sm" onclick="deletePurchaseDetail(`<?= $purchaseDetail->id ?>`)" title="Hapus">
@@ -188,6 +188,63 @@
                         <button class="btn btn-primary">Save</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-outer right-modal fade" id="modal-detail" tabindex="-1" aria-labelledby="modal-detail-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header py-3">
+                <h5 class="modal-title text-gray-600" id="modal-detail-label">Detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0">
+                <div class="mb-2">
+                    <label for="detail-name" class="col-form-label text-gray-600 fw-500">Produk</label>
+                    <input type="text" name="name" id="detail-name" class="form-control solid fw-500" disabled="disabled">
+                </div>
+                <div class="mb-2">
+                    <label for="detail-type" class="col-form-label text-gray-600 fw-500">Tipe Produk</label>
+                    <input type="text" name="type" id="detail-type" class="form-control solid fw-500" disabled="disabled">
+                </div>
+                <div class="mb-2">
+                    <label for="detail-price" class="col-form-label text-gray-600 fw-500">Harga</label>
+                    <input type="text" name="price" id="detail-price" class="form-control solid fw-500" disabled="disabled">
+                </div>
+                <div class="mb-4">
+                    <label for="detail-qty" class="col-form-label text-gray-600 fw-500">Qty</label>
+                    <input type="text" name="qty" id="detail-qty" class="form-control solid fw-500" disabled="disabled">
+                </div>
+                <div id="lens-type-details">
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-dashed text-nowrap">
+                            <thead class="text-gray-400 fw-500 text-uppercase">
+                                <tr>
+                                    <th></th>
+                                    <th>SPH</th>
+                                    <th>CYL</th>
+                                    <th>ADD</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700 fw-500">
+                                <tr>
+                                    <td class="text-primary">R</td>
+                                    <td id="detail-r-sph"></td>
+                                    <td id="detail-r-cyl"></td>
+                                    <td id="detail-r-add"></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary">L</td>
+                                    <td id="detail-l-sph"></td>
+                                    <td id="detail-l-cyl"></td>
+                                    <td id="detail-l-add"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -322,6 +379,26 @@
         const formDeletePurchaseDetail = document.forms["form-delete-purchase-detail"];
         formDeletePurchaseDetail.action = `${baseURL}purchase-details/${id}`;
         formDeletePurchaseDetail.submit();
+    }
+</script>
+
+<script>
+    function detail(id) {
+        $.ajax({
+            "url": `${baseURL}purchase-details/${id}`,
+            "method": "GET",
+            "dataType": "JSON",
+            "headers": {
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-Type": "application/json",
+            },
+            "success": fillPurchaseDetailModal,
+            "error": function(error) {
+                errorAlert(error.responseJSON.message);
+            }
+        })
+        const modalDetail = new bootstrap.Modal(document.querySelector("#modal-detail"));
+        modalDetail.show();
     }
 </script>
 

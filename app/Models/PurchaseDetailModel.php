@@ -50,4 +50,14 @@ class PurchaseDetailModel extends Model
         return $data->getCustomResultObject("\App\Entities\PurchaseDetailEntity");
     }
 
+    public function getProduct($id)
+    {
+        $builder = $this->table("purchase_details");
+        $builder->select("purchase_details.id, purchase_details.price, purchase_details.qty, products.name as product, products.l_sph, products.l_cyl, products.l_add, products.r_sph, products.r_cyl, products.r_add, products.type");
+        $builder->where("purchase_details.id", $id);
+        $builder->join("products", "purchase_details.product_id = products.id", "LEFT");
+        $data = $builder->get();
+        return $data->getRowArray();
+    }
+
 }
