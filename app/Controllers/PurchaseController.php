@@ -18,10 +18,11 @@ class PurchaseController extends BaseController
 
     public function index()
     {
-        $purchaseID = session("purchaseID");
+        $purchases = $this->purchaseModel->getPurchases();
 
         $data = [
-            "title"             => "Data Pembelian",
+            "purchases"         => $purchases->paginate(100, "purchases"),
+            "pager"             => $purchases->pager->links("purchases", "default"),
         ];
 
         return view("purchases/index", $data);

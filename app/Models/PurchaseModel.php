@@ -40,6 +40,14 @@ class PurchaseModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    public function getPurchases(): object
+    {
+        $builder = $this->table("purchases");
+        $builder->select("purchases.id, purchases.grand_total, purchases.status, purchases.payment_status, purchases.user_id, purchases.date, users.name as user");
+        $builder->join("users", "users.id = purchases.user_id", "LEFT");
+        return $builder;
+    }
+
     public function checkout($id, $inputs, $payment)
     {
         $this->db->transStart();
