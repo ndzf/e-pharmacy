@@ -112,17 +112,17 @@
                             <label for="discount" class="col-form-label text-gray-600 fw-500">Discount</label>
                             <input type="number" name="discount" id="discount" class="form-control solid fw-500">
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-4">
                             <label for="checkout-nominal" class="col-form-label text-gray-600 fw-500">Uang yang dibayar</label>
                             <input type="text" name="nominal" id="checkout-nominal" class="form-control solid fw-500 format-rupiah-input">
                         </div>
                         <div class="mb-2 d-flex">
-                            <button class="btn btn-light-danger fw-500">
+                            <button class="btn btn-light-danger fw-500" type="button" onclick="cancelPurchase(`<?= $purchase->id ?>`)">
                                 <i class="fas fa-trash me-1"></i>
                                 <span>Batal</span>
                             </button>
                             <div class="ms-auto">
-                                <button class="btn btn-primary fw-500">Checkout</button>
+                                <button class="btn btn-primary fw-500" type="submit">Checkout</button>
                             </div>
                         </div>
                     </form>
@@ -186,7 +186,9 @@
     </div>
 </div>
 
-
+<form action="" method="post" id="form-cancel">
+    <input type="hidden" name="_method" value="DELETE">
+</form>
 
 <?= $this->endSection() ?>
 
@@ -288,6 +290,14 @@
         total = countDiscount(parseInt(discountInputEl.value), grandTotal);
         document.querySelector("#checkout-grand-total").value = formatRupiah(total.toString());
     });
+</script>
+
+<script>
+    function cancelPurchase(id) {
+        const formCancel = document.forms["form-cancel"];
+        formCancel.action = `${baseURL}purchases/${id}`;
+        formCancel.submit();
+    }
 </script>
 
 <?= $this->endSection() ?>

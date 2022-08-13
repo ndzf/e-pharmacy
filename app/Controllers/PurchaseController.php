@@ -96,4 +96,19 @@ class PurchaseController extends BaseController
 
 		return redirect()->to('/purchases')->with("successMessage", "Berhasil membuat transaksi pembelian");
     }
+
+    public function destroy(int $id)
+    {
+        $purchaseDetailModel = new \App\Models\PurchaseDetailModel();
+        
+        // Deleting purchase 
+        $this->purchaseModel->where("id", $id)->delete();
+        // Deleting purchase details
+        $purchaseDetailModel->where("purchase_id", $id)->delete();
+        // Removing purchase sessions
+        session()->remove("createPurchase");
+        session()->remove("purchaseID");
+
+		return redirect()->to('/purchases')->with("successMessage", "Berhasil membatalkan pembelian");
+    }
 }
