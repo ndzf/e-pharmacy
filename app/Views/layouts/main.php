@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,6 +15,7 @@
     <link rel="stylesheet" href="<?= base_url("/assets/css/style.css")  ?>">
     <title><?= $title ?? config("App")->appName ?></title>
 </head>
+
 <body>
     <div id="wrapper">
         <!-- Sidebar -->
@@ -46,12 +48,11 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="<?= site_url("products") ?>" title="<?= lang("Product.title.index") ?>" >
+                <a class="nav-link" href="<?= site_url("products") ?>" title="<?= lang("Product.title.index") ?>">
                     <i class="fas fa-boxes me-1"></i>
                     <span>Produk</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="<?= site_url("transactions") ?>" title="Data Penjualan">
                     <i class="fas fa-table me-2"></i>
@@ -59,11 +60,19 @@
             </li>
 
             <li class="nav-item">
-                <a href="<?= site_url("users") ?>" class="nav-link" title="<?= lang("User.title.index")  ?>">
-                    <i class="fas fa-user me-2"></i>
-                    <span><?= lang("User.title.index") ?></span>
+                <a class="nav-link" href="<?= site_url("purchases") ?>" title="Data Pembelian">
+                    <i class="fas fa-table me-2"></i>
+                    <span>Pembelian</span>
                 </a>
             </li>
+            <?php if (session("role") == "admin") : ?>
+                <li class="nav-item">
+                    <a href="<?= site_url("users") ?>" class="nav-link" title="<?= lang("User.title.index")  ?>">
+                        <i class="fas fa-user me-2"></i>
+                        <span><?= lang("User.title.index") ?></span>
+                    </a>
+                </li>
+            <?php endif; ?>
 
             <li class="nav-item">
                 <a href="<?= site_url("customers") ?>" class="nav-link" title="<?= lang("Customer.title.index") ?>">
@@ -88,9 +97,7 @@
                             <i class="fas fa-bars"></i>
                         </a>
                         <a class="navbar-brand text-gray-700 fw-500" href="#"><?= ($title ?? config("App")->appName)  ?></a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="ms-auto">
@@ -131,7 +138,7 @@
     <script src="<?= base_url("/assets/plugins/bootstrap/js/bootstrap.bundle.min.js")  ?>"></script>
     <script>
         const sidebarToggle = document.getElementById("sidebar-toggle");
-        sidebarToggle.addEventListener("click", function (e) {
+        sidebarToggle.addEventListener("click", function(e) {
             const body = document.querySelector("body");
             const sidebar = document.querySelector(".sidebar");
             if (body.classList.contains("sidebar-toggled")) {
@@ -158,4 +165,5 @@
     <!-- Custom script -->
     <?= $this->renderSection("script")  ?>
 </body>
+
 </html>
