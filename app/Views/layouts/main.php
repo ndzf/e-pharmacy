@@ -55,13 +55,13 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="<?= site_url("transactions") ?>" title="Data Penjualan">
-                    <i class="fas fa-table me-2"></i>
+                    <i class="fas fa-file-invoice-dollar me-2"></i>
                     <span>Penjualan</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="<?= site_url("purchases") ?>" title="Data Pembelian">
-                    <i class="fas fa-table me-2"></i>
+                    <i class="fas fa-shopping-bag me-2"></i>
                     <span>Pembelian</span>
                 </a>
             </li>
