@@ -45,7 +45,7 @@ class PurchaseDetailModel extends Model
     {
         $builder = $this->table("purchase_details");
         // $builder->select("id, purchase_id, product_id, product_name, price, qty");
-        $builder->select("purchase_details.id, purchase_details.purchase_id, purchase_details.price, purchase_details.qty, products.name as product, purchase_details.product_name, products.l_sph, products.l_cyl, products.l_add, products.r_sph, products.r_cyl, products.r_add, products.type");
+        $builder->select("purchase_details.id, purchase_details.product_id, purchase_details.purchase_id, purchase_details.price, purchase_details.qty, products.name as product, purchase_details.product_name, products.l_sph, products.l_cyl, products.l_add, products.r_sph, products.r_cyl, products.r_add, products.type");
         $builder->join("products", "purchase_details.product_id = products.id");
         $builder->where("purchase_id", $purchaseID);
         $data = $builder->get();

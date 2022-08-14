@@ -132,6 +132,7 @@ $routes->group("purchases", function($routes) {
     $routes->get("clear", "PurchaseController::clear", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->delete("(:num)", "PurchaseController::destroy/$1", ["filter" => "purchase:admin,cashier"]);
     $routes->get("(:num)", "PurchaseController::show/$1", ["filter" => "isLoggedIn:admin,cashier"]);
+    $routes->get("(:num)/payments", "PurchaseController::payments/$1", ["filter" => "isLoggedIn:admin,cashier"]);
 });
 
 $routes->group("purchase-details", function($routes) {
@@ -139,6 +140,11 @@ $routes->group("purchase-details", function($routes) {
     $routes->delete("(:num)", "PurchaseDetailController::delete/$1", ["filter" => "purchase:admin,cashier"]);
     $routes->get("(:num)", "PurchaseDetailController::show/$1", ["filter" => "purchase:admin,cashier"]);
 });
+
+$routes->group("purchase-payments", function($routes) {
+    $routes->post("/", "PurchasePaymentController::create", ["filter" => "isLoggedIn:admin,cashier"]);
+});
+
 
 /*
  * --------------------------------------------------------------------

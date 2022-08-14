@@ -133,4 +133,22 @@ class PurchaseController extends BaseController
 
         return json_encode($data);
     }
+
+    public function payments($id)
+    {
+        $purchase = $this->purchaseModel->select("id, status, grand_total")->where("id", $id)->get()->getRowArray();
+
+        if (empty($purchase)) {
+			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Data pembelian Tidak Ditemukan");
+		}
+
+        $purchasePaymentModel = new \App\Models\PurchasePaymentModel();
+
+        $data = [
+			"purchase"		    => $purchase,
+			"payments"			=> $purchasePaymentModel->getByPurchaseID($id),
+		];
+
+        return json_encode($data);
+    }
 }

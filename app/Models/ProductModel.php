@@ -69,4 +69,13 @@ class ProductModel extends Model
 
         return $builder;
     }
+
+    public function getProduct(int $id)
+    {
+        $builder = $this->table("products");
+        $builder->select("*");
+        $builder->where("id", $id);
+        $data = $builder->get();
+        return $data->getCustomRowObject(1, "\App\Entities\ProductEntity");
+    }
 }
