@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 
 class PurchasePaymentModel extends Model
@@ -47,5 +48,20 @@ class PurchasePaymentModel extends Model
         $builder->where("purchase_id", $purchaseID);
         $data = $builder->get();
         return $data->getCustomResultObject("\App\Entities\PurchasePaymentEntity");
+    }
+
+    public function todayNominal()
+    {
+        $date = Time::parse("now", "Asia/Jakarta")->toDateString();
+        $builder = $this->table("builder");
+        $builder->select("*");
+        $builder->where("date", $date);
+        $row = $builder->get();
+        $data = $row->getResultArray();
+        $nominal = 0;
+        foreach ($data as $purchase) {
+            $nominal += $purchase["nominal"];
+        }
+        return $nominal;
     }
 }

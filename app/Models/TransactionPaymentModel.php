@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 
 class TransactionPaymentModel extends Model
@@ -47,5 +48,20 @@ class TransactionPaymentModel extends Model
         $builder->where("transaction_id", $transactionID);
         $data = $builder->get();
         return $data->getCustomResultObject("\App\Entities\TransactionPaymentEntity");
+    }
+
+    public function todayNominal()
+    {
+        $date = Time::parse("now", "Asia/Jakarta")->toDateString();
+        $builder = $this->table("transaction_payments");
+        $builder->select("id, nominal");
+        $builder->where("date", $date);
+        $row = $builder->get();
+        $transactions = $row->getResultArray();
+        $nominal = 0;
+        foreach ($transactions as $transaction) {
+            $nominal += $transaction["nominal"];
+        }
+        return $nominal;
     }
 }

@@ -57,6 +57,24 @@ a {
     text-decoration: none;
 }
 
+/* Background color */
+
+.bg-light-primary {
+    background-color: var(--primary-light) !important;
+}
+
+.bg-light-success {
+    background-color: var(--success-light) !important;
+}
+
+.bg-light-warning {
+    background-color: var(--warning-light) !important;
+}
+
+.bg-light-danger {
+    background-color: var(--danger-light) !important;
+}
+
 /* Badge */
 
 .badge-table {
@@ -340,7 +358,7 @@ a {
 }
 
 .btn-light-primary:focus {
-    background-color: var(--primary-active) ;
+    background-color: var(--primary-active);
     color: var(--white);
 }
 
@@ -429,7 +447,8 @@ a {
     box-shadow: none;
 }
 
-.form-control.solid:disabled, .form-control[readonly] {
+.form-control.solid:disabled,
+.form-control[readonly] {
     background-color: #e9ecef;
     border-color: #e9ecef;
     opacity: 1;
@@ -448,7 +467,8 @@ a {
     box-shadow: none;
 }
 
-.form-control.solid.is-invalid, .was-validated .form-control.solid:invalid {
+.form-control.solid.is-invalid,
+.was-validated .form-control.solid:invalid {
     background-image: none;
     border-color: var(--danger);
 }
@@ -498,13 +518,15 @@ a {
 
 /*left right modal*/
 
-.modal.left-modal, .modal.right-modal {
+.modal.left-modal,
+.modal.right-modal {
     position: fixed;
     z-index: 99999;
     background-color: rgba(0, 0, 0, .3);
 }
 
-.modal.left-modal .modal-dialog, .modal.right-modal .modal-dialog {
+.modal.left-modal .modal-dialog,
+.modal.right-modal .modal-dialog {
     position: fixed;
     margin: auto;
     width: 450px;
@@ -531,13 +553,15 @@ a {
     }
 }
 
-.modal.left-modal .modal-content, .modal.right-modal .modal-content {
+.modal.left-modal .modal-content,
+.modal.right-modal .modal-content {
     /*overflow-y: auto;
       overflow-x: hidden;*/
     height: 100vh !important;
 }
 
-.modal.left-modal .modal-body, .modal.right-modal .modal-body {
+.modal.left-modal .modal-body,
+.modal.right-modal .modal-body {
     padding: 15px 15px 30px;
 }
 
@@ -585,7 +609,8 @@ a {
     border: none;
 }
 
-.modal-header.left-modal, .modal-header.right-modal {
+.modal-header.left-modal,
+.modal-header.right-modal {
     padding: 10px 15px;
     border-bottom-color: #EEEEEE;
     background-color: #FAFAFA;
@@ -921,7 +946,7 @@ a {
 .swal2-html-container {
     padding: .6rem 1rem 0 !important;
     text-align: left !important;
-    font-size: 1rem !important; 
+    font-size: 1rem !important;
     margin: 0 !important;
     font-weight: 500 !important;
 }
