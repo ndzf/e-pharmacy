@@ -38,55 +38,50 @@ $routes->set404Override();
 $routes->get('/', 'Home::index', ["filter" => "isLoggedIn:admin,cashier"]);
 
 
-$routes->group("/login", function($routes) {
+$routes->group("/login", function ($routes) {
 
     $routes->get("/", "AuthController::login");
     $routes->post("/", "AuthController::attemptLogin");
-
 });
 
-$routes->group("/users", ["filter" => "isLoggedIn:admin"], function($routes) {
+$routes->group("/users", ["filter" => "isLoggedIn:admin"], function ($routes) {
 
     $routes->get("/", "UserController::index");
     $routes->post("/", "UserController::create");
     $routes->get("(:num)/edit", "UserController::edit/$1");
     $routes->put("(:num)", "UserController::update/$1");
     $routes->delete("(:num)", "UserController::delete/$1");
-    
 });
 
-$routes->group("/categories", function($routes) {
+$routes->group("/categories", function ($routes) {
 
     $routes->get("/", "CategoryController::index", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->post("/", "CategoryController::create", ["filter" => "isLoggedIn:admin"]);
     $routes->put("(:num)", "CategoryController::update/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->get("(:num)/edit", "CategoryController::edit/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->delete("(:num)", "CategoryController::delete/$1", ["filter" => "isLoggedIn:admin"]);
-
 });
 
-$routes->group("/suppliers", function($routes) {
+$routes->group("/suppliers", function ($routes) {
 
     $routes->get("/", "SupplierController::index", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->post("/", "SupplierController::create", ["filter" => "isLoggedIn:admin"]);
     $routes->get("(:num)/edit", "SupplierController::edit/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->put("(:num)", "SupplierController::update/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->delete("(:num)", "SupplierController::delete/$1", ["filter" => "isLoggedIn:admin"]);
-
 });
 
-$routes->group("/customers", function($routes) {
+$routes->group("/customers", function ($routes) {
 
     $routes->get("/", "CustomerController::index", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->get("(:num)/edit", "CustomerController::edit/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->post("/", "CustomerController::create", ["filter" => "isLoggedIn:admin"]);
     $routes->put("(:num)", "CustomerController::update/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->delete("(:num)", "CustomerController::delete/$1", ["filter" => "isLoggedIn:admin"]);
-
 });
 
 
-$routes->group("/products", function($routes) {
+$routes->group("/products", function ($routes) {
 
     $routes->get("/", "ProductController::index", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->post("/", "ProductController::create", ["filter" => "isLoggedIn:admin"]);
@@ -95,36 +90,33 @@ $routes->group("/products", function($routes) {
     $routes->put("(:num)", "ProductController::update/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->delete("(:num)", "ProductController::delete/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->get("search", "ProductController::search", ["filter" => "isLoggedIn:admin,cashier"]);
-    
 });
 
-$routes->group("transactions", function($routes) {
+$routes->group("transactions", function ($routes) {
 
-	$routes->get("/", "TransactionController::index", ["filter" => "isLoggedIn:admin,cashier"]);
-	$routes->post("/", "TransactionController::store");
-	$routes->get("create", "TransactionController::create", ["filter" => "transaction:admin,cashier"]);
-	$routes->get("check-current-transaction", "TransactionController::checkCurrentTransaction");
+    $routes->get("/", "TransactionController::index", ["filter" => "isLoggedIn:admin,cashier"]);
+    $routes->post("/", "TransactionController::store");
+    $routes->get("create", "TransactionController::create", ["filter" => "transaction:admin,cashier"]);
+    $routes->get("check-current-transaction", "TransactionController::checkCurrentTransaction");
     // FIXME: change destroy to DELETE HTTP Method
     $routes->get("destroy", "TransactionController::destroy", ["filter" => "transaction:admin,cashier"]);
     $routes->get("(:num)", "TransactionController::show/$1", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->put("(:num)/checkout", "TransactionController::checkout/$1", ["filter" => "transaction:admin,cashier"]);
     $routes->get("(:num)/payments", "TransactionController::payments/$1", ["filter" => "isLoggedIn:admin,cashier"]);
-
 });
 
-$routes->group("transaction-details", function($routes) {
+$routes->group("transaction-details", function ($routes) {
     $routes->post("/", "TransactionDetailController::create", ["filter" => "transaction:admin,cashier"]);
     $routes->delete("(:num)", "TransactionDetailController::delete/$1", ["filter" => "transaction:admin,cashier"]);
-    $routes->get("(:num)", "TransactionDetailController::show/$1", ["filter" => "transaction:admin,cashier"]); 
+    $routes->get("(:num)", "TransactionDetailController::show/$1", ["filter" => "transaction:admin,cashier"]);
 });
 
-$routes->group("transaction-payments", function($routes) {
+$routes->group("transaction-payments", function ($routes) {
 
-    $routes->post("/", "TransactionPaymentController::create", ["filter" =>"isLoggedIn:admin,cashier"]);
-
+    $routes->post("/", "TransactionPaymentController::create", ["filter" => "isLoggedIn:admin,cashier"]);
 });
 
-$routes->group("purchases", function($routes) {
+$routes->group("purchases", function ($routes) {
     $routes->get("/", "PurchaseController::index", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->post("/", "PurchaseController::store", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->put("(:num)/checkout", "PurchaseController::checkout/$1", ["filter" => "purchase:admin,cashier"]);
@@ -135,14 +127,19 @@ $routes->group("purchases", function($routes) {
     $routes->get("(:num)/payments", "PurchaseController::payments/$1", ["filter" => "isLoggedIn:admin,cashier"]);
 });
 
-$routes->group("purchase-details", function($routes) {
+$routes->group("purchase-details", function ($routes) {
     $routes->post("/", "PurchaseDetailController::create", ["filter" => "purchase:admin,cashier"]);
     $routes->delete("(:num)", "PurchaseDetailController::delete/$1", ["filter" => "purchase:admin,cashier"]);
     $routes->get("(:num)", "PurchaseDetailController::show/$1", ["filter" => "purchase:admin,cashier"]);
 });
 
-$routes->group("purchase-payments", function($routes) {
+$routes->group("purchase-payments", function ($routes) {
     $routes->post("/", "PurchasePaymentController::create", ["filter" => "isLoggedIn:admin,cashier"]);
+});
+
+$routes->group("profile", function ($routes) {
+    $routes->get("/", "ProfileController::index", ["filter" => "isLoggedIn:admin,cashier"]);
+    $routes->put("(:num)", "ProfileController::update/$1", ["filter" => "isLoggedIn:admin,cashier"]);
 });
 
 

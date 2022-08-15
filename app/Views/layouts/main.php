@@ -68,11 +68,12 @@
             <?php if (session("role") == "admin") : ?>
                 <li class="nav-item">
                     <a href="<?= site_url("users") ?>" class="nav-link" title="<?= lang("User.title.index")  ?>">
-                        <i class="fas fa-user me-2"></i>
+                        <i class="fas fa-users me-2"></i>
                         <span><?= lang("User.title.index") ?></span>
                     </a>
                 </li>
             <?php endif; ?>
+
 
             <li class="nav-item">
                 <a href="<?= site_url("customers") ?>" class="nav-link" title="<?= lang("Customer.title.index") ?>">
@@ -80,7 +81,12 @@
                     <span><?= lang("Customer.title.index") ?></span>
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a href="<?= site_url("profile") ?>" class="nav-link" title="Profile">
+                    <i class="fas fa-user me-1"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
         </ul>
         <!-- End of Sidebar -->
 
