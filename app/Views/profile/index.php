@@ -26,11 +26,8 @@
                             <label for="password" class="col-form-label text-gray-500 fw-500">Password</label>
                             <input type="password" name="password" minlength="5" id="password" class="form-control solid fw-500" autocomplete="new-password">
                         </div>
-                        <div class="mb-2 d-flex">
-                            <button class="btn btn-light-primary fw-500" type="button">Ganti password</button>
-                            <div class="ms-auto">
-                                <button class="btn btn-primary fw-500" type="submit">Simpan</button>
-                            </div>
+                        <div class="mb-2 d-flex justify-content-end">
+                            <button class="btn btn-primary fw-500" type="submit">Simpan</button>
                         </div>
                     </form>
                 </div>
