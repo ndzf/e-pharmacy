@@ -45,9 +45,6 @@
 											<button class="btn btn-light btn-sm me-2" onclick="showPurchaseDetail(<?= $purchase->id ?>)">
 												<i class="fas fa-search"></i>
 											</button>
-											<button class="btn btn-light btn-sm">
-												<i class="fas fa-print"></i>
-											</button>
 											<?php if ($purchase->payment_status == "debt") : ?>
 												<button class="btn btn-light btn-sm" onclick="createPayment(`<?= $purchase->id ?>`)">
 													<i class="fas fa-dollar"></i>
