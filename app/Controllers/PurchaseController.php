@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\PurchaseModel;
 use \CodeIgniter\I18n\Time;
 use App\Models\PurchaseDetailModel;
+use App\Models\PurchasePaymentModel;
 
 class PurchaseController extends BaseController
 {
@@ -44,7 +45,6 @@ class PurchaseController extends BaseController
         ];
 
         return view("purchases/create", $data);
-
     }
 
     public function store()
@@ -66,7 +66,7 @@ class PurchaseController extends BaseController
         // Set Sessions
         session()->set("createPurchase", true);
         session()->set("purchaseID", $purchaseID);
-        
+
         return redirect()->to("/purchases/create");
     }
 
@@ -94,13 +94,13 @@ class PurchaseController extends BaseController
         session()->remove("createPurchase");
         session()->remove("purchaseID");
 
-		return redirect()->to('/purchases')->with("successMessage", "Berhasil membuat transaksi pembelian");
+        return redirect()->to('/purchases')->with("successMessage", "Berhasil membuat transaksi pembelian");
     }
 
     public function destroy(int $id)
     {
         $purchaseDetailModel = new \App\Models\PurchaseDetailModel();
-        
+
         // Deleting purchase 
         $this->purchaseModel->where("id", $id)->delete();
         // Deleting purchase details
@@ -109,7 +109,7 @@ class PurchaseController extends BaseController
         session()->remove("createPurchase");
         session()->remove("purchaseID");
 
-		return redirect()->to('/purchases')->with("successMessage", "Berhasil membatalkan pembelian");
+        return redirect()->to('/purchases')->with("successMessage", "Berhasil membatalkan pembelian");
     }
 
     public function show($id)
@@ -120,7 +120,7 @@ class PurchaseController extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Pembelian tidak ditemukan");
         }
 
-		$purchase->formattedDate = $purchase->date->toLocalizedString("dd MMM yyyy");
+        $purchase->formattedDate = $purchase->date->toLocalizedString("dd MMM yyyy");
 
         $purchaseDetailModel = new \App\Models\PurchaseDetailModel();
         $purchasePaymentModel = new \App\Models\PurchasePaymentModel();
@@ -139,16 +139,28 @@ class PurchaseController extends BaseController
         $purchase = $this->purchaseModel->select("id, status, grand_total")->where("id", $id)->get()->getRowArray();
 
         if (empty($purchase)) {
-			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Data pembelian Tidak Ditemukan");
-		}
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Data pembelian Tidak Ditemukan");
+        }
 
         $purchasePaymentModel = new \App\Models\PurchasePaymentModel();
 
         $data = [
-			"purchase"		    => $purchase,
-			"payments"			=> $purchasePaymentModel->getByPurchaseID($id),
-		];
+            "purchase"            => $purchase,
+            "payments"            => $purchasePaymentModel->getByPurchaseID($id),
+        ];
 
         return json_encode($data);
+    }
+
+    public function delete(int $id)
+    {
+        $purchaseDetailModel = new PurchaseDetailModel();
+        $purchasePaymentModel = new PurchasePaymentModel();
+
+        $purchaseDetailModel->where("purchase_id", $id)->delete();
+        $purchasePaymentModel->where("purchase_id", $id)->delete();
+        $this->purchaseModel->where("id", $id)->delete();
+
+        return redirect()->to("/purchases")->with("successMessage", "Berhasil menghapus data pembelian");
     }
 }

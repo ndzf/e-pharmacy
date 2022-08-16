@@ -45,6 +45,11 @@
 											<button class="btn btn-light btn-sm me-2" onclick="showPurchaseDetail(<?= $purchase->id ?>)">
 												<i class="fas fa-search"></i>
 											</button>
+											<?php if ($purchase->status == "done") : ?>
+												<button class="btn btn-light-danger btn-sm me-2" title="Hapus" onclick="deletePurchase(`<?= $purchase->id ?>`)">
+													<i class="fas fa-trash"></i>
+												</button>
+											<?php endif; ?>
 											<?php if ($purchase->payment_status == "debt") : ?>
 												<button class="btn btn-light btn-sm" onclick="createPayment(`<?= $purchase->id ?>`)">
 													<i class="fas fa-dollar"></i>
@@ -146,6 +151,10 @@
 
 <form action="<?= site_url("purchases") ?>" method="post" id="form-create"></form>
 
+<form action="" method="post" id="form-delete">
+	<input type="hidden" name="_method" value="DELETE">
+</form>
+
 <?= $this->endSection() ?>
 
 <?= $this->section("script") ?>
@@ -212,5 +221,13 @@
 		successAlert(`<?= session("successMessage") ?>`);
 	</script>
 <?php endif ?>
+
+<script>
+	function deletePurchase(id) {
+		const formDelete = document.forms["form-delete"];
+		formDelete.action = `${baseURL}purchases/${id}/destroy`;
+		formDelete.submit();
+	}
+</script>
 
 <?= $this->endSection() ?>
