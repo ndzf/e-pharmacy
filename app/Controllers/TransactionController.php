@@ -128,6 +128,18 @@ class TransactionController extends BaseController
 		return redirect()->to("/transactions");
 	}
 
+	public function delete(int $id)
+	{
+		$transactionDetailModel = new TransactionDetailModel();
+		$transactionPaymentModel = new TransactionPaymentModel();
+
+		$transactionDetailModel->where("transaction_id", $id)->delete();
+		$transactionPaymentModel->where("transaction_id", $id)->delete();
+		$this->transactionModel->where("id", $id)->delete();
+
+		return redirect()->to("/transactions")->with("successMessage", "Berhasil menghapus transaksi");
+	}
+
 	public function show(int $id)
 	{
 		$transactionPaymentModel = new \App\Models\TransactionPaymentModel();

@@ -105,6 +105,7 @@ $routes->group("transactions", function ($routes) {
     $routes->get("(:num)/print", "TransactionController::print/$1", ["filter" => "isLoggedIn:admin,cashier"]);
     $routes->put("(:num)/checkout", "TransactionController::checkout/$1", ["filter" => "transaction:admin,cashier"]);
     $routes->get("(:num)/payments", "TransactionController::payments/$1", ["filter" => "isLoggedIn:admin,cashier"]);
+    $routes->delete("(:num)", "TransactionController::delete/$1", ["filter" => "isLoggedIn:admin,cashier"]);
 });
 
 $routes->group("transaction-details", function ($routes) {

@@ -98,6 +98,9 @@
 											<a href="<?= site_url("/transactions/$transaction->id/print") ?>" target="_blank" type="button" class="btn btn-light btn-sm me-2">
 												<i class="fas fa-print"></i>
 											</a>
+											<button class="btn btn-light-danger btn-sm" title="Hapus" onclick="deleteTransaction(`<?= esc($transaction->id) ?>`)">
+												<i class="fas fa-trash"></i>
+											</button>
 											<?php if ($transaction->payment_status == "debt") : ?>
 												<button class="btn btn-light btn-sm" onclick="createPayment(`<?= $transaction->id ?>`)">
 													<i class="fas fa-dollar"></i>
@@ -236,8 +239,13 @@
 		</div>
 	</div>
 </div>
+<form action="" method="post" id="form-delete">
+	<input type="hidden" name="_method" value="DELETE">
+</form>
 
 <?= $this->endSection() ?>
+
+
 
 <?= $this->section("script") ?>
 
@@ -356,5 +364,13 @@
 		successAlert(`<?= session("successMessage") ?>`);
 	</script>
 <?php endif; ?>
+
+<script>
+	function deleteTransaction(id) {
+		const formDelete = document.forms["form-delete"];
+		formDelete.action = `${baseURL}transactions/${id}`;
+		formDelete.submit();
+	}
+</script>
 
 <?= $this->endSection() ?>
