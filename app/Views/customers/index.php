@@ -11,7 +11,7 @@
                         <input type="search" name="q" id="search-bar" placeholder="Cari.." value="<?= esc($keyword)  ?>" class="form-control solid fw-500">
                     </form>
                     <div class="ms-auto">
-                        <?php if(session("role") == "admin"): ?>
+                        <?php if (session("role") == "admin") : ?>
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create">
                                 <i class="fas fa-plus"></i>
                             </button>
@@ -31,7 +31,7 @@
                                 </tr>
                             </thead>
                             <tbody class="fw-500 text-gray-700">
-                                <?php foreach($customers as $customer): ?>
+                                <?php foreach ($customers as $customer) : ?>
                                     <tr>
                                         <td><?= esc($customer->name)  ?></td>
                                         <td><?= esc($customer->phone_number)  ?></td>
@@ -42,7 +42,10 @@
                                             </div>
                                         </td>
                                         <th>
-                                            <?php if(session("role") == "admin"): ?>
+                                            <a href="<?= site_url("/customers/$customer->id/print") ?>" type="button" class="btn btn-light btn-sm">
+                                                <i class="fas fa-print"></i>
+                                            </a>
+                                            <?php if (session("role") == "admin") : ?>
                                                 <button class="btn btn-light btn-sm fw-500 me-2" onclick="editCustomer(`<?= $customer->id ?>`)">
                                                     Edit
                                                 </button>
@@ -170,7 +173,7 @@
 <!-- Modal -->
 <script src="<?= base_url("/assets/js/modal.js")  ?>"></script>
 
-<?php if(session("successMessage")): ?>
+<?php if (session("successMessage")) : ?>
 
     <script>
         successAlert(`<?= session("successMessage")  ?>`);
@@ -198,7 +201,7 @@
             document.querySelector("#edit-address").innerHTML = customer.address;
             const roleOptions = document.querySelector("#edit-role").options;
             for (roleOption of roleOptions) {
-                (roleOption.value == customer.role) ? roleOption.setAttribute("selected", true) : roleOption;
+                (roleOption.value == customer.role) ? roleOption.setAttribute("selected", true): roleOption;
             }
             document.querySelector("#form-edit").setAttribute("action", `${baseURL}customers/${id}`);
             const editModal = new bootstrap.Modal(document.querySelector("#modal-edit"));
@@ -214,10 +217,9 @@
         formDelete.setAttribute("action", `${baseURL}customers/${id}`);
         formDelete.submit();
     }
-
 </script>
 
-<?php if(session("validationErrorCreate")): ?>
+<?php if (session("validationErrorCreate")) : ?>
 
     <script>
         const modalCreate = new bootstrap.Modal(document.querySelector("#modal-create"));
@@ -226,7 +228,7 @@
 
 <?php endif;  ?>
 
-<?php if(session("validationErrorUpdate")): ?>
+<?php if (session("validationErrorUpdate")) : ?>
 
     <script>
         editCustomer(`<?= session("validationErrorUpdate")  ?>`);
@@ -248,7 +250,7 @@
         for (roleOptionEdit of roleOptionsEdit) {
             roleOptionEdit.removeAttribute("selected");
         }
-        });
+    });
 
     document.querySelector("#modal-edit").addEventListener("hidden.bs.modal", (e) => {
         const roleOptionsCreate = document.querySelector("#create-role").options;

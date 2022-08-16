@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\CustomerModel;
 use App\Entities\CustomerEntity;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class CustomerController extends BaseController
 {
@@ -94,5 +95,22 @@ class CustomerController extends BaseController
     {
         $this->customerModel->where("id", $id)->delete();
         return redirect()->to("/customers")->with("successMessage", lang("Message.success.delete", [strtolower($this->title)]));
+    }
+
+    public function print(int $id)
+    {
+        $storeModel = new \App\Models\StoreModel();
+        $customer = $this->customerModel->find($id);
+
+        if (empty($customer)) {
+            throw PageNotFoundException::forPageNotFound("Customer tidak ditemukan");
+        }
+
+        $data = [
+            "customer"      => $customer,
+            "store"         => $storeModel->getStore()
+        ];
+
+        return view("customers/print", $data);
     }
 }
