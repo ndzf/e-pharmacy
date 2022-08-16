@@ -4,6 +4,6 @@
 3. Running `php spark key:generate`
 4. Setup database
 5. Running `php spark migrate`
-6. Running `php spark db:seed UserSeeder`
+6. Running `php spark db:seed DatabaseSeeder`
 7. Running `php spark serve`
-8. Login in `\login` with username: user@admin and password: admin
+8. Login `\login` with username: user@admin and password: admin
