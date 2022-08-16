@@ -5,7 +5,10 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\TransactionModel;
 use App\Entities\TransactionEntity;
+use App\Models\CustomerModel;
+use App\Models\TransactionDetailModel;
 use App\Models\TransactionPaymentModel;
+use App\Models\UserModel;
 use CodeIgniter\I18n\Time;
 
 class TransactionController extends BaseController
@@ -19,18 +22,18 @@ class TransactionController extends BaseController
 		$this->title = lang("Transaction.title.index");
 	}
 
-    public function index()
-    {
+	public function index()
+	{
 		$customerModel = new \App\Models\CustomerModel();
 		$transactions = $this->transactionModel->getTransactions();
-		
+
 		$data = [
 			"transactions"		=> $transactions->paginate(100, "transactions"),
 			"customers"			=> $customerModel->getNames("customer", "member"),
 		];
 
 		return view("transactions/index", $data);
-    }
+	}
 
 	public function checkCurrentTransaction()
 	{
@@ -95,7 +98,7 @@ class TransactionController extends BaseController
 		$payment = [
 			"nominal"			=> ($nominal >= $grandTotal) ? $grandTotal : $nominal,
 			"user_id"			=> session("userID"),
-			"transaction_id"	=> $id, 
+			"transaction_id"	=> $id,
 			"date"				=> Time::now("Asia/Jakarta")->toDateString(),
 		];
 
@@ -118,7 +121,7 @@ class TransactionController extends BaseController
 
 		// Delete transaction details 
 		$transactionDetailModel->where("transaction_id", $transactionID)->delete();
-		
+
 		session()->remove("createTransaction");
 		session()->remove("transactionID");
 
@@ -150,7 +153,7 @@ class TransactionController extends BaseController
 	public function payments(int $id)
 	{
 		$transaction = $this->transactionModel->select("id, grand_total, status")->where("id", $id)->get()->getRowArray();
-		
+
 		if (empty($transaction)) {
 			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Transaksi Tidak Ditemukan");
 		}
@@ -163,5 +166,27 @@ class TransactionController extends BaseController
 		];
 
 		return json_encode($data);
+	}
+
+	public function print($id)
+	{
+		$transaction = $this->transactionModel->find($id);
+
+		if (empty($transaction)) {
+			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Transaksi tidak ditemukan");
+		}
+
+		$userModel = new UserModel();
+		$customerModel = new CustomerModel();
+		$transactionDetailModel = new TransactionDetailModel();
+
+		$data = [
+			"transaction"		=> $transaction,
+			"user"				=> $userModel->find($transaction->user_id),
+			"customer"			=> $customerModel->where("id", $transaction->customer_id)->select("name")->get()->getRowObject(),
+			"products"			=> $transactionDetailModel->getProductsByTransaction($transaction->id),
+		];
+
+		return view("transactions/invoice", $data);
 	}
 }

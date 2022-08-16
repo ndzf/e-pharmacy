@@ -74,12 +74,11 @@ class TransactionDetailModel extends Model
     public function getProductsByTransaction($transactionID)
     {
         $builder = $this->table("transaction_details");
-        $builder->select("transaction_details.id, transaction_details.transaction_id, transaction_details.product_id, transaction_details.product_name, transaction_details.product_price, transaction_details.qty, r_axis, l_axis, products.type, products.r_sph, products.r_cyl, products.r_add, products.l_sph, products.l_cyl, products.l_add");
+        $builder->select("transaction_details.id, transaction_details.transaction_id, transaction_details.product_id, transaction_details.product_name, transaction_details.product_price, transaction_details.qty, r_axis, l_axis, products.type, products.r_sph, products.r_cyl, products.r_add, products.l_sph, products.l_cyl, products.l_add, products.type");
         $builder->join("products", "products.id = transaction_details.product_id", "LEFT");
         $builder->where("transaction_details.transaction_id", $transactionID);
         $builder->orderBy("transaction_details.created_at", "DESC");
         $data = $builder->get();
         return $data->getCustomResultObject("\App\Entities\TransactionDetailEntity");
     }
-
 }

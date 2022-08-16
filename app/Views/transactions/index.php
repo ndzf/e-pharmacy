@@ -12,7 +12,9 @@
 		border-color: var(--input-solid-bg);
 		color: var(--input-solid-color);
 	}
-	.selectize-control.single .selectize-input.input-active, .selectize-input {
+
+	.selectize-control.single .selectize-input.input-active,
+	.selectize-input {
 		background-color: var(--input-solid-bg);
 		box-shadow: none;
 	}
@@ -21,20 +23,22 @@
 		padding: .5em 0px;
 	}
 
-	.selectize-dropdown, .selectize-input, .selectize-input input {
+	.selectize-dropdown,
+	.selectize-input,
+	.selectize-input input {
 		background-color: var(--input-solid-bg);
 		font-weight: 500;
 		color: var(--input-solid-color);
 		border: none;
 	}
 
-    .transaction-title {
-        font-size: 1.5rem;
-    }
+	.transaction-title {
+		font-size: 1.5rem;
+	}
 
-    .product-title {
-        font-size: 1.1rem;
-    }
+	.product-title {
+		font-size: 1.1rem;
+	}
 </style>
 
 <?= $this->endSection() ?>
@@ -46,7 +50,7 @@
 		<div class="col-12">
 			<div class="card border-0 shadow rounded-3">
 				<div class="card-header border-0 d-flex py-3 bg-white d-flex">
-                    <h2 class="transaction-title text-gray-700 fw-500 mt-2">Data Penjualan</h2>
+					<h2 class="transaction-title text-gray-700 fw-500 mt-2">Data Penjualan</h2>
 					<div class="ms-auto">
 						<button class="btn btn-primary" id="create-button" onclick="createTransaction()">
 							<div class="spinner-border text-white spinner-border-sm" hidden id="spinner" role="status">
@@ -71,7 +75,7 @@
 								</tr>
 							</thead>
 							<tbody class="text-gray-700 fw-500">
-								<?php foreach($transactions as $transaction): ?>
+								<?php foreach ($transactions as $transaction) : ?>
 									<tr>
 										<td>
 											<?= esc($transaction->date->toLocalizedString("dd MMM yyyy")) ?>
@@ -91,10 +95,10 @@
 											<button class="btn btn-light btn-sm me-2" onclick="showTransactionDetail(`<?= esc($transaction->id) ?>`)">
 												<i class="fas fa-search"></i>
 											</button>
-											<button class="btn btn-light btn-sm me-2">
+											<a href="<?= site_url("/transactions/$transaction->id/print") ?>" target="_blank" type="button" class="btn btn-light btn-sm me-2">
 												<i class="fas fa-print"></i>
-											</button>
-											<?php if($transaction->payment_status == "debt"): ?>
+											</a>
+											<?php if ($transaction->payment_status == "debt") : ?>
 												<button class="btn btn-light btn-sm" onclick="createPayment(`<?= $transaction->id ?>`)">
 													<i class="fas fa-dollar"></i>
 												</button>
@@ -126,12 +130,12 @@
 					<div class="mb-2">
 						<label class="col-form-label" for="customer"><?= lang("Transaction.customer") ?></label>
 						<select id="customer" class="" name="customer" required>
-							<?php foreach($customers as $customer): ?>
-							<option value="<?= $customer->id ?>" <?= (old("customer") == $customer->id) ? "selected" : "" ?>>
-								<?= esc($customer->role) ?>
-								-
-								<?= esc($customer->name) ?>
-							</option>
+							<?php foreach ($customers as $customer) : ?>
+								<option value="<?= $customer->id ?>" <?= (old("customer") == $customer->id) ? "selected" : "" ?>>
+									<?= esc($customer->role) ?>
+									-
+									<?= esc($customer->name) ?>
+								</option>
 							<?php endforeach; ?>
 						</select>
 					</div>
@@ -203,8 +207,8 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body pt-0">
-				
-				
+
+
 				<form action="<?= site_url("transaction-payments") ?>" method="post">
 					<input type="hidden" name="transactionID" id="create-payment-transaction-id">
 					<div class="mb-2">
@@ -290,15 +294,15 @@
 			},
 			"error": function(error) {
 				console.log(error);
-			}, 
+			},
 			"beforeSend": showSpinner,
 			"complete": hideSpinner,
-			});
+		});
 
 	}
 </script>
 
-<?php if(session("validationErrorCreate")): ?>
+<?php if (session("validationErrorCreate")) : ?>
 	<script>
 		const modalCreate = bootstrap.Modal(document.querySelector("#modal-create"));
 		modalCreate.show();
@@ -345,14 +349,12 @@
 			}
 		});
 	}
-
 </script>
 
-<?php if(session("successMessage")): ?>
+<?php if (session("successMessage")) : ?>
 	<script>
 		successAlert(`<?= session("successMessage") ?>`);
 	</script>
 <?php endif; ?>
 
 <?= $this->endSection() ?>
-
