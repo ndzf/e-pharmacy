@@ -72,6 +72,12 @@
                         <span><?= lang("User.title.index") ?></span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?= site_url("store") ?>" class="nav-link" title="Toko">
+                        <i class="fas fa-store"></i>
+                        <span>Toko</span>
+                    </a>
+                </li>
             <?php endif; ?>
 
 
@@ -127,7 +133,7 @@
             <footer class="sticky-footer mt-3">
                 <div class="container-fluid">
                     <div class="d-flex flex-row p-2">
-                        <div class="app-name my-auto fw-500 text-danger">Apotek</div>
+                        <div class="app-name my-auto fw-500 text-danger"><?= view_cell("\App\Libraries\Store::getName") ?></div>
                         <div class="copyright ms-auto fw-500 text-dark">
                             <span>Copyright <span class="text-danger">&copy;</span> <span id="copyright-year"></span></span>
                         </div>
