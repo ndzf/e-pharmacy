@@ -52,4 +52,43 @@ class StoreController extends BaseController
             return redirect()->to("/store")->with("errorMessage", $e->getMessage());
         }
     }
+
+    public function print_customer()
+    {
+        $inputs = [
+            "file"          => $this->request->getFile("file"),
+            "textColor"     => esc($this->request->getPost("textColor")),
+        ];
+
+        $store = $this->storeModel->getStore();
+
+        if (empty($store)) {
+            throw PageNotFoundException::forPageNotFound("something error");
+        }
+
+        $validationRules = [
+            "file"          => ["label" => "Background", "rules" => "is_image[file]"],
+        ];
+
+        if ($inputs["file"]->getError() != 4) {
+            if (!$this->validate($validationRules)) {
+                return redirect()->to("/store")->with("errorMessage", $this->validator->getError("file"));
+            }
+
+            // Moving file
+            $fileName = $inputs["file"]->getRandomName();
+            $targetPath = $_SERVER["DOCUMENT_ROOT"] . "/assets/print-customer/";
+            $inputs["file"]->move($targetPath, $fileName);
+
+            $store->banner = $fileName;
+        }
+        $store->text_color = $inputs["textColor"];
+        // check upload image or not
+        try {
+            $this->storeModel->save($store);
+            return redirect()->to("/store")->with("successMessage", "Berhasil memperbaharui data toko");
+        } catch (\Exception $e) {
+            return redirect()->to("/store")->with("errorMessage", $e->getMessage());
+        }
+    }
 }

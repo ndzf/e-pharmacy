@@ -146,6 +146,7 @@ $routes->group("profile", function ($routes) {
 $routes->group("store", function ($routes) {
     $routes->get("/", "StoreController::index", ["filter" => "isLoggedIn:admin"]);
     $routes->put("(:num)", "StoreController::update/$1", ["filter" => "isLoggedIn:admin"]);
+    $routes->put("print", "StoreController::print_customer", ["filter" => "isLoggedIn:admin"]);
 });
 
 

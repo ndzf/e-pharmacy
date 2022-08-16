@@ -14,7 +14,7 @@ class StoreModel extends Model
     protected $returnType       = \App\Entities\StoreEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["name", "address", "phone_number", "email"];
+    protected $allowedFields    = ["name", "address", "phone_number", "email", "banner", "text_color"];
 
     // Dates
     protected $useTimestamps = false;
