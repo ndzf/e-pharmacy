@@ -143,6 +143,11 @@ $routes->group("profile", function ($routes) {
     $routes->put("(:num)", "ProfileController::update/$1", ["filter" => "isLoggedIn:admin,cashier"]);
 });
 
+$routes->group("store", function ($routes) {
+    $routes->get("/", "StoreController::index", ["filter" => "isLoggedIn:admin"]);
+    $routes->put("(:num)", "StoreController::update/$1", ["filter" => "isLoggedIn:admin"]);
+});
+
 
 /*
  * --------------------------------------------------------------------

@@ -39,4 +39,12 @@ class StoreModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getStore()
+    {
+        $builder = $this->table("store");
+        $builder->select("*");
+        $data = $builder->get(1);
+        return $data->getCustomRowObject(1, "\App\Entities\StoreEntity");
+    }
 }
