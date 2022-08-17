@@ -73,11 +73,12 @@ function fillAddProduct(res) {
     document.querySelector("#create-product-name").value = res.name;
     document.querySelector("#create-product-id").value = res.id;
     const createPrice = document.querySelector("#create-price");
-    const originalPriceOption = getOption("Harga Asli", res.original_price);
-    const sellingPriceOption = getOption("Harga Jual", res.selling_price);
-    const memberPriceOption = getOption("Harga Member", res.member_price);
-    const wholesalePriceOption = getOption("Harga Grosir", res.wholesale_price);
-    createPrice.append(originalPriceOption, sellingPriceOption, memberPriceOption, wholesalePriceOption);
+    // const originalPriceOption = getOption("Harga Asli", res.original_price);
+    // const sellingPriceOption = getOption("Harga Jual", res.selling_price);
+    // const memberPriceOption = getOption("Harga Member", res.member_price);
+    // const wholesalePriceOption = getOption("Harga Grosir", res.wholesale_price);
+    // createPrice.append(originalPriceOption, sellingPriceOption, memberPriceOption, wholesalePriceOption);
+    createPrice.value = formatRupiah(res.original_price);
 
 }
 

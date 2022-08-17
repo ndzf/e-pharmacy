@@ -16,27 +16,31 @@
         font-size: 1.1rem;
     }
 
-	.selectize-input.full {
-		font-weight: 500;
-		background-color: var(--input-solid-bg);
-		border-color: var(--input-solid-bg);
-		color: var(--input-solid-color);
-	}
-	.selectize-control.single .selectize-input.input-active, .selectize-input {
-		background-color: var(--input-solid-bg);
-		box-shadow: none;
-	}
+    .selectize-input.full {
+        font-weight: 500;
+        background-color: var(--input-solid-bg);
+        border-color: var(--input-solid-bg);
+        color: var(--input-solid-color);
+    }
 
-	.selectize-dropdown-content {
-		padding: .5em 0px;
-	}
+    .selectize-control.single .selectize-input.input-active,
+    .selectize-input {
+        background-color: var(--input-solid-bg);
+        box-shadow: none;
+    }
 
-	.selectize-dropdown, .selectize-input, .selectize-input input {
-		background-color: var(--input-solid-bg);
-		font-weight: 500;
-		color: var(--input-solid-color);
-		border: none;
-	}
+    .selectize-dropdown-content {
+        padding: .5em 0px;
+    }
+
+    .selectize-dropdown,
+    .selectize-input,
+    .selectize-input input {
+        background-color: var(--input-solid-bg);
+        font-weight: 500;
+        color: var(--input-solid-color);
+        border: none;
+    }
 
     .transaction-title {
         font-size: 1.5rem;
@@ -77,7 +81,7 @@
                             </thead>
                             <tbody class="text-gray-700 fw-500">
                                 <?php $grandTotal = 0; ?>
-                                <?php foreach($purchaseDetails as $purchaseDetail): ?>
+                                <?php foreach ($purchaseDetails as $purchaseDetail) : ?>
                                     <?php $grandTotal += $purchaseDetail->price * $purchaseDetail->qty ?>
                                     <?php $total = $purchaseDetail->qty * $purchaseDetail->price ?>
                                     <tr>
@@ -154,7 +158,7 @@
                         <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
-                
+
                 <div id="search-result"></div>
             </div>
         </div>
@@ -178,7 +182,8 @@
                     </div>
                     <div class="mb-2">
                         <label for="create-price" class="col-form-label text-gray-600 fw-500">Harga</label>
-                        <select name="price" class="form-select solid fw-500" required id="create-price"></select>
+                        <!-- <select name="price" class="form-select solid fw-500" required id="create-price"></select> -->
+                        <input type="text" name="price" id="create-price" class="form-control solid fw-500" readonly>
                     </div>
                     <div class="mb-4">
                         <label for="create-qty" class="col-form-label text-gray-600 fw-500">Qty</label>
@@ -312,7 +317,6 @@
             }
         })
     }
-
 </script>
 
 <script>
@@ -368,7 +372,7 @@
     }
 </script>
 
-<?php if(session("successMessage")): ?>
+<?php if (session("successMessage")) : ?>
     <script>
         successAlert(`<?= session("successMessage") ?>`);
     </script>

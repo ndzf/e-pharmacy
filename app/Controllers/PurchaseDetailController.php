@@ -23,13 +23,13 @@ class PurchaseDetailController extends BaseController
     {
         $purchaseID = session("purchaseID");
         $inputs = esc($this->request->getPost());
-        
+
         $purchase = [
             "purchase_id"           => $purchaseID,
             "product_id"            => $inputs["productID"],
             "product_name"          => $inputs["productName"],
             "qty"                   => $inputs["qty"],
-            "price"                 => $inputs["price"],
+            "price"                 => str_replace(".", "", $inputs["price"]),
         ];
 
         $this->purchaseDetailModel->insert($purchase);
