@@ -64,7 +64,7 @@ class TransactionDetailModel extends Model
     public function getProduct(int $id)
     {
         $builder = $this->table("transaction_details");
-        $builder->select("transaction_details.id, transaction_details.r_axis, transaction_details.l_axis, transaction_details.product_price, transaction_details.qty, products.name as product, products.l_sph, products.l_cyl, products.l_add, products.r_sph, products.r_cyl, products.r_add, products.type");
+        $builder->select("transaction_details.id, transaction_details.r_axis, transaction_details.l_axis, transaction_details.product_price, transaction_details.qty, products.name as product, products.l_sph, products.l_cyl, products.l_add, products.r_sph, products.r_cyl, products.r_add, products.type, product_name, products.original_price");
         $builder->where("transaction_details.id", $id);
         $builder->join("products", "transaction_details.product_id = products.id", "LEFT");
         $data = $builder->get();
@@ -80,5 +80,11 @@ class TransactionDetailModel extends Model
         $builder->orderBy("transaction_details.created_at", "DESC");
         $data = $builder->get();
         return $data->getCustomResultObject("\App\Entities\TransactionDetailEntity");
+    }
+
+    public function omzet($transactions)
+    {
+        // between
+        $builder = $this->table("transaction_details");
     }
 }

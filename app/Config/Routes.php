@@ -151,6 +151,10 @@ $routes->group("store", function ($routes) {
     $routes->put("print", "StoreController::print_customer", ["filter" => "isLoggedIn:admin"]);
 });
 
+$routes->group("reports", function ($routes) {
+    $routes->get("omzet", "ReportController::omzet", ["filter" => "isLoggedIn:admin"]);
+});
+
 
 /*
  * --------------------------------------------------------------------

@@ -40,7 +40,7 @@ class TransactionModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getTransactions() :object
+    public function getTransactions(): object
     {
         $builder = $this->table("transactions");
         $builder->select("transactions.id, transactions.date, transactions.status, transactions.payment_status, transactions.grand_total, users.name as user, customers.name as customer");
@@ -50,7 +50,7 @@ class TransactionModel extends Model
         return $builder;
     }
 
-    public function getTransaction(int $id) 
+    public function getTransaction(int $id)
     {
         $builder = $this->table("transactions");
         $builder->select("transactions.id, transactions.date, transactions.discount, transactions.status, transactions.payment_status, transactions.grand_total, users.name as user, customers.name as customer");
@@ -59,7 +59,6 @@ class TransactionModel extends Model
         $builder->where("transactions.id", $id);
         $data = $builder->get();
         return $data->getCustomRowObject(1, "\App\Entities\TransactionEntity");
-        
     }
 
     public function checkout($id, $inputs, $payment)
@@ -68,7 +67,7 @@ class TransactionModel extends Model
         // Updating transaction
         $transaction = [
             "discount"              => $inputs["discount"],
-            "grand_total"           => str_replace(".", "",$inputs["grandTotal"]),
+            "grand_total"           => str_replace(".", "", $inputs["grandTotal"]),
             "payment_status"        => (intval(str_replace(".", "", $inputs["nominal"])) - intval(str_replace(".", "", $inputs["grandTotal"])) < 0) ? "debt" : "cash",
             "status"                => "done",
         ];
@@ -98,7 +97,17 @@ class TransactionModel extends Model
         $paymentModel->save($payment);
 
         $this->db->transComplete();
+    }
 
+    public function between(?string $start, ?string $end)
+    {
+        $builder = $this->table("transactions");
+        $builder->select("id, date, status, payment_status");
+        $builder->where("status", "done");
+        if ($start && $end) {
+            $builder->where("date between '$start' and '$end'");
+        }
+        $data = $builder->get();
+        return $data->getCustomResultObject("\App\Entities\TransactionEntity");
     }
 }
-
