@@ -14,10 +14,6 @@
                         <input type="text" class="form-control solid fw-500 me-2" value="<?= $inputs["date"] ?>" name="daterange" id="daterange">
                         <input type="hidden" name="start" id="start">
                         <input type="hidden" name="end" id="end">
-                        <select name="" id="" class="form-select solid fw-500">
-                            <option value="drity">Kotor</option>
-                            <option value="clean">Bersih</option>
-                        </select>
                     </form>
                     <div class="ms-auto">
                     </div>
@@ -33,10 +29,14 @@
                                     <th>Harga Jual</th>
                                     <th>Qty</th>
                                     <th>Payment Status</th>
+                                    <th>Omzet</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 fw-500">
+                                <?php $totalOmzet = 0; ?>
                                 <?php foreach ($products as $product) : ?>
+                                    <?php $omzet = ($product["product_price"] - $product["original_price"]) * $product["qty"] ?>
+                                    <?php $totalOmzet += $omzet ?>
                                     <tr>
                                         <td><?= $product["date"]->toDateString() ?></td>
                                         <td><?= $product["product"] ?? $product["product_name"] ?></td>
@@ -48,8 +48,20 @@
                                         </td>
                                         <td><?= $product["qty"] ?></td>
                                         <td><?= $product["payment_status"] ?></td>
+                                        <td class="format-rupiah" data-format="<?= $omzet ?>">
+                                            <?= $omzet ?>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
+                                <tr>
+                                    <td colspan="5"></td>
+                                    <td class="text-end">Total Omzet</td>
+                                    <td>
+                                        <span class="format-rupiah" data-format="<?= $totalOmzet ?>">
+                                            <?= $totalOmzet ?>
+                                        </span>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
