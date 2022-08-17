@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\TransactionModel;
 use App\Entities\TransactionEntity;
 use App\Models\CustomerModel;
+use App\Models\ProductModel;
 use App\Models\TransactionDetailModel;
 use App\Models\TransactionPaymentModel;
 use App\Models\UserModel;
@@ -130,8 +131,19 @@ class TransactionController extends BaseController
 
 	public function delete(int $id)
 	{
+		$productModel = new ProductModel();
 		$transactionDetailModel = new TransactionDetailModel();
 		$transactionPaymentModel = new TransactionPaymentModel();
+
+		$transactionDetails = $transactionDetailModel->getProductsByTransaction($id);
+		foreach ($transactionDetails as $transactionDetail) {
+			$product = $productModel->find($transactionDetail->product_id);
+			if (empty($product)) {
+				continue;
+			}
+			$product->qty = ($product->qty + $transactionDetail->qty);
+			$productModel->save($product);
+		}
 
 		$transactionDetailModel->where("transaction_id", $id)->delete();
 		$transactionPaymentModel->where("transaction_id", $id)->delete();
