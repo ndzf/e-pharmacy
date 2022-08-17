@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\ProductModel;
 use App\Models\PurchaseModel;
 use \CodeIgniter\I18n\Time;
 use App\Models\PurchaseDetailModel;
@@ -154,10 +155,22 @@ class PurchaseController extends BaseController
 
     public function delete(int $id)
     {
+        $productModel = new ProductModel();
         $purchaseDetailModel = new PurchaseDetailModel();
         $purchasePaymentModel = new PurchasePaymentModel();
 
-        $purchaseDetailModel->where("purchase_id", $id)->delete();
+        // Manage qty 
+        $productDetails = $purchaseDetailModel->getProductsByPurchaseID($id);
+        foreach ($productDetails as $productDetail) {
+            $product = $productModel->find($productDetail->product_id);
+            if (empty($product)) {
+                // let's say product has been deleted
+                continue;
+            }
+            $product->qty = ($product->qty - $productDetail->qty);
+            $productModel->save($product);
+        }
+
         $purchasePaymentModel->where("purchase_id", $id)->delete();
         $this->purchaseModel->where("id", $id)->delete();
 
