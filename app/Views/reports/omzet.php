@@ -12,10 +12,13 @@
                 <div class="card-header py-3 bg-white border-0 d-flex">
                     <form action="" class="d-flex" id="form-filter" method="get">
                         <input type="text" class="form-control solid fw-500 me-2" value="<?= $inputs["date"] ?>" name="daterange" id="daterange">
-                        <input type="hidden" name="start" id="start">
-                        <input type="hidden" name="end" id="end">
+                        <input type="hidden" name="start" value="<?= $inputs["start"] ?>" id="start">
+                        <input type="hidden" name="end" id="end" value="<?= $inputs["end"] ?>">
                     </form>
                     <div class="ms-auto">
+                        <button class="btn btn-success" onclick="exportOmzet()">
+                            <i class="fas fa-file-download"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="card-body pt-0">
@@ -71,6 +74,11 @@
     </div>
 </div>
 
+<form action="" method="post" id="form-export">
+    <input type="hidden" name="start">
+    <input type="hidden" name="end">
+</form>
+
 <?= $this->endSection() ?>
 
 <?= $this->section("script") ?>
@@ -82,6 +90,7 @@
 
 <script>
     const formFilter = document.forms["form-filter"];
+    const baseURL = `<?= site_url() ?>`;
 
     $(function() {
         $("#daterange").daterangepicker({
@@ -98,6 +107,16 @@
             formFilter.submit();
         });
     })
+</script>
+
+<script>
+    function exportOmzet() {
+        const formExport = document.forms["form-export"];
+        formExport[0].value = document.querySelector("#start").value;
+        formExport[1].value = document.querySelector("#end").value;
+        formExport.action = `${baseURL}reports/export-omzet`;
+        formExport.submit();
+    }
 </script>
 
 <?= $this->endSection() ?>

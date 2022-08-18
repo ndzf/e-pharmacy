@@ -78,6 +78,12 @@
                         <span>Toko</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?= site_url("reports/omzet") ?>" class="nav-link" title="Toko">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Laporan Omzet</span>
+                    </a>
+                </li>
             <?php endif; ?>
 
 

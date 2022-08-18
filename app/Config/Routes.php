@@ -153,6 +153,7 @@ $routes->group("store", function ($routes) {
 
 $routes->group("reports", function ($routes) {
     $routes->get("omzet", "ReportController::omzet", ["filter" => "isLoggedIn:admin"]);
+    $routes->post("export-omzet", "ReportController::attemptExportOmzet", ["filter" => "isLoggedIn:admin"]);
 });
 
 
