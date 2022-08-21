@@ -7,6 +7,7 @@ use App\Models\TransactionModel;
 use App\Entities\TransactionEntity;
 use App\Models\CustomerModel;
 use App\Models\ProductModel;
+use App\Models\StoreModel;
 use App\Models\TransactionDetailModel;
 use App\Models\TransactionPaymentModel;
 use App\Models\UserModel;
@@ -203,12 +204,16 @@ class TransactionController extends BaseController
 		$userModel = new UserModel();
 		$customerModel = new CustomerModel();
 		$transactionDetailModel = new TransactionDetailModel();
+		$storeModel = new StoreModel();
+		$transactionPaymentModel = new TransactionPaymentModel();
 
 		$data = [
 			"transaction"		=> $transaction,
 			"user"				=> $userModel->find($transaction->user_id),
 			"customer"			=> $customerModel->where("id", $transaction->customer_id)->select("name")->get()->getRowObject(),
 			"products"			=> $transactionDetailModel->getProductsByTransaction($transaction->id),
+			"store"				=> $storeModel->getStore(),
+			"payment"			=> $transactionPaymentModel->getTotalByTransaction($transaction->id)
 		];
 
 		return view("transactions/invoice", $data);

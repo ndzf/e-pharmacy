@@ -64,4 +64,24 @@ class TransactionPaymentModel extends Model
         }
         return $nominal;
     }
+
+    public function getTotalByTransaction($transactionId)
+    {
+        $builder = $this->builder("transaction_payments");
+        $builder->select("id, nominal");
+        $builder->where("transaction_id", $transactionId);
+        $data = $builder->get();
+        $payments = $data->getCustomResultObject("\App\Entities\TransactionPaymentEntity");
+        $total = 0;
+
+        if (empty($payments)) {
+            return $total;
+        }
+
+        foreach ($payments as $payment) {
+            $total += $payment->nominal;
+        }
+
+        return $total;
+    }
 }

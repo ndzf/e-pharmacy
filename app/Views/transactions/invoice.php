@@ -125,10 +125,10 @@
     </style>
 </head>
 
-<body onload="window.print()">
+<body onload="windows.print()">
     <div class="face face-front">
         <section class="content p-2">
-            <h1 class="text-center mb-3"><?= config("App")->appName ?></h1>
+            <h1 class="text-center mb-3"><?= $store->name ?? config("App")->appName ?></h1>
             <div class="info" style="margin-bottom: .5rem;">
                 <table class="table-info">
                     <tbody class="text-dark fw-500">
@@ -219,6 +219,11 @@
                         <td class="fw-600">Grand Total</td>
                         <td>:</td>
                         <td class="fw-500 format-rupiah" data-format="<?= $transaction->grand_total ?>"><?= $transaction->grand_total ?></td>
+                    </tr>
+                    <tr>
+                        <td class="fw-600">Terbayar</td>
+                        <td>:</td>
+                        <td class="fw-500 format-rupiah" data-format="<?= $payment ?>"><?= $payment ?></td>
                     </tr>
                 </table>
             </div>
