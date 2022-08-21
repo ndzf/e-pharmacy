@@ -161,7 +161,7 @@
                 <tbody class="text-dark fw-500">
                     <?php $grandTotal = 0; ?>
                     <?php foreach ($products as $product) : ?>
-                        <?php $grandTotal += $product->product_price ?>
+                        <?php $grandTotal += $product->product_price * $product->qty ?>
                         <tr>
                             <td><?= $product->product_name ?></td>
                             <td><?= $product->qty ?></td>
