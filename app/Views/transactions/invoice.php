@@ -125,7 +125,7 @@
     </style>
 </head>
 
-<body onload="windows.print()">
+<body onload="window.print()">
     <div class="face face-front">
         <section class="content p-2">
             <h1 class="text-center mb-3"><?= $store->name ?? config("App")->appName ?></h1>
