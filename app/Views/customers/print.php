@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= base_url("/assets/plugins/fontawesome-free/css/all.min.css") ?>">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
     <style>
@@ -83,11 +84,22 @@
     </style>
 </head>
 
-<body>
+<body onload="window.print()">
     <div class="face face-front d-flex flex-column" style="background-image: url(<?= site_url("/assets/print-customer/$store->banner") ?>) !important; background-position: center; background-size: cover;">
-        <div class="top p-2 text-white d-flex flex-grow-1 flex-column justify-content-center border">
+        <!-- <div class="top p-2 text-white d-flex flex-grow-1 flex-column justify-content-center border">
             <h1 class="fw-normal text-color"><?= $store->name ?></h1>
+            <p class="fw-bold text-color"><?= $store->phone_number ?></p>
             <h3 class="text-color"><?= $customer->name ?></h3>
+        </div> -->
+        <div class="top p-2 text-white d-flex flex-grow-1 flex-column border">
+            <h1 class="fw-normal text-color"><?= $store->name ?></h1>
+            <p class="fw-bold text-color mb-0"> <i class="fas fa-phone me-1"></i> <?= $store->phone_number ?></p>
+            <p class="fw-bold text-color"> <i class="fas fa-location-dot me-2"></i> <?= $store->address ?></p>
+            <div class="my-auto">
+            </div>
+            <div class="mt-auto">
+                <h3 class="text-color"><?= $customer->name ?></h3>
+            </div>
         </div>
     </div>
 </body>
