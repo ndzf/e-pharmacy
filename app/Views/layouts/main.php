@@ -99,6 +99,12 @@
                     <span>Profile</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="<?= site_url("/logout") ?>" class="nav-link" title="Logout">
+                    <i class="fas fa-arrow-right-from-bracket me-1"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
         </ul>
         <!-- End of Sidebar -->
 

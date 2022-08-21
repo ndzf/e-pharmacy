@@ -43,12 +43,18 @@ class AuthController extends BaseController
         }
 
         $payload = [
-            "isLoggedIn"        => true, 
+            "isLoggedIn"        => true,
             "userID"            => $user->id,
             "role"              => $user->role,
         ];
 
         session()->set($payload);
+        return redirect()->to("/");
+    }
+
+    public function logout()
+    {
+        session()->destroy();
         return redirect()->to("/");
     }
 }
