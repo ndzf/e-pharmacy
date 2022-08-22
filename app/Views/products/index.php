@@ -76,6 +76,8 @@
                             </div>
                         </div>
 
+                        <button class="btn btn-light-primary fw-500 me-2" id="print-barcode">Barcode</button>
+
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create" title="<?= lang("Product.title.create") ?>">
                             <i class="fas fa-plus"></i>
                         </button>
@@ -86,6 +88,7 @@
                         <table class="table table-borderless table-dashed text-nowrap align-middle">
                             <thead class="text-gray-400 fw-500 text-uppercase">
                                 <tr>
+                                    <th></th>
                                     <th><?= lang("Product.name") ?></th>
                                     <th><?= lang("Product.category") ?></th>
                                     <th><?= lang("Product.type") ?></th>
@@ -97,6 +100,11 @@
                             <tbody class="text-gray-700 fw-500">
                                 <?php foreach ($products as $product) : ?>
                                     <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input type="checkbox" name="products[]" value="<?= $product->id ?>" class="form-check-input">
+                                            </div>
+                                        </td>
                                         <td><?= esc($product->name) ?></td>
                                         <td>
                                             <?= isset($product->category) ? esc($product->category) : "-" ?>
@@ -112,7 +120,7 @@
                                             <button class="btn btn-light-light fw-500 btn-sm me-2" onclick="editProduct(`<?= $product->id ?>`)" title="<?= lang("Product.title.edit") ?>">
                                                 Edit
                                             </button>
-					    <button class="btn btn-sm btn-light-danger" onclick="deleteProduct(`<?= $product->id ?>`)" title="<?= lang("Product.title.delete") ?>" >
+                                            <button class="btn btn-sm btn-light-danger" onclick="deleteProduct(`<?= $product->id ?>`)" title="<?= lang("Product.title.delete") ?>">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
@@ -300,9 +308,9 @@
                         <label for="edit-wholesale-price" class="col-form-label text-gray-700 fw-500"><?= lang("Product.wholesalePrice") ?> <span class="text-danger">*</span></label>
                         <input type="text" name="wholesalePrice" id="edit-wholesale-price" class="form-control solid fw-500 format-rupiah-input">
                     </div>
-		    <div class="mb-3 d-flex justify-content-end">
-			<button class="btn btn-primary fw-500"><?= lang("General.save") ?></button>
-		    </div>
+                    <div class="mb-3 d-flex justify-content-end">
+                        <button class="btn btn-primary fw-500"><?= lang("General.save") ?></button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -312,6 +320,8 @@
 <form id="form-delete" action="" method="post">
     <input type="hidden" name="_method" value="DELETE">
 </form>
+
+<form action="<?= site_url("/products/print-barcode") ?>" method="post" id="form-print-barcode"></form>
 
 <?= $this->endSection() ?>
 
@@ -383,11 +393,10 @@
     }
 
     function deleteProduct(id) {
-	const formDelete = document.forms["form-delete"];
-	formDelete.setAttribute("action", `${baseURL}products/${id}`);
-	formDelete.submit();
+        const formDelete = document.forms["form-delete"];
+        formDelete.setAttribute("action", `${baseURL}products/${id}`);
+        formDelete.submit();
     }
-
 </script>
 
 <?php if (session("successMessage")) : ?>
@@ -407,33 +416,55 @@
 
 <?php endif; ?>
 
-<?php if(session("validationErrorUpdate")): ?>
+<?php if (session("validationErrorUpdate")) : ?>
 
     <script>
-	editProduct(`<?= session("validationErrorUpdate") ?>`);
+        editProduct(`<?= session("validationErrorUpdate") ?>`);
     </script>
 
 <?php endif; ?>
 
 <script>
     function clear() {
-	// Create
-	clearValidation("#form-create", "#form-edit");
-	resetSelectedOptions("#create-supplier", true);
-	resetSelectedOptions("#create-category", true);
-	resetSelectedOptions("#create-type", true);
-	setLensDetail("general");
-	// Update
-	resetSelectedOptions("#edit-supplier", false);
-	resetSelectedOptions("#edit-category", false);
-	resetSelectedOptions("#edit-type", false);
-	setLensDetail("general");
+        // Create
+        clearValidation("#form-create", "#form-edit");
+        resetSelectedOptions("#create-supplier", true);
+        resetSelectedOptions("#create-category", true);
+        resetSelectedOptions("#create-type", true);
+        setLensDetail("general");
+        // Update
+        resetSelectedOptions("#edit-supplier", false);
+        resetSelectedOptions("#edit-category", false);
+        resetSelectedOptions("#edit-type", false);
+        setLensDetail("general");
     }
     const modalCreateEl = document.querySelector("#modal-create");
     modalCreateEl.addEventListener("hidden.bs.modal", clear);
 
     const modalEditEl = document.querySelector("#modal-edit");
     modalEditEl.addEventListener("hidden.bs.modal", clear);
+</script>
+
+<script>
+    document.querySelector("#print-barcode").addEventListener("click", function() {
+        const formPrintBarcode = document.querySelector("#form-print-barcode");
+        formPrintBarcode.innerHTML = '';
+
+        const [...productsInputs] = document.querySelectorAll(".form-check-input");
+
+        const products = productsInputs.filter((product) => product.checked == true).map(product => {
+            return `<input type="text" name="products[]" value="${product.value}" hidden class="form-control">`
+        });
+
+        if (products.length == 0) {
+            errorAlert("Silahkan pilih produk terlebih dahulu");
+            return false;
+        }
+
+        formPrintBarcode.innerHTML = products.join('');
+        formPrintBarcode.submit();
+
+    });
 </script>
 
 <?= $this->endSection() ?>

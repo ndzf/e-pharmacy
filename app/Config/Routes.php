@@ -92,6 +92,7 @@ $routes->group("/products", function ($routes) {
     $routes->put("(:num)", "ProductController::update/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->delete("(:num)", "ProductController::delete/$1", ["filter" => "isLoggedIn:admin"]);
     $routes->get("search", "ProductController::search", ["filter" => "isLoggedIn:admin,cashier"]);
+    $routes->post("print-barcode", "ProductController::printBarcode", ["filter" => "isLoggedIn:admin,cashier"]);
 });
 
 $routes->group("transactions", function ($routes) {
