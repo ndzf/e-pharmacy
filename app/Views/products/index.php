@@ -78,9 +78,9 @@
 
                         <button class="btn btn-light-primary fw-500 me-2" id="print-barcode">Barcode</button>
 
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create" title="<?= lang("Product.title.create") ?>">
+                        <a href="<?= site_url("/products/new") ?>" class="btn btn-primary" type="button">
                             <i class="fas fa-plus"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="card-body pt-0">

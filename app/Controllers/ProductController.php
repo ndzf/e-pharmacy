@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\ProductModel;
 use App\Entities\ProductEntity;
+use App\Models\CategoryModel;
+use App\Models\SupplierModel;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 use Picqer\Barcode\BarcodeGeneratorSVG;
 
@@ -43,6 +45,22 @@ class ProductController extends BaseController
 
     public function create()
     {
+        $validation = service("validation");
+
+        $supplierModel = new SupplierModel();
+        $categoryModel = new CategoryModel();
+
+        $data = [
+            "validation"            => $validation->getErrors(),
+            "categories"            => $categoryModel->getNames(),
+            "suppliers"             => $supplierModel->getNames()
+        ];
+
+        return view("products/create", $data);
+    }
+
+    public function store()
+    {
         $inputs = esc($this->request->getPost());
 
         if (!$this->validate("createProduct")) {
@@ -50,26 +68,10 @@ class ProductController extends BaseController
         }
 
         $product = new ProductEntity();
-        $product->name = $inputs["name"];
-        $product->supplier_id = $inputs["supplier"];
-        $product->category_id = $inputs["category"];
-        $product->code = $inputs["code"];
-        $product->type = $inputs["type"];
-        $product->r_sph = $inputs["rSph"];
-        $product->r_cyl = $inputs["rCyl"];
-        $product->r_add = $inputs["rAdd"];
-        $product->l_sph = $inputs["lSph"];
-        $product->l_cyl = $inputs["lCyl"];
-        $product->l_add = $inputs["lAdd"];
-        $product->qty = $inputs["qty"];
-        $product->minimum_qty = $inputs["minimumQty"];
-        $product->original_price = $inputs["originalPrice"];
-        $product->selling_price = $inputs["sellingPrice"];
-        $product->member_price = $inputs["memberPrice"];
-        $product->wholesale_price = $inputs["wholesalePrice"];
+        $product->fill($inputs);
 
         $this->productModel->save($product);
-        return redirect()->to("/products")->with("successMessage", lang("Message.success.create", [strtolower($this->title)]));
+        return redirect()->to("/products")->with("successMessage", "Berhasil menambah data produk");
     }
 
     public function edit(int $id)
