@@ -14,7 +14,7 @@ class ProductModel extends Model
     protected $returnType       = \App\Entities\ProductEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["supplier_id", "category_id", "code", "name", "type", "r_sph", "r_cyl", "r_add", "l_sph", "l_cyl", "l_add", "qty", "minimum_qty", "original_price", "selling_price", "member_price", "wholesale_price"];
+    protected $allowedFields    = ["supplier_id", "category_id", "code", "name", "type", "r_sph", "r_cyl", "r_add", "l_sph", "l_cyl", "l_add", "qty", "minimum_qty", "original_price", "selling_price", "member_price", "wholesale_price", "lens_type", "sph", "cyl", "add"];
 
     // Dates
     protected $useTimestamps = true;
