@@ -117,9 +117,9 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <button class="btn btn-light-light fw-500 btn-sm me-2" onclick="editProduct(`<?= $product->id ?>`)" title="<?= lang("Product.title.edit") ?>">
+                                            <a href="<?= site_url("/products/{$product->id}/edit") ?>" class="btn btn-light-light fw-500 btn-sm me-2" type="button">
                                                 Edit
-                                            </button>
+                                            </a>
                                             <button class="btn btn-sm btn-light-danger" onclick="deleteProduct(`<?= $product->id ?>`)" title="<?= lang("Product.title.delete") ?>">
                                                 <i class="fas fa-trash"></i>
                                             </button>

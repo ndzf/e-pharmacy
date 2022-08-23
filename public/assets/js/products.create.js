@@ -36,9 +36,8 @@ document.querySelector("#lens-type").addEventListener("change", function (e) {
     lensTypeWrapper(e.target.value);
 });
 
-
-inputType.addEventListener("DOMContentLoaded", function (e) {
-    const value = e.target.value;
+document.addEventListener("DOMContentLoaded", function (e) {
+    const value = document.querySelector("#type").value;
 
     if (value == "lens") {
         document.querySelector("#lens-type-wrapper").removeAttribute("hidden");
@@ -50,8 +49,4 @@ inputType.addEventListener("DOMContentLoaded", function (e) {
         document.querySelector("#lens-type-wrapper").setAttribute("hidden", true);
         hideLensTypeWrappers();
     }
-})
-
-document.querySelector("#lens-type").addEventListener("DOMContentLoaded", function (e) {
-    lensTypeWrapper(e.target.value);
 });

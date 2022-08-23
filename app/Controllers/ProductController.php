@@ -82,7 +82,19 @@ class ProductController extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(lang("Message.error.notFound", [ucwords($this->title)]));
         }
 
-        return json_encode($product);
+        $validation = service("validation");
+
+        $supplierModel = new SupplierModel();
+        $categoryModel = new CategoryModel();
+
+        $data = [
+            "validation"            => $validation->getErrors(),
+            "categories"            => $categoryModel->getNames(),
+            "suppliers"             => $supplierModel->getNames(),
+            "product"               => $product,
+        ];
+
+        return view("products/edit", $data);
     }
 
     public function update(int $id)
@@ -99,23 +111,7 @@ class ProductController extends BaseController
             return redirect()->to("/products")->withInput()->with("validationErrorUpdate", $id);
         }
 
-        $product->name = $inputs["name"];
-        $product->supplier_id = $inputs["supplier"];
-        $product->category_id = $inputs["category"];
-        $product->code = $inputs["code"];
-        $product->type = $inputs["type"];
-        $product->r_sph = $inputs["rSph"];
-        $product->r_cyl = $inputs["rCyl"];
-        $product->r_add = $inputs["rAdd"];
-        $product->l_sph = $inputs["lSph"];
-        $product->l_cyl = $inputs["lCyl"];
-        $product->l_add = $inputs["lAdd"];
-        $product->qty = $inputs["qty"];
-        $product->minimum_qty = $inputs["minimumQty"];
-        $product->original_price = $inputs["originalPrice"];
-        $product->selling_price = $inputs["sellingPrice"];
-        $product->member_price = $inputs["memberPrice"];
-        $product->wholesale_price = $inputs["wholesalePrice"];
+        $product->fill($inputs);
 
         $this->productModel->save($product);
         return redirect()->to("/products")->with("successMessage", lang("Message.success.update", [strtolower($this->title)]));
