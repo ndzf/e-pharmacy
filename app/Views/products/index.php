@@ -120,7 +120,7 @@
                                             <a href="<?= site_url("/products/{$product->id}/edit") ?>" class="btn btn-light-light fw-500 btn-sm me-2" type="button">
                                                 Edit
                                             </a>
-                                            <button class="btn btn-sm btn-light-danger" onclick="deleteProduct(`<?= $product->id ?>`)" title="<?= lang("Product.title.delete") ?>">
+                                            <button class="btn btn-sm btn-light-danger" onclick="deleteProduct(`<?= $product->id ?>`, `<?= $product->name ?>`)" title="<?= lang("Product.title.delete") ?>">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
@@ -210,6 +210,25 @@
         formPrintBarcode.submit();
 
     });
+</script>
+
+<script>
+    // Delete Products
+    function deleteProduct(id, name) {
+        Swal.fire({
+            title: `Hapus ${name}`,
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Hapus',
+            denyButtonText: `Batal`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const formDelete = document.querySelector("#form-delete");
+                formDelete.action = `<?= base_url() ?>/products/${id}`;
+                formDelete.submit();
+            }
+        })
+    }
 </script>
 
 <?= $this->endSection() ?>
