@@ -91,4 +91,28 @@ class StoreController extends BaseController
             return redirect()->to("/store")->with("errorMessage", $e->getMessage());
         }
     }
+
+    public function invoiceSetting()
+    {
+        $validationRules = [
+            "invoice_banner"          => ["label" => "Invoice header", "rules" => "is_image[invoice_banner]"],
+        ];
+        $file = $this->request->getFile("invoice_banner");
+        if ($file->getError() != 4) {
+            if (!$this->validate($validationRules)) {
+                return redirect()->to("/store")->with("errorMessage", $this->validator->getError("invoice_banner"));
+            }
+
+            $fileName = $file->getRandomName();
+            $targetPath = $_SERVER["DOCUMENT_ROOT"] . "/assets/images/invoice_banner/";
+            $file->move($targetPath, $fileName);
+
+            $store = $this->storeModel->getStore();
+            $store->invoice_banner = $fileName;
+            $this->storeModel->save($store);
+
+            return redirect()->to("/store")->with("successMessage", "Berhasil memperbaharui header invoice");
+        }
+        return redirect()->to("/store")->with("errorMessage", "Header not uploaded");
+    }
 }
