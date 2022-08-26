@@ -210,7 +210,7 @@ class TransactionController extends BaseController
 		$data = [
 			"transaction"		=> $transaction,
 			"user"				=> $userModel->find($transaction->user_id),
-			"customer"			=> $customerModel->where("id", $transaction->customer_id)->select("name")->get()->getRowObject(),
+			"customer"			=> $customerModel->where("id", $transaction->customer_id)->select("*")->get()->getRowObject(),
 			"products"			=> $transactionDetailModel->getProductsByTransaction($transaction->id),
 			"store"				=> $storeModel->getStore(),
 			"payment"			=> $transactionPaymentModel->getTotalByTransaction($transaction->id)

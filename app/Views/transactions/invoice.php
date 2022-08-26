@@ -4,13 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="<?= base_url("/assets/plugins/fontawesome-free/css/all.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("/assets/plugins/bootstrap/css/bootstrap.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("/assets/css/style.css") ?>">
     <title>Invoice</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-
-
 
         @page {
             /* dimensions for the whole page */
@@ -54,7 +53,7 @@
         }
 
         /* an image that fills the whole of the front face */
-        .face-front img {
+        /* .face-front img {
             position: absolute;
             top: 0;
             left: 0;
@@ -62,7 +61,7 @@
             right: 0;
             width: 100%;
             height: 100%;
-        }
+        } */
 
         table.products {
             width: 100%;
@@ -122,14 +121,42 @@
         h1 {
             font-size: 2rem;
         }
+
+        .icon {
+            background-color: #0834a9;
+            width: 1.4rem;
+        }
     </style>
 </head>
 
-<body onload="window.print()">
+<body onload="">
     <div class="face face-front">
+        <img src="<?= base_url("/assets/images/invoice_banner/$store->invoice_banner") ?>" alt="" class="img-fluid">
         <section class="content p-2">
             <h1 class="text-center mb-3"><?= $store->name ?? config("App")->appName ?></h1>
-            <div class="info" style="margin-bottom: .5rem;">
+            <div class="text-center d-flex justify-content-center">
+                <div class="list d-flex align-items-middle me-3">
+                    <div class="icon text-white me-1">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <span class="fw-500"><?= esc($store->phone_number) ?></span>
+                </div>
+                <div class="list d-flex align-items-middle">
+                    <div class="icon text-white me-1">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <span class="fw-500"><?= esc($store->email) ?></span>
+                </div>
+            </div>
+            <div class="text-center d-flex justify-content-center mt-3">
+                <div class="list d-flex align-items-middle">
+                    <div class="icon text-white me-1">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <span class="fw-500"><?= esc($store->address) ?></span>
+                </div>
+            </div>
+            <div class="info mt-4" style="margin-bottom: .5rem;">
                 <table class="table-info">
                     <tbody class="text-dark fw-500">
                         <tr>
@@ -146,6 +173,16 @@
                             <td>Pelanggan</td>
                             <td class="ps-3 pe-2">:</td>
                             <td><?= esc($customer->name) ?></td>
+                        </tr>
+                        <tr>
+                            <td>Alamat</td>
+                            <td class="ps-3 pe-2">:</td>
+                            <td><?= esc($user->address) ?></td>
+                        </tr>
+                        <tr>
+                            <td>TELP</td>
+                            <td class="ps-3 pe-2">:</td>
+                            <td><?= esc($user->phone_number) ?></td>
                         </tr>
                     </tbody>
                 </table>
