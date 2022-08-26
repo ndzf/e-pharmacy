@@ -7,7 +7,7 @@
         <div class=" mb-3 col-12 col-lg-4 col-md-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-body py-2">
-                    <h3 class="text-gray-600 mb-0">Data Toko</h3>
+                    <h3 class="text-gray-600 mb-0 mt-2">Data Toko</h3>
                     <form action="<?= site_url("/store/$store->id") ?>" method="post">
                         <input type="hidden" name="_method" value="PUT">
                         <div class="mb-2">
@@ -36,7 +36,7 @@
         <div class="col-12 col-lg-8 col-md-6">
             <div class="card border-0">
                 <div class="card-body py-2">
-                    <h3 class="text-gray-600 mb-0">Print Customer</h3>
+                    <h3 class="text-gray-600 mb-0 mt-2 text-truncate">Pengaturan Kartu Pelanggan</h3>
                     <form action="<?= site_url("/store/print") ?>" enctype="multipart/form-data" method="post">
                         <input type="hidden" name="_method" value="PUT">
                         <div class="mb-2">
@@ -47,8 +47,19 @@
                             <label for="file" class="col-form-label text-gray-500 fw-500">Background</label>
                             <input class="form-control solid fw-500" name="file" type="file" id="file">
                         </div>
-                        <div class="mb-2">
-                            <button class="btn btn-primary">Submit</button>
+                        <div class="mb-2 d-flex justify-content-end">
+                            <button class="btn btn-primary fw-500">Submit</button>
+                        </div>
+                    </form>
+                    <h3 class="text-gray-600 mb-0 mt-3">Pengaturan Nota</h3>
+                    <form action="<?= site_url("/store/invoice-setting") ?>" enctype="multipart/form-data" method="post">
+                        <input type="hidden" name="_method" value="PUT">
+                        <div class="mb-4">
+                            <label for="invoice-banner" class="col-form-label text-gray-500 fw-500">Header</label>
+                            <input type="file" name="invoice_banner" required id="invoice-banner" class="form-control solid fw-500">
+                        </div>
+                        <div class="mb-2 d-flex justify-content-end">
+                            <button class="btn btn-primary fw-500">Submit</button>
                         </div>
                     </form>
                 </div>
