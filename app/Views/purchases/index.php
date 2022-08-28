@@ -224,9 +224,19 @@
 
 <script>
 	function deletePurchase(id) {
-		const formDelete = document.forms["form-delete"];
-		formDelete.action = `${baseURL}purchases/${id}/destroy`;
-		formDelete.submit();
+		Swal.fire({
+			title: `Hapus Data Pembelian?`,
+			showDenyButton: true,
+			showCancelButton: false,
+			confirmButtonText: 'Hapus',
+			denyButtonText: `Batal`,
+		}).then((result) => {
+			if (result.isConfirmed) {
+				const formDelete = document.forms["form-delete"];
+				formDelete.action = `${baseURL}purchases/${id}/destroy`;
+				formDelete.submit();
+			}
+		})
 	}
 </script>
 
