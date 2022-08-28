@@ -49,7 +49,7 @@
                                                 <button class="btn btn-light btn-sm fw-500 me-2" onclick="editCustomer(`<?= $customer->id ?>`)">
                                                     Edit
                                                 </button>
-                                                <button class="btn btn-light-danger btn-sm" onclick="deleteCustomer(`<?= $customer->id  ?>`)" title="<?= lang("Customer.title.delete")  ?>">
+                                                <button class="btn btn-light-danger btn-sm" onclick="deleteCustomer(`<?= $customer->id  ?>`, `<?= esc($customer->name) ?>`)" title="<?= lang("Customer.title.delete")  ?>">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             <?php endif; ?>
@@ -211,11 +211,22 @@
         });
     }
 
-    function deleteCustomer(id) {
-        const formDelete = document.forms["form-delete"];
-        console.log(formDelete);
-        formDelete.setAttribute("action", `${baseURL}customers/${id}`);
-        formDelete.submit();
+    function deleteCustomer(id, name) {
+        Swal.fire({
+            title: `Hapus ${name}`,
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Hapus',
+            denyButtonText: `Batal`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const formDelete = document.forms["form-delete"];
+                console.log(formDelete);
+                formDelete.setAttribute("action", `${baseURL}customers/${id}`);
+                formDelete.submit();
+            }
+        })
+
     }
 </script>
 
