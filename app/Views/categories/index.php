@@ -12,7 +12,7 @@
                             <input type="search" name="q" id="search-bar" value="<?= esc($keyword)  ?>" placeholder="Cari..." class="form-control solid me-2">
                         </form>
                         <div class="ms-auto">
-                            <?php if(session("role") == "admin"): ?>
+                            <?php if (session("role") == "admin") : ?>
                                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-modal">
                                     <i class="fas fa-plus"></i>
                                 </button>
@@ -30,15 +30,15 @@
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700 fw-500">
-                                <?php foreach($categories as $category): ?>
+                                <?php foreach ($categories as $category) : ?>
                                     <tr>
                                         <td><?= esc($category->name)  ?></td>
                                         <td>
-                                            <?php if(session("role") == "admin"): ?>
+                                            <?php if (session("role") == "admin") : ?>
                                                 <button class="btn btn-light btn-sm fw-500 me-2" onclick="editCategory(`<?= $category->id  ?>`)">
                                                     Edit
                                                 </button>
-                                                <button class="btn btn-light-danger btn-sm" onclick="deleteCategory(`<?= $category->id  ?>`)">
+                                                <button class="btn btn-light-danger btn-sm" onclick="deleteCategory(`<?= $category->id  ?>`, `<?= $category->name ?>`)">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             <?php endif; ?>
@@ -127,7 +127,7 @@
 <!-- Modal -->
 <script src="<?= base_url("/assets/js/modal.js")  ?>"></script>
 
-<?php if(session("successMessage")): ?>
+<?php if (session("successMessage")) : ?>
 
     <script>
         successAlert(`<?= session("successMessage")  ?>`);
@@ -149,7 +149,7 @@
             }
         }).then(res => {
             const category = res.data;
-            
+
             document.querySelector("#edit-name").value = category.name;
             document.querySelector("#form-edit").setAttribute("action", `${baseURL}categories/${id}`);
             const editModal = new bootstrap.Modal(document.querySelector("#edit-modal"));
@@ -160,15 +160,24 @@
         });
     }
 
-    function deleteCategory(id) {
-        const formDelete = document.querySelector("#form-delete");
-        formDelete.setAttribute("action", `${baseURL}categories/${id}`);
-        formDelete.submit();
+    function deleteCategory(id, name) {
+        Swal.fire({
+            title: `Hapus ${name}`,
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Hapus',
+            denyButtonText: `Batal`,
+        }).then(result => {
+            if (result.isConfirmed) {
+                const formDelete = document.querySelector("#form-delete");
+                formDelete.setAttribute("action", `${baseURL}categories/${id}`);
+                formDelete.submit();
+            }
+        })
     }
-
 </script>
 
-<?php if(session("validationErrorCreate")): ?>
+<?php if (session("validationErrorCreate")) : ?>
 
     <script>
         const createModalEl = document.querySelector("#create-modal");
@@ -178,7 +187,7 @@
 
 <?php endif; ?>
 
-<?php if(session("validationErrorUpdate")): ?>
+<?php if (session("validationErrorUpdate")) : ?>
 
     <script>
         editCategory(`<?= session("validationErrorUpdate")  ?>`);
@@ -197,4 +206,3 @@
 </script>
 
 <?= $this->endSection()  ?>
-
