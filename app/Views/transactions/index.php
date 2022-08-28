@@ -368,10 +368,20 @@
 <?php endif; ?>
 
 <script>
-	function deleteTransaction(id) {
-		const formDelete = document.forms["form-delete"];
-		formDelete.action = `${baseURL}transactions/${id}`;
-		formDelete.submit();
+	function deleteTransaction(id, name) {
+		Swal.fire({
+			title: `Hapus Transaksi`,
+			showDenyButton: true,
+			showCancelButton: false,
+			confirmButtonText: 'Hapus',
+			denyButtonText: `Batal`,
+		}).then(res => {
+			if (res.isConfirmed) {
+				const formDelete = document.forms["form-delete"];
+				formDelete.action = `${baseURL}transactions/${id}`;
+				formDelete.submit();
+			}
+		});
 	}
 </script>
 
