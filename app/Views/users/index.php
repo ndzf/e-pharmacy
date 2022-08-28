@@ -17,7 +17,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="card-body py-0 pb-3">
                     <div class="table-responsive">
@@ -33,7 +33,7 @@
                                 </tr>
                             </thead>
                             <tbody class="text-gray-800 fw-500">
-                                <?php foreach($users as $user): ?>
+                                <?php foreach ($users as $user) : ?>
                                     <tr>
                                         <td><?= esc($user->name)  ?></td>
                                         <td><?= esc($user->username)  ?></td>
@@ -45,9 +45,9 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <?php if($user->role == "cashier"): ?>
+                                            <?php if ($user->role == "cashier") : ?>
                                                 <button class="btn btn-light btn-sm fw-600 me-2" <?= (($user->role == "admin") ? "disabled" : "")  ?> onclick="editUser(`<?= $user->id  ?>`)">Edit</button>
-                                                <button class="btn btn-light-danger btn-sm" onclick="deleteUser(`<?= $user->id  ?>`)">
+                                                <button class="btn btn-light-danger btn-sm" onclick="deleteUser(`<?= $user->id  ?>`, `<?= esc($user->name) ?>`)">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             <?php endif; ?>
@@ -116,49 +116,49 @@
 <div class="modal modal-outer right-modal fade" id="edit-modal" tabindex="-1" aria-labelledby="edit-modal-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title text-dark" id="edit-modal-label"><?= lang("User.title.edit")  ?></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="" method="post" id="form-edit">
-                <input type="hidden" name="currentUsername" id="current-username">
-                <input type="hidden" name="_method" value="PUT">
-                <div class="mb-2">
-                    <label for="edit-name" class="col-form-label text-gray-800 fw-500"><?= lang("User.name")  ?> <span class="text-danger">*</span></label>
-                    <input type="text" name="name" id="edit-name" class="form-control fw-500 solid <?= (isset($validation["name"]) ? "is-invalid" : "")  ?>">
-                    <div class="invalid-feedback"><?= $validation["name"] ?? ""  ?></div>
-                </div>
-                <div class="mb-2">
-                    <label for="edit-username" class="col-form-label text-gray-800 fw-500"><?= lang("User.username")  ?> <span class="text-danger">*</span></label>
-                    <input type="text" name="username" id="edit-username" disabled class="form-control fw-500 solid <?= (isset($validation["username"]) ? "is-invalid" : "")  ?>">
-                    <div class="invalid-feedback"><?= $validation["username"] ?? ""  ?></div>
-                </div>
-                <div class="mb-2">
-                    <label for="edit-phone-number" class="col-form-label text-gray-800 fw-500"><?= lang("User.phoneNumber")  ?></label>
-                    <input type="text" name="phoneNumber" id="edit-phone-number" class="form-control solid fw-500">
-                </div>
-                <div class="mb-2">
-                    <label for="edit-role" class="col-form-label text-gray-800 fw-500 "><?= lang("User.role")  ?> <span class="text-danger">*</span></label>
-                    <select name="role" id="edit-role" class="form-select solid fw-500 <?= (isset($validation["role"]) ? "is-invalid" : "") ?>">
-                        <option value="cashier"><?= lang("User.cashier")  ?></option>
-                        <option value="admin"><?= lang("User.admin")  ?></option>
-                    </select>
-                    <div class="invalid-feedback"><?= $validation["role"] ?? ""  ?></div>
-                </div>
-                <div class="mb-4">
-                    <label for="edit-status" class="col-form-label text-gray-800 fw-500 "><?= lang("User.status")  ?> <span class="text-danger">*</span></label>
-                    <select name="status" id="edit-status" class="form-select solid fw-500 <?= (isset($validation["status"]) ? "is-invalid" : "") ?>">
-                        <option value="active">Aktif</option>
-                        <option value="suspend">Suspend</option>
-                    </select>
-                    <div class="invalid-feedback"><?= $validation["status"] ?? ""  ?></div>
-                </div>
-                <div class="mb-3 d-flex justify-content-end">
-                    <button class="btn btn-primary fw-500"><?= lang("User.save")  ?></button>
-                </div>
-            </form>
-        </div>
+            <div class="modal-header">
+                <h5 class="modal-title text-dark" id="edit-modal-label"><?= lang("User.title.edit")  ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="form-edit">
+                    <input type="hidden" name="currentUsername" id="current-username">
+                    <input type="hidden" name="_method" value="PUT">
+                    <div class="mb-2">
+                        <label for="edit-name" class="col-form-label text-gray-800 fw-500"><?= lang("User.name")  ?> <span class="text-danger">*</span></label>
+                        <input type="text" name="name" id="edit-name" class="form-control fw-500 solid <?= (isset($validation["name"]) ? "is-invalid" : "")  ?>">
+                        <div class="invalid-feedback"><?= $validation["name"] ?? ""  ?></div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="edit-username" class="col-form-label text-gray-800 fw-500"><?= lang("User.username")  ?> <span class="text-danger">*</span></label>
+                        <input type="text" name="username" id="edit-username" disabled class="form-control fw-500 solid <?= (isset($validation["username"]) ? "is-invalid" : "")  ?>">
+                        <div class="invalid-feedback"><?= $validation["username"] ?? ""  ?></div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="edit-phone-number" class="col-form-label text-gray-800 fw-500"><?= lang("User.phoneNumber")  ?></label>
+                        <input type="text" name="phoneNumber" id="edit-phone-number" class="form-control solid fw-500">
+                    </div>
+                    <div class="mb-2">
+                        <label for="edit-role" class="col-form-label text-gray-800 fw-500 "><?= lang("User.role")  ?> <span class="text-danger">*</span></label>
+                        <select name="role" id="edit-role" class="form-select solid fw-500 <?= (isset($validation["role"]) ? "is-invalid" : "") ?>">
+                            <option value="cashier"><?= lang("User.cashier")  ?></option>
+                            <option value="admin"><?= lang("User.admin")  ?></option>
+                        </select>
+                        <div class="invalid-feedback"><?= $validation["role"] ?? ""  ?></div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="edit-status" class="col-form-label text-gray-800 fw-500 "><?= lang("User.status")  ?> <span class="text-danger">*</span></label>
+                        <select name="status" id="edit-status" class="form-select solid fw-500 <?= (isset($validation["status"]) ? "is-invalid" : "") ?>">
+                            <option value="active">Aktif</option>
+                            <option value="suspend">Suspend</option>
+                        </select>
+                        <div class="invalid-feedback"><?= $validation["status"] ?? ""  ?></div>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-end">
+                        <button class="btn btn-primary fw-500"><?= lang("User.save")  ?></button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -187,7 +187,7 @@
     }
 </script>
 
-<?php if(session("successMessage")): ?>
+<?php if (session("successMessage")) : ?>
     <script>
         successAlert(`<?= session("successMessage")  ?>`);
     </script>
@@ -234,15 +234,24 @@
         });
     }
 
-    function deleteUser(id) {
-        const formDelete = document.forms["form-delete"];
-        formDelete.setAttribute("action", `${baseURL}users/${id}`);
-        formDelete.submit();
+    function deleteUser(id, name) {
+        Swal.fire({
+            title: `Hapus ${name}`,
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Hapus',
+            denyButtonText: `Batal`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const formDelete = document.forms["form-delete"];
+                formDelete.setAttribute("action", `${baseURL}users/${id}`);
+                formDelete.submit();
+            }
+        })
     }
-
 </script>
 
-<?php if(session("validationErrorCreate")): ?>
+<?php if (session("validationErrorCreate")) : ?>
     <script>
         const createModalEl = document.querySelector("#create-modal");
         const createModal = new bootstrap.Modal(createModalEl);
@@ -250,7 +259,7 @@
     </script>
 <?php endif ?>
 
-<?php if(session("validationErrorUpdate")): ?>
+<?php if (session("validationErrorUpdate")) : ?>
     <script>
         const editModalEl = document.querySelector("#edit-modal");
         const editModal = new bootstrap.Modal(editModalEl);
