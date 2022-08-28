@@ -12,7 +12,7 @@
                             <input type="search" name="q" placeholder="Cari.." id="search-bar" value="<?= esc($keyword)  ?>" class="form-control solid me-2">
                         </form>
                         <div class="ms-auto">
-                            <?php if(session("role") == "admin"): ?>
+                            <?php if (session("role") == "admin") : ?>
                                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-modal">
                                     <i class="fas fa-plus"></i>
                                 </button>
@@ -32,17 +32,17 @@
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700 fw-500">
-                                <?php foreach($suppliers as $supplier): ?>
+                                <?php foreach ($suppliers as $supplier) : ?>
                                     <tr>
                                         <td><?= esc($supplier->name);  ?></td>
                                         <td><?= esc($supplier->phone_number);  ?></td>
                                         <td><?= esc($supplier->email);  ?></td>
                                         <td>
-                                            <?php if(session("role") == "admin"): ?>
+                                            <?php if (session("role") == "admin") : ?>
                                                 <button class="btn btn-light me-2 fw-500 btn-sm" onclick="editSupplier(`<?= $supplier->id  ?>`)">
                                                     Edit
                                                 </button>
-                                                <button class="btn btn-light-danger btn-sm" onclick="deleteSupplier(`<?= $supplier->id ?>`)">
+                                                <button class="btn btn-light-danger btn-sm" onclick="deleteSupplier(`<?= $supplier->id ?>`, `<?= $supplier->name ?>`)">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             <?php endif; ?>
@@ -145,7 +145,7 @@
 <script src="<?= base_url("/assets/js/alert.js")  ?>"></script>
 <script src="<?= base_url("/assets/js/modal.js")  ?>"></script>
 
-<?php if(session("successMessage")): ?>
+<?php if (session("successMessage")) : ?>
 
     <script>
         successAlert(`<?= session("successMessage")  ?>`);
@@ -154,7 +154,6 @@
 <?php endif; ?>
 
 <script>
-
     const baseURL = `<?= site_url()  ?>`
 
     function editSupplier(id) {
@@ -178,24 +177,33 @@
         })
     }
 
-    function deleteSupplier(id) {
-        const formDelete = document.forms["form-delete"];
-        formDelete.setAttribute("action", `${baseURL}suppliers/${id}`);
-        formDelete.submit();
+    function deleteSupplier(id, name) {
+        Swal.fire({
+            title: `Hapus ${name}`,
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Hapus',
+            denyButtonText: `Batal`,
+        }).then(result => {
+            if (result.isConfirmed) {
+                const formDelete = document.forms["form-delete"];
+                formDelete.setAttribute("action", `${baseURL}suppliers/${id}`);
+                formDelete.submit();
+            }
+        })
     }
-
 </script>
 
-<?php if(session("validationErrorCreate")): ?>
+<?php if (session("validationErrorCreate")) : ?>
 
     <script>
-        const createModal =  new bootstrap.Modal(document.querySelector("#create-modal"));
+        const createModal = new bootstrap.Modal(document.querySelector("#create-modal"));
         createModal.show();
     </script>
 
 <?php endif; ?>
 
-<?php if(session("validationErrorUpdate")): ?>
+<?php if (session("validationErrorUpdate")) : ?>
 
     <script>
         editSupplier(`<?= session("validationErrorUpdate")  ?>`);
