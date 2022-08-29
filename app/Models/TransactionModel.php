@@ -14,7 +14,7 @@ class TransactionModel extends Model
     protected $returnType       = \App\Entities\TransactionEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["user_id", "customer_id", "status", "payment_status", "grand_total", "discount", "date"];
+    protected $allowedFields    = ["user_id", "customer_id", "status", "payment_status", "grand_total", "discount", "date", "facet", "pick_up_date", "pd", "note"];
 
     // Dates
     protected $useTimestamps = false;
