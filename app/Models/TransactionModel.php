@@ -70,6 +70,11 @@ class TransactionModel extends Model
             "grand_total"           => str_replace(".", "", $inputs["grandTotal"]),
             "payment_status"        => (intval(str_replace(".", "", $inputs["nominal"])) - intval(str_replace(".", "", $inputs["grandTotal"])) < 0) ? "debt" : "cash",
             "status"                => "done",
+            "faced"                 => $inputs["faced"],
+            "pick_up_date"          => $inputs["pick_up_date"],
+            "pd"                    => $inputs["pd"],
+            "recipe"                => $inputs["recipe"],
+            "note"                  => $inputs["note"],
         ];
 
         $builder = $this->table("transactions");

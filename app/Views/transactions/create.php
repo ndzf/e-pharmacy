@@ -41,13 +41,13 @@
                             </thead>
                             <tbody class="text-gray-700 fw-500">
                                 <?php $grandTotal = 0; ?>
-                                <?php foreach($transactionDetails as $transactionDetail): ?>
+                                <?php foreach ($transactionDetails as $transactionDetail) : ?>
                                     <?php $grandTotal += $transactionDetail->qty * $transactionDetail->product_price ?>
                                     <tr>
                                         <td><?= $transactionDetail->product_name ?></td>
                                         <td><?= $transactionDetail->qty ?></td>
                                         <td class="format-rupiah" data-format="<?= esc($transactionDetail->product_price)  ?>">
-                                            <?= $transactionDetail->product_price ?> 
+                                            <?= $transactionDetail->product_price ?>
                                         </td>
                                         <td>
                                             <button class="btn btn btn-light-light fw-500 me-2 btn-sm" onclick="detail(`<?= $transactionDetail->id ?>`)">
@@ -86,9 +86,29 @@
                             <label for="grand-total" class="col-form-label text-gray-600 fw-500">Grand Total</label>
                             <input type="text" name="grandTotal" id="grand-total" class="form-control solid fw-500" readonly="readonly">
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-2">
                             <label for="nominal" class="col-form-label text-gray-600 fw-500">Uang Yang Dibayar</label>
                             <input type="text" name="nominal" id="nominal" value="<?= old("nominal") ?>" class="form-control format-rupiah-input solid text-gray-600 fw-500">
+                        </div>
+                        <div class="mb-2">
+                            <label for="faced" class="col-form-label text-gray-600 fw-500">Faced</label>
+                            <input type="text" name="faced" id="faced" class="form-control solid fw-500">
+                        </div>
+                        <div class="mb-2">
+                            <label for="pick-up-date" class="col-form-label text-gray-600 fw-500">Tanggal ambil</label>
+                            <input type="date" name="pick_up_date" id="pick-up-date" class="form-control solid fw-500">
+                        </div>
+                        <div class="mb-2">
+                            <label for="pd" class="col-form-label text-gray-600 fw-500">PD</label>
+                            <input type="text" name="pd" id="pd" class="form-control solid fw-500">
+                        </div>
+                        <div class="mb-2">
+                            <label for="recipe" class="col-form-label text-gray-600 fw-500">Resep</label>
+                            <textarea name="recipe" id="recipe" rows="2" class="form-control solid fw-500"></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label for="note" class="col-form-label text-gray-600 fw-500">Ket</label>
+                            <textarea name="note" id="note" rows="2" class="form-control solid fw-500"></textarea>
                         </div>
                         <div class="mb-3 d-flex">
                             <a href="<?= site_url("transactions/destroy") ?>" class="btn btn-danger fw-500 me-2">
@@ -151,7 +171,7 @@
                     </div>
                     <div class="mb-2">
                         <label for="create-qty" class="col-form-label text-gray-700 fw-500"><?= lang("Product.qty") ?></label>
-                        <input type="number" name="qty" value="<?= old("qty") ?>" required id="create-qty" class="form-control solid fw-500" >
+                        <input type="number" name="qty" value="<?= old("qty") ?>" required id="create-qty" class="form-control solid fw-500">
                     </div>
                     <div id="create-lens-details">
                         <table class="table table-borderless table-dashed align-middle">
@@ -342,7 +362,6 @@
             }
         })
     }
-
 </script>
 
 <script>
@@ -366,7 +385,7 @@
     }
 </script>
 
-<?php if(session("errorMessage")): ?>
+<?php if (session("errorMessage")) : ?>
 
     <script>
         errorAlert(`<?= session("errorMessage") ?>`);
@@ -374,7 +393,7 @@
 
 <?php endif ?>
 
-<?php if(session("successMessage")): ?>
+<?php if (session("successMessage")) : ?>
     <script>
         successAlert(`<?= session("successMessage") ?>`);
     </script>
@@ -416,7 +435,6 @@
         const total = countDiscount(parseInt(discount.value), grandTotal);
         document.querySelector("#grand-total").value = formatRupiah(total.toString());
     });
-    
 </script>
 
 <script>
@@ -445,7 +463,6 @@
         const modalDetail = new bootstrap.Modal(document.querySelector("#modal-detail"));
         modalDetail.show();
     }
-
 </script>
 
 <?= $this->endSection() ?>
