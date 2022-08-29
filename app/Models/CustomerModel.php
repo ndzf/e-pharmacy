@@ -53,14 +53,14 @@ class CustomerModel extends Model
         return $builder;
     }
 
-	public function getNames(?string ...$roles)
-	{
-		$builder = $this->table("customers");
-		$builder->select("id, name, role");
-		if (!empty($roles)) {
-			$builder->whereIn("role", $roles);
-		}
-		$data = $builder->get();
-		return $data->getCustomResultObject("\App\Entities\CustomerEntity");
-	}
+    public function getNames(?string ...$roles)
+    {
+        $builder = $this->table("customers");
+        $builder->select("id, name, role, phone_number");
+        if (!empty($roles)) {
+            $builder->whereIn("role", $roles);
+        }
+        $data = $builder->get();
+        return $data->getCustomResultObject("\App\Entities\CustomerEntity");
+    }
 }
