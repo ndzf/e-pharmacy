@@ -140,6 +140,8 @@
 									<?= esc($customer->role) ?>
 									-
 									<?= esc($customer->name) ?>
+									-
+									<?= esc($customer->phone_number) ?>
 								</option>
 							<?php endforeach; ?>
 						</select>
