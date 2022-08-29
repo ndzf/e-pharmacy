@@ -16,7 +16,7 @@ class TransactionsMigration extends Migration
 			"payment_status"	=> ["type" => "enum", "constraint" => ["cash", "debt"], "null" => true],
 			"grand_total"		=> ["type" => "int", "constraint" => 11, "null" => true],
 			"discount"			=> ["type" => "int", "constraint" => 11, "null" => true],
-			"facet"				=> ["type" => "varchar", "constraint" => 255, "null" => true],
+			"faced"				=> ["type" => "varchar", "constraint" => 255, "null" => true],
 			"pick_up_date"		=> ["type" => "date", "null" => true],
 			"pd"				=> ["type" => "varchar", "constraint" => 255, "null" => true],
 			"note"				=> ["type" => "text", "null" => true],
