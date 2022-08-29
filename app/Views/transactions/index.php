@@ -132,8 +132,8 @@
 			</div>
 			<div class="modal-body">
 				<form action="" method="post" id="form-create">
-					<div class="mb-2">
-						<label class="col-form-label" for="customer"><?= lang("Transaction.customer") ?></label>
+					<div class="mb-4">
+						<label class="col-form-label text-gray-600 fw-500" for="customer"><?= lang("Customer.name") ?></label>
 						<select id="customer" class="" name="customer" required>
 							<?php foreach ($customers as $customer) : ?>
 								<option value="<?= $customer->id ?>" <?= (old("customer") == $customer->id) ? "selected" : "" ?>>
