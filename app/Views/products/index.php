@@ -76,11 +76,12 @@
                             </div>
                         </div>
 
-                        <button class="btn btn-light-primary fw-500 me-2" id="print-barcode">Barcode</button>
-
-                        <a href="<?= site_url("/products/new") ?>" class="btn btn-primary" type="button">
-                            <i class="fas fa-plus"></i>
-                        </a>
+                        <?php if (session("role") == "admin") : ?>
+                            <button class="btn btn-light-primary fw-500 me-2" id="print-barcode">Barcode</button>
+                            <a href="<?= site_url("/products/new") ?>" class="btn btn-primary" type="button">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="card-body pt-0">
@@ -117,12 +118,14 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <a href="<?= site_url("/products/{$product->id}/edit") ?>" class="btn btn-light-light fw-500 btn-sm me-2" type="button">
-                                                Edit
-                                            </a>
-                                            <button class="btn btn-sm btn-light-danger" onclick="deleteProduct(`<?= $product->id ?>`, `<?= $product->name ?>`)" title="<?= lang("Product.title.delete") ?>">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <?php if (session("role") == "admin") : ?>
+                                                <a href="<?= site_url("/products/{$product->id}/edit") ?>" class="btn btn-light-light fw-500 btn-sm me-2" type="button">
+                                                    Edit
+                                                </a>
+                                                <button class="btn btn-sm btn-light-danger" onclick="deleteProduct(`<?= $product->id ?>`, `<?= $product->name ?>`)" title="<?= lang("Product.title.delete") ?>">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
