@@ -19,6 +19,7 @@ class TransactionsMigration extends Migration
 			"faced"				=> ["type" => "varchar", "constraint" => 255, "null" => true],
 			"pick_up_date"		=> ["type" => "date", "null" => true],
 			"pd"				=> ["type" => "varchar", "constraint" => 255, "null" => true],
+			"recipe"			=> ["type" => "text", "null" => true],
 			"note"				=> ["type" => "text", "null" => true],
 			"date"				=> ["type" => "date"],
 			"created_at"		=> ["type" => "timestamp"],
