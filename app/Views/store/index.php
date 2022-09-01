@@ -30,6 +30,16 @@
                             <button class="btn btn-primary fw-500">Simpan</button>
                         </div>
                     </form>
+                    <form action="<?= site_url("/store/invoice-setting") ?>" enctype="multipart/form-data" method="post">
+                        <input type="hidden" name="_method" value="PUT">
+                        <div class="mb-4">
+                            <label for="invoice-banner" class="col-form-label text-gray-500 fw-500">Logo Aplikasi</label>
+                            <input type="file" name="invoice_banner" required id="invoice-banner" class="form-control solid fw-500">
+                        </div>
+                        <div class="mb-2 d-flex justify-content-end">
+                            <button class="btn btn-primary fw-500">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -37,29 +47,33 @@
             <div class="card border-0">
                 <div class="card-body py-2">
                     <h3 class="text-gray-600 mb-0 mt-2 text-truncate">Pengaturan Kartu Pelanggan</h3>
-                    <form action="<?= site_url("/store/print") ?>" enctype="multipart/form-data" method="post">
+                    <form action="<?= site_url("customer-card-setting/$setting->id") ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="_method" value="PUT">
                         <div class="mb-2">
-                            <label for="text-color" class="col-form-label text-gray-500 fw-500">Warna Tulisan</label>
-                            <input type="color" class="form-control fw-500 solid form-control-color" id="text-color" name="textColor" value="<?= $store->text_color ?>" title="Choose your color">
-                        </div>
-                        <div class="mb-4">
-                            <label for="file" class="col-form-label text-gray-500 fw-500">Background</label>
-                            <input class="form-control solid fw-500" name="file" type="file" id="file">
-                        </div>
-                        <div class="mb-2 d-flex justify-content-end">
-                            <button class="btn btn-primary fw-500">Submit</button>
-                        </div>
-                    </form>
-                    <h3 class="text-gray-600 mb-0 mt-3">Pengaturan Nota</h3>
-                    <form action="<?= site_url("/store/invoice-setting") ?>" enctype="multipart/form-data" method="post">
-                        <input type="hidden" name="_method" value="PUT">
-                        <div class="mb-4">
-                            <label for="invoice-banner" class="col-form-label text-gray-500 fw-500">Header</label>
-                            <input type="file" name="invoice_banner" required id="invoice-banner" class="form-control solid fw-500">
-                        </div>
-                        <div class="mb-2 d-flex justify-content-end">
-                            <button class="btn btn-primary fw-500">Submit</button>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <label class="col-form-label col-form-label text-gray-700 fw-500">Warna Text</label>
+                                    <input type="color" name="text_color" class="form-control form-control-color" value="<?= old("text_color", $setting->text_color) ?>">
+                                </div>
+                                <div class="col">
+                                    <label class="col-form-label col-form-label text-gray-700 fw-500">Warna Primary</label>
+                                    <input type="color" name="primary_color" class="form-control form-control-color" value="<?= old("primary_color", $setting->primary_color) ?>">
+                                </div>
+                                <div class="col">
+                                    <label class="col-form-label col-form-label text-gray-700 fw-500">Warna Secondary</label>
+                                    <input type="color" name="surface_color" class="form-control form-control-color" value="<?= old("surface_color", $setting->surface_color) ?>">
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <label class="col-form-label col-form-label text-gray-700 fw-500">Background Image</label>
+                                    <input type="file" name="background_image" class="form-control fw-500 text-gray-700">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary float-end fw-500">Simpan</button>
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
                     </form>
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\CustomerCardSettingModel;
 use App\Models\StoreModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
@@ -18,6 +19,7 @@ class StoreController extends BaseController
     public function index()
     {
         $store = $this->storeModel->getStore();
+        $settingModel = new CustomerCardSettingModel();
 
         if (empty($store)) {
             throw PageNotFoundException::forPageNotFound("something error");
@@ -26,6 +28,7 @@ class StoreController extends BaseController
         $data = [
             "title"     => "Toko",
             "store"     => $store,
+            "setting"   => $settingModel->getByStatus("active"),
         ];
 
         return view("store/index", $data);
@@ -111,8 +114,8 @@ class StoreController extends BaseController
             $store->invoice_banner = $fileName;
             $this->storeModel->save($store);
 
-            return redirect()->to("/store")->with("successMessage", "Berhasil memperbaharui header invoice");
+            return redirect()->to("/store")->with("successMessage", "Berhasil memperbaharui Logo");
         }
-        return redirect()->to("/store")->with("errorMessage", "Header not uploaded");
+        return redirect()->to("/store")->with("errorMessage", "Logo not uploaded");
     }
 }

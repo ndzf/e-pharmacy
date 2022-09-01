@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\CustomerModel;
 use App\Entities\CustomerEntity;
+use App\Models\CustomerCardSettingModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class CustomerController extends BaseController
@@ -99,6 +100,7 @@ class CustomerController extends BaseController
 
     public function print(int $id)
     {
+        $settingModel = new CustomerCardSettingModel();
         $storeModel = new \App\Models\StoreModel();
         $customer = $this->customerModel->find($id);
 
@@ -108,7 +110,8 @@ class CustomerController extends BaseController
 
         $data = [
             "customer"      => $customer,
-            "store"         => $storeModel->getStore()
+            "store"         => $storeModel->getStore(),
+            "setting"       => $settingModel->getByStatus("active"),
         ];
 
         return view("customers/print", $data);

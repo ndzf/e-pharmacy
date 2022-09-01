@@ -10,12 +10,21 @@
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+        :root {
+            ---text-color: <?= $setting->text_color ?>;
+            ---text-white: #fff;
+            --primary: <?= $setting->primary_color ?>;
+            --surface: <?= $setting->surface_color ?>;
+        }
 
         @page {
             /* dimensions for the whole page */
             size: A5;
             margin: 0;
+        }
+
+        .text-primary {
+            color: var(--primary) !important;
         }
 
         html {
@@ -27,10 +36,8 @@
             /* A5 dimensions */
             height: 210mm;
             width: 148.5mm;
-            font-family: sans-serif;
-            margin: 0;
-            font-family: "Roboto", sans-serif;
 
+            margin: 0;
         }
 
         /* fill half the height with each face */
@@ -40,66 +47,84 @@
             position: relative;
         }
 
-        /* the back face */
-        .face-back {
-            /* background: #f6f6f6; */
-            /* background-color: #fff; */
-            background-color: #f5f8ff;
-        }
-
         /* the front face */
         .face-front {
-            background: #fff;
-            background-color: black;
-        }
-
-        /* an image that fills the whole of the front face */
-        .face-front img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .face-front {
+            background-image: url("<?= "/assets/customer-card/" . $setting->background_image ?>");
             -webkit-print-color-adjust: exact !important;
             color-adjust: exact !important;
         }
 
-        h1 {
-            font-size: 2rem;
-            font-weight: 500;
+        .header-box {
+            background-color: var(--primary);
+            width: 60%;
+            position: absolute;
+            right: 0;
+            z-index: 1;
         }
 
-        h3 {
-            font-size: 1.3rem;
+        .logo-wrapper {
+            background-color: var(--surface);
+            padding: 1rem;
+            position: absolute;
+            width: 100%;
+            top: 2rem;
         }
 
-        .text-color {
-            color: <?= $store->text_color ?>;
+        .customer-box {
+            top: 8rem;
+            position: absolute;
+            z-index: 2;
+        }
+
+        .description-box {
+            background-color: var(--surface);
+            position: absolute;
+            bottom: 0;
+            width: 70%;
+            height: 9rem;
+        }
+
+        .info span {
+            font-weight: bold;
         }
     </style>
 </head>
 
-<body onload="window.print()">
-    <div class="face face-front d-flex flex-column" style="background-image: url(<?= site_url("/assets/print-customer/$store->banner") ?>) !important; background-position: center; background-size: cover;">
-        <!-- <div class="top p-2 text-white d-flex flex-grow-1 flex-column justify-content-center border">
-            <h1 class="fw-normal text-color"><?= $store->name ?></h1>
-            <p class="fw-bold text-color"><?= $store->phone_number ?></p>
-            <h3 class="text-color"><?= $customer->name ?></h3>
-        </div> -->
-        <div class="top p-2 text-white d-flex flex-grow-1 flex-column border">
-            <h1 class="fw-normal text-color"><?= $store->name ?></h1>
-            <p class="fw-bold text-color mb-0"> <i class="fas fa-phone me-1"></i> <?= $store->phone_number ?></p>
-            <p class="fw-bold text-color"> <i class="fas fa-location-dot me-2"></i> <?= $store->address ?></p>
-            <div class="my-auto">
+<body onload="window.printx()">
+    <div class="face face-front p-relative">
+        <div class="header-box ">
+            <h2 class="text-white pt-2 ps-3 h4 pb-1">Kartu Member</h2>
+        </div>
+        <div class="logo-wrapper d-flex">
+            <img src="<?= base_url("/assets/images/invoice_banner/$store->invoice_banner") ?>" height="50px" height="50px" alt="Logo">
+            <div class="ms-auto mt-2" style="width: 60%">
+                <div class="d-flex flex-column">
+                    <div class="info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><?= $store->address ?></span>
+                    </div>
+                    <div class="info d-flex">
+                        <div class="one me-2">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span><?= $store->phone_number ?></span>
+                        </div>
+                        <!-- <div class="">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>-</span>
+                        </div> -->
+                    </div>
+                </div>
             </div>
-            <div class="mt-auto">
-                <h3 class="text-color"><?= $customer->name ?></h3>
+        </div>
+        <div class="content  customer-box">
+            <div class="d-flex ms-3 flex-column mt-3">
+                <h2>Nama: <?= $customer->name ?></h2>
+                <h2>Alamat: <?= $customer->address ?></h2>
             </div>
+        </div>
+        <div class="description-box p-2">
+            <h2 class="h5 text-primary">Harap bawa kartu ini saat melakukan transaksi di Optik AVIVA.</h2>
+            <h2 class="h5 text-primary">Kartu hanya berlaku untuk nama yang Tercantum di dalam kartu ini.</h2>
         </div>
     </div>
 </body>

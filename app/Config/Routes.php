@@ -161,6 +161,11 @@ $routes->group("reports", function ($routes) {
     $routes->post("export-omzet", "ReportController::attemptExportOmzet", ["filter" => "isLoggedIn:admin"]);
 });
 
+$routes->group("customer-card-setting", ["filter" => "isLoggedIn:admin"], function ($routes) {
+    $routes->get("/", "CustomerCardSettingController::index");
+    $routes->put("(:num)", "CustomerCardSettingController::update/$1");
+});
+
 
 /*
  * --------------------------------------------------------------------

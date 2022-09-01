@@ -39,4 +39,13 @@ class CustomerCardSettingModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getByStatus(string $status): ?object
+    {
+        $builder = $this->table("customer_card_setting");
+        $builder->select("*");
+        $builder->where("status", $status);
+        $data = $builder->get();
+        return $data->getCustomRowObject(1, "\App\Entities\CustomerCardSettingEntity");
+    }
 }
