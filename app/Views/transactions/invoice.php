@@ -4,16 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="<?= base_url("/assets/plugins/fontawesome-free/css/all.min.css") ?>">
-    <link rel="stylesheet" href="<?= base_url("/assets/plugins/bootstrap/css/bootstrap.min.css") ?>">
-    <link rel="stylesheet" href="<?= base_url("/assets/css/style.css") ?>">
-    <title>Invoice</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css">
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <!-- Style -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        :root {
+            --text-color: <?= $setting->text_color ?>;
+        }
 
         @page {
             /* dimensions for the whole page */
-            size: A5;
+            size: A5 !important;
             margin: 0;
         }
 
@@ -24,11 +26,11 @@
 
         body {
             /* A5 dimensions */
-            /* height: 210mm; */
-            width: 148.5mm;
-            font-family: "inter" !important;
+            height: 210mm !important;
+            width: 148mm !important;
             margin: 0;
-            -webkit-print-color-adjust: exact;
+            background-color: inherit !important;
+            color: var(--text-color);
         }
 
         /* fill half the height with each face */
@@ -40,234 +42,251 @@
 
         /* the back face */
         .face-back {
-            /* background: #f6f6f6; */
-            /* background-color: #fff; */
-            background-color: #f5f8ff;
-            border: 1px solid black;
+            background: #f6f6f6;
         }
 
         /* the front face */
         .face-front {
             background: #fff;
-            background-color: #f5f8ff;
         }
 
-        /* an image that fills the whole of the front face */
-        /* .face-front img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-        } */
-
-        table.products {
-            width: 100%;
-            border-spacing: 0;
+        .fw-500 {
+            font-weight: 500 !important;
         }
 
-        .mt-3 {
-            margin-top: 1rem;
+        .header {
+            border-bottom: 2px solid var(--text-color);
+            padding-bottom: .5rem;
         }
 
-        table.products th {
-            padding: .5em;
-            border-collapse: separate;
-            background-color: #0834a9;
-            color: white;
-            -webkit-print-color-adjust: exact;
-            text-align: left;
-            font-weight: 500;
+        .content {
+            border-bottom: 2px solid var(--text-color);
         }
 
-        table.products td {
-            padding: .5em;
-            border-bottom: 1px solid var(--dark);
-            -webkit-print-color-adjust: exact;
-            color: var(--dark);
+        .content .left {
+            border-right: 1px solid var(--text-color);
+            width: 50%;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            padding-right: .3rem;
+            padding-top: .5rem;
+            padding-bottom: .3rem;
         }
 
-        table.detail {
-            border-spacing: 2px !important;
-            border-collapse: collapse;
+        .content .right {
+            border-left: 1px solid var(--text-color);
+            width: 50%;
+            padding-left: .5rem;
+            padding-top: .5rem;
+            padding-bottom: .3rem;
         }
 
-        .detail>:not(caption)>*>* {
+        .info .table>:not(caption)>*>* {
             padding: 0;
         }
 
-        table.detail td {
-            font-weight: 500;
-            color: var(--dark);
-            -webkit-print-color-adjust: exact;
-            padding-bottom: 5px;
+        p {
+            margin: 0;
         }
 
-
-        table.detail th {
-            background-color: #0834a9;
-            font-weight: 500;
-            color: white;
-            -webkit-print-color-adjust: exact;
+        .table-products {
+            color: var(--text-color);
         }
 
-        .bg-primary {
-            background-color: #0834a9 !important;
-            -webkit-print-color-adjust: exact;
+        .table-products.table>:not(caption)>*>* {
+            padding: 0 .2rem;
         }
 
-        h1 {
-            font-size: 2rem;
+        .table-products thead th {
+            font-weight: 400 !important;
         }
 
-        .icon {
-            background-color: #0834a9;
-            width: 1.4rem;
+        .table-products tbody,
+        td,
+        tfoot,
+        th,
+        thead,
+        tr {
+            border-color: var(--text-color);
+        }
+
+        .table-inline th {
+            font-weight: 500 !important;
+        }
+
+        .r-90 {
+            transform: rotate(90deg);
         }
     </style>
+    <title>Document</title>
 </head>
 
-<body onload="">
+<body>
     <div class="face face-front">
-        <img src="<?= base_url("/assets/images/invoice_banner/$store->invoice_banner") ?>" alt="" class="img-fluid">
-        <section class="content p-2">
-            <h1 class="text-center mb-3"><?= $store->name ?? config("App")->appName ?></h1>
-            <div class="text-center d-flex justify-content-center">
-                <div class="list d-flex align-items-middle me-3">
-                    <div class="icon text-white me-1">
-                        <i class="fas fa-phone"></i>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="header d-flex mt-2 align-items-center">
+                    <!-- Logo -->
+                    <img src="<?= base_url("/assets/customer-card/$setting->background_image") ?>" alt="Logo" width="90px" class="me-2" height="70px">
+                    <div class="header-text d-flex flex-column">
+                        <h1 class="h5 mb-1"><?= $store->name ?></h1>
+                        <p class="fw-500 mb-0"><?= $store->address ?></p>
+                        <div class="d-flex mb-0">
+                            <div class="me-3 fw-500">
+                                <i class="fas fa-phone r-90"></i>
+                                <span><?= $store->phone_number ?></span>
+                            </div>
+                            <div class="fw-500">
+                                <i class="fas fa-envelope"></i>
+                                <span><?= $store->email ?></span>
+                            </div>
+                        </div>
                     </div>
-                    <span class="fw-500"><?= esc($store->phone_number) ?></span>
-                </div>
-                <div class="list d-flex align-items-middle">
-                    <div class="icon text-white me-1">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <span class="fw-500"><?= esc($store->email) ?></span>
-                </div>
-            </div>
-            <div class="text-center d-flex justify-content-center mt-3">
-                <div class="list d-flex align-items-middle">
-                    <div class="icon text-white me-1">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <span class="fw-500"><?= esc($store->address) ?></span>
                 </div>
             </div>
-            <div class="info mt-4" style="margin-bottom: .5rem;">
-                <table class="table-info">
-                    <tbody class="text-dark fw-500">
-                        <tr>
-                            <td>Tanggal</td>
-                            <td class="ps-3 pe-2">:</td>
-                            <td><?= $transaction->date->toLocalizedString("dd MMM y") ?></td>
-                        </tr>
-                        <tr>
-                            <td>Kasir</td>
-                            <td class="ps-3 pe-2">:</td>
-                            <td><?= esc($user->name) ?></td>
-                        </tr>
-                        <tr>
-                            <td>Pelanggan</td>
-                            <td class="ps-3 pe-2">:</td>
-                            <td><?= esc($customer->name) ?></td>
-                        </tr>
-                        <tr>
-                            <td>Alamat</td>
-                            <td class="ps-3 pe-2">:</td>
-                            <td><?= esc($user->address) ?></td>
-                        </tr>
-                        <tr>
-                            <td>TELP</td>
-                            <td class="ps-3 pe-2">:</td>
-                            <td><?= esc($user->phone_number) ?></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="content d-flex">
+                    <div class="left ">
+                        <div class="info d-flex flex-column">
+                            <table class="table table-borderless table-inline mb-1">
+                                <tr>
+                                    <th>Tgl</th>
+                                    <th>:</th>
+                                    <td>&NegativeMediumSpace; <?= esc($transaction->date->toLocalizedString("dd-MM-YYYY")) ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>:</th>
+                                    <td>&NegativeMediumSpace; <?= esc($customer->name) ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Alamat</th>
+                                    <th>:</th>
+                                    <td class="text-truncate">&NegativeMediumSpace; <?= esc($customer->address) ?></td>
+                                </tr>
+                            </table>
+                            <table class="table table-products table-bordered mb-1">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>SPH</th>
+                                        <th>CYL</th>
+                                        <th>AXIS</th>
+                                        <th>ADD</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $lens = []; ?>
+                                    <?php foreach ($products as $product) : ?>
+                                        <?php if ($product->lens_type == "progressive") : ?>
+                                            <?php array_push($lens, "progressive") ?>
+                                            <tr>
+                                                <td>R</td>
+                                                <td><?= esc($product->r_sph) ?></td>
+                                                <td><?= esc($product->r_cyl) ?></td>
+                                                <td><?= esc($product->r_axis) ?></td>
+                                                <td><?= esc($product->r_add) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>L</td>
+                                                <td><?= esc($product->l_sph) ?></td>
+                                                <td><?= esc($product->l_cyl) ?></td>
+                                                <td><?= esc($product->l_axis) ?></td>
+                                                <td><?= esc($product->l_add) ?></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                        <?php if ($product->lens_type == "regular") : ?>
+                                            <?php array_push($lens, "regular") ?>
+                                            <tr>
+                                                <td></td>
+                                                <td>1,4</td>
+                                                <td>1,4</td>
+                                                <td>1,4</td>
+                                                <td>1,4</td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    <?php endforeach ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td style="border-right-width: 0;">PD</td>
+                                        <td style="border-left-width: 0;" colspan="4"><?= $transaction->pd ?></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <table class="table table-inline table-borderless mb-0">
+                                <tr>
+                                    <th>Lensa</th>
+                                    <th>:</th>
+                                    <td>&NegativeMediumSpace; <?= implode(",", $lens) ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Resep</th>
+                                    <th>:</th>
+                                    <td>&NegativeMediumSpace; <?= esc($transaction->recipe ?? "-") ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Pelayan</th>
+                                    <th>:</th>
+                                    <td class="text-truncate">&NegativeMediumSpace; <?= esc($user->name ?? "-") ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Facet</th>
+                                    <th>:</th>
+                                    <td class="text-truncate">&NegativeMediumSpace; <?= esc($user->facet ?? "-") ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <h2 class="h6">Pembelian Barang</h2>
+                        <table class="table table-products table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Barang</th>
+                                    <th>Jml</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $no = 1; ?>
+                                <?php $total = 0; ?>
+                                <?php foreach ($products as $product) : ?>
+                                    <?php $subTotal = $product->qty * $product->product_price ?>
+                                    <?php $total += $subTotal ?>
+                                    <tr>
+                                        <td><?= $no++ ?></td>
+                                        <td><?= esc($product->name) ?></td>
+                                        <td><?= $product->qty ?></td>
+                                        <td><?= $subTotal ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" style="border-right-width: 0;">
+                                        Total
+                                    </td>
+                                    <td colspan="1" style="border-left-width: 0;">
+                                        <?= $total; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="border-right-width: 0;">
+                                        Bayar
+                                    </td>
+                                    <td colspan="1" style="border-left-width: 0;">
+                                        <?= $payment ?>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <table class="products table table-borderless mb-4">
-                <thead class="text-white fw-500">
-                    <tr>
-                        <th>Produk</th>
-                        <th>Qty</th>
-                        <th>Harga</th>
-                    </tr>
-                </thead>
-                <tbody class="text-dark fw-500">
-                    <?php $grandTotal = 0; ?>
-                    <?php foreach ($products as $product) : ?>
-                        <?php $grandTotal += $product->product_price * $product->qty ?>
-                        <tr>
-                            <td><?= $product->product_name ?></td>
-                            <td><?= $product->qty ?></td>
-                            <td class="format-rupiah" data-format="<?= $product->product_price ?>"><?= $product->product_price ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <?php foreach ($products as $product) : ?>
-                <?php if ($product->type == "lens") : ?>
-                    <!-- <div class="text-dark fw-500"><?= $product->product_name ?></div> -->
-                    <table class="detail table table-borderless">
-                        <thead>
-                            <tr>
-                                <th class="bg-transparent"></th>
-                                <th class="ps-4">SPH</th>
-                                <th>CYL</th>
-                                <th>ADD</th>
-                                <th>AXIS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="bg-primary text-white text-center text-center fw-600">R</td>
-                                <td class="ps-4"><?= $product->r_sph ?></td>
-                                <td><?= $product->r_cyl ?></td>
-                                <td><?= $product->r_add ?></td>
-                                <td><?= $product->r_axis ?></td>
-                            </tr>
-                            <tr>
-                                <td class="bg-primary text-white text-center fw-600">L</td>
-                                <td class="ps-4"><?= $product->l_sph ?></td>
-                                <td><?= $product->l_cyl ?></td>
-                                <td><?= $product->l_add ?></td>
-                                <td><?= $product->l_axis ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                <?php endif; ?>
-            <?php endforeach; ?>
-            <div class="mt-3 d-flex">
-                <div class="50" style="width:60%"></div>
-                <table>
-                    <tr>
-                        <td class="fw-600">Total</td>
-                        <td>:</td>
-                        <td class="fw-500 format-rupiah" data-format="<?= $grandTotal ?>"><?= $grandTotal ?></td>
-                    </tr>
-                    <tr>
-                        <td class="fw-600">Diskon</td>
-                        <td>:</td>
-                        <td class="fw-500"><?= $transaction->discount ?> %</td>
-                    </tr>
-                    <tr>
-                        <td class="fw-600">Grand Total</td>
-                        <td>:</td>
-                        <td class="fw-500 format-rupiah" data-format="<?= $transaction->grand_total ?>"><?= $transaction->grand_total ?></td>
-                    </tr>
-                    <tr>
-                        <td class="fw-600">Terbayar</td>
-                        <td>:</td>
-                        <td class="fw-500 format-rupiah" data-format="<?= $payment ?>"><?= $payment ?></td>
-                    </tr>
-                </table>
-            </div>
-        </section>
+        </div>
     </div>
-
-    <script src="<?= base_url("/assets/js/currency.js") ?>"></script>
 </body>
 
 </html>

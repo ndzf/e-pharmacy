@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\TransactionModel;
 use App\Entities\TransactionEntity;
+use App\Models\CustomerCardSettingModel;
 use App\Models\CustomerModel;
 use App\Models\ProductModel;
 use App\Models\StoreModel;
@@ -206,6 +207,7 @@ class TransactionController extends BaseController
 		$transactionDetailModel = new TransactionDetailModel();
 		$storeModel = new StoreModel();
 		$transactionPaymentModel = new TransactionPaymentModel();
+		$settingModel = new CustomerCardSettingModel();
 
 		$data = [
 			"transaction"		=> $transaction,
@@ -213,7 +215,8 @@ class TransactionController extends BaseController
 			"customer"			=> $customerModel->where("id", $transaction->customer_id)->select("*")->get()->getRowObject(),
 			"products"			=> $transactionDetailModel->getProductsByTransaction($transaction->id),
 			"store"				=> $storeModel->getStore(),
-			"payment"			=> $transactionPaymentModel->getTotalByTransaction($transaction->id)
+			"payment"			=> $transactionPaymentModel->getTotalByTransaction($transaction->id),
+			"setting"			=> $settingModel->getByStatus("active"),
 		];
 
 		return view("transactions/invoice", $data);
