@@ -14,7 +14,7 @@ class TransactionDetailModel extends Model
     protected $returnType       = \App\Entities\TransactionDetailEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["transaction_id", "product_id", "product_name", "product_price", "qty", "r_axis", "l_axis"];
+    protected $allowedFields    = ["transaction_id", "product_id", "product_name", "product_price", "qty", "axis", "r_axis", "l_axis"];
 
     // Dates
     protected $useTimestamps = true;
