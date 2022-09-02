@@ -15,6 +15,7 @@ class TransactionDetailsMigration extends Migration
             "product_name"      => ["type" => "varchar", "constraint" => 255, "null" => true],
             "product_price"     => ["type" => "int", "constraint" => 11, "null" => true],
             "qty"               => ["type" => "int", "constraint" => 11],
+            "axis"              => ["type" => "varchar", "constraint" => 15, "null" => true],
             "r_axis"            => ["type" => "varchar", "constraint" => 15, "null" => true],
             "l_axis"            => ["type" => "varchar", "constraint" => 15, "null" => true],
             "created_at"        => ["type" => "timestamp"],
