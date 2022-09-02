@@ -1,6 +1,5 @@
 function getCard(product) {
     let card = "";
-    console.log(product);
     card += `<div class="mb-3">`;
     card += `<a href="javascript:void(0)" onclick="addProduct(${product.id})">`;
     card += `<div class="card border-0 shadow">`;
