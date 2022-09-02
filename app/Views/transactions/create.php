@@ -249,7 +249,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header py-3">
-                <h5 class="modal-title text-gray-600" id="modal-detail-label">Modal title</h5>
+                <h5 class="modal-title text-gray-600" id="modal-detail-label">Detail Produk</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body pt-0">
@@ -281,7 +281,7 @@
                                     <th>Axis</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-gray-700 fw-500">
+                            <tbody class="text-gray-700 fw-500" id="detail-table-progressive">
                                 <tr>
                                     <td class="text-primary">R</td>
                                     <td id="detail-r-sph"></td>
@@ -295,6 +295,15 @@
                                     <td id="detail-l-cyl"></td>
                                     <td id="detail-l-add"></td>
                                     <td id="detail-l-axis"></td>
+                                </tr>
+                            </tbody>
+                            <tbody class="text-gray-700 fw-500" id="detail-table-regular">
+                                <tr>
+                                    <td class="text-primary"></td>
+                                    <td id="detail-sph"></td>
+                                    <td id="detail-cyl"></td>
+                                    <td id="detail-add"></td>
+                                    <td id="detail-axis"></td>
                                 </tr>
                             </tbody>
                         </table>
