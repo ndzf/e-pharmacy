@@ -173,7 +173,7 @@
                         <label for="create-qty" class="col-form-label text-gray-700 fw-500"><?= lang("Product.qty") ?></label>
                         <input type="number" name="qty" value="<?= old("qty") ?>" required id="create-qty" class="form-control solid fw-500">
                     </div>
-                    <div id="create-lens-details">
+                    <div id="create-lens-details" class="mt-3">
                         <table class="table table-borderless table-dashed align-middle">
                             <thead class="text-gray-500 fw-500 text-uppercase">
                                 <tr>
@@ -184,7 +184,7 @@
                                     <th>AXIS</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-gray-700 fw-500">
+                            <tbody class="text-gray-700 fw-500" id="progressive-table">
                                 <tr>
                                     <td class="text-primary">R</td>
                                     <td>
@@ -213,6 +213,23 @@
                                     </td>
                                     <td>
                                         <input type="text" name="lAxis" id="create-l-axis" value="<?= old("lAxis") ?>" class="form-control solid rounded-2 fw-500">
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody id="regular-table">
+                                <tr>
+                                    <td class="text-primary"></td>
+                                    <td>
+                                        <input type="text" name="sph" id="regular-sph" disabled class="form-control solid rounded-2 me-2 fw-500">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="cyl" id="regular-cyl" disabled class="form-control solid rounded-2 me-2 fw-500">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="add" id="regular-add" disabled class="form-control solid rounded-2 fw-500">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="axis" id="regular-axis" value="<?= old("lAxis") ?>" class="form-control solid rounded-2 fw-500">
                                     </td>
                                 </tr>
                             </tbody>

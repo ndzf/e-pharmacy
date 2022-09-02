@@ -1,4 +1,5 @@
 function fillCreateTransactionForm(res, customerRole) {
+    console.log(res);
     document.querySelector("#create-product-id").value = res.id;
     document.querySelector("#create-name").value = res.name;
 
@@ -11,26 +12,40 @@ function fillCreateTransactionForm(res, customerRole) {
 
     let price = "";
     switch (customerRole) {
-        case "customer": 
+        case "customer":
             price = res.selling_price;
             break;
-        case "member": 
+        case "member":
             price = res.member_price;
             break;
-        case "reseller": 
+        case "reseller":
             price = res.wholesale_price;
             break;
     }
 
     document.querySelector("#create-product-price").value = formatRupiah(price);
 
-    document.querySelector("#create-r-sph").value = res.r_sph;
-    document.querySelector("#create-r-cyl").value = res.r_cyl;
-    document.querySelector("#create-r-add").value = res.r_add;
+    if (res.lens_type == "progressive") {
+        document.querySelector("#progressive-table").removeAttribute("hidden");
+        document.querySelector("#regular-table").setAttribute("hidden", true);
 
-    document.querySelector("#create-l-sph").value = res.l_sph;
-    document.querySelector("#create-l-cyl").value = res.l_cyl;
-    document.querySelector("#create-l-add").value = res.l_add;
+        document.querySelector("#create-r-sph").value = res.r_sph;
+        document.querySelector("#create-r-cyl").value = res.r_cyl;
+        document.querySelector("#create-r-add").value = res.r_add;
+        document.querySelector("#create-l-sph").value = res.l_sph;
+        document.querySelector("#create-l-cyl").value = res.l_cyl;
+        document.querySelector("#create-l-add").value = res.l_add;
+    }
+
+    if (res.lens_type == "regular") {
+        document.querySelector("#regular-table").removeAttribute("hidden");
+        document.querySelector("#progressive-table").setAttribute("hidden", true);
+
+        document.querySelector("#regular-sph").value = res.sph;
+        document.querySelector("#regular-cyl").value = res.cyl;
+        document.querySelector("#regular-add").value = res.add;
+    }
+
 }
 
 function getProductCard(product) {
@@ -114,7 +129,7 @@ function fillDetails(res) {
     payments.forEach(payment => {
         paymentCards += getPaymentCard(payment);
     });
-    
+
     document.getElementById("details-products").innerHTML = productCards;
     document.getElementById("details-payments").innerHTML = paymentCards;
 }
