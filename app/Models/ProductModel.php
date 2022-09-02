@@ -43,7 +43,7 @@ class ProductModel extends Model
     public function search(?string $keyword, ?string $type, ?string $category)
     {
         $builder = $this->table("products");
-        $builder->select("products.id, products.name, products.qty, products.type, products.minimum_qty, products.selling_price, products.original_price, categories.name as category, r_sph, r_cyl, r_add, l_sph, l_cyl, l_add, ");
+        $builder->select("products.id, products.name, products.qty, products.type, products.minimum_qty, products.selling_price, products.original_price, categories.name as category, r_sph, r_cyl, r_add, l_sph, l_cyl, l_add, products.sph, products.add, products.cyl, products.lens_type  ");
         $builder->join("categories", "categories.id = products.category_id", "LEFT");
         if ($keyword) {
             $builder->like("products.name", $keyword);
