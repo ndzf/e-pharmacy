@@ -30,13 +30,21 @@
         html {
             /* off-white, so body edge is visible in browser */
             background: #eee;
+            font-size: 8px;
+        }
+
+        .h7 {
+            font-size: calc(1.110rem + .1vw);
+        }
+
+        .h8 {
+            font-size: 1rem;
         }
 
         body {
-            /* A5 dimensions */
-            height: 210mm;
-            width: 148.5mm;
-
+            height: 9cm;
+            width: 6cm;
+            background-color: inherit;
             margin: 0;
         }
 
@@ -50,6 +58,10 @@
         /* the front face */
         .face-front {
             background-image: url("<?= "/assets/customer-card/" . $setting->background_image ?>");
+            background-position-x: center;
+            background-position-y: center;
+            background-size: cover;
+            background-repeat: no-repeat;
             -webkit-print-color-adjust: exact !important;
             color-adjust: exact !important;
         }
@@ -81,7 +93,7 @@
             position: absolute;
             bottom: 0;
             width: 70%;
-            height: 9rem;
+            height: 6.5rem;
         }
 
         .info span {
@@ -90,13 +102,13 @@
     </style>
 </head>
 
-<body onload="window.printx()">
+<body onload="window.print()">
     <div class="face face-front p-relative">
         <div class="header-box ">
             <h2 class="text-white pt-2 ps-3 h4 pb-1">Kartu Member</h2>
         </div>
         <div class="logo-wrapper d-flex">
-            <img src="<?= base_url("/assets/images/invoice_banner/$store->invoice_banner") ?>" height="50px" height="50px" alt="Logo">
+            <img src="<?= base_url("/assets/images/invoice_banner/$store->invoice_banner") ?>" height="24px" height="24px" alt="Logo">
             <div class="ms-auto mt-2" style="width: 60%">
                 <div class="d-flex flex-column">
                     <div class="info">
@@ -105,7 +117,7 @@
                     </div>
                     <div class="info d-flex">
                         <div class="one me-2">
-                            <i class="fas fa-map-marker-alt"></i>
+                            <i class="fas fa-phone"></i>
                             <span><?= $store->phone_number ?></span>
                         </div>
                         <!-- <div class="">
@@ -118,13 +130,13 @@
         </div>
         <div class="content  customer-box">
             <div class="d-flex ms-3 flex-column mt-3">
-                <h2>Nama: <?= $customer->name ?></h2>
-                <h2>Alamat: <?= $customer->address ?></h2>
+                <h2 class="h7">Nama: <?= $customer->name ?></h2>
+                <h2 class="h7">Alamat: <?= $customer->address ?></h2>
             </div>
         </div>
         <div class="description-box p-2">
-            <h2 class="h5 text-primary">Harap bawa kartu ini saat melakukan transaksi di Optik AVIVA.</h2>
-            <h2 class="h5 text-primary">Kartu hanya berlaku untuk nama yang Tercantum di dalam kartu ini.</h2>
+            <h2 class="h8 text-primary">Harap bawa kartu ini saat melakukan transaksi di Optik AVIVA.</h2>
+            <h2 class="h8 text-primary">Kartu hanya berlaku untuk nama yang Tercantum di dalam kartu ini.</h2>
         </div>
     </div>
 </body>

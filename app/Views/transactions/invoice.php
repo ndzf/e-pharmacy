@@ -127,7 +127,7 @@
             <div class="row">
                 <div class="header d-flex mt-2 align-items-center">
                     <!-- Logo -->
-                    <img src="<?= base_url("/assets/customer-card/$setting->background_image") ?>" alt="Logo" width="90px" class="me-2" height="70px">
+                    <img src="<?= base_url("/assets/images/invoice_banner/$store->invoice_banner") ?>" alt="Logo" width="90px" class="me-2" height="70px">
                     <div class="header-text d-flex flex-column">
                         <h1 class="h5 mb-1"><?= $store->name ?></h1>
                         <p class="fw-500 mb-0"><?= $store->address ?></p>
@@ -231,9 +231,9 @@
                                     <td class="text-truncate">&NegativeMediumSpace; <?= esc($user->name ?? "-") ?></td>
                                 </tr>
                                 <tr>
-                                    <th>Facet</th>
+                                    <th>Faced</th>
                                     <th>:</th>
-                                    <td class="text-truncate">&NegativeMediumSpace; <?= esc($user->facet ?? "-") ?></td>
+                                    <td class="text-truncate">&NegativeMediumSpace; <?= esc($user->faced ?? "-") ?></td>
                                 </tr>
                             </table>
                         </div>
@@ -257,7 +257,7 @@
                                     <?php $total += $subTotal ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><?= esc($product->name) ?></td>
+                                        <td><?= esc($product->product_name) ?></td>
                                         <td><?= $product->qty ?></td>
                                         <td><?= $subTotal ?></td>
                                     </tr>
