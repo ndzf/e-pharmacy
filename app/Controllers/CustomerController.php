@@ -6,12 +6,32 @@ use App\Controllers\BaseController;
 use App\Models\CustomerModel;
 use App\Entities\CustomerEntity;
 use App\Models\CustomerCardSettingModel;
+use BaconQrCode\Common\ErrorCorrectionLevel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Color\Color;
 
 class CustomerController extends BaseController
 {
     protected CustomerModel $customerModel;
     protected $title;
+
+    function getCode($n)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
+
+        return $randomString;
+    }
 
     public function __construct()
     {
@@ -46,6 +66,7 @@ class CustomerController extends BaseController
 
         $customer = new CustomerEntity();
         $customer->name = $inputs["name"];
+        $customer->code = $this->getCode(10) . $this->customerModel->getLastId();
         $customer->phone_number = $inputs["phoneNumber"];
         $customer->email = $inputs["email"];
         $customer->role = $inputs["role"];
@@ -108,10 +129,27 @@ class CustomerController extends BaseController
             throw PageNotFoundException::forPageNotFound("Customer tidak ditemukan");
         }
 
+        $setting = $settingModel->getByStatus("active");
+        $writer = new PngWriter();
+        $hex = $setting->surface_color ?? "#fff";
+        list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+
+        $qrCode = QrCode::create($customer->name, $customer->code, $customer->address)
+            ->setEncoding(new Encoding("UTF-8"))
+            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+            ->setSize(48)
+            ->setMargin(0)
+            ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color($r, $g, $b));
+
+        $result = $writer->write($qrCode);
+
         $data = [
             "customer"      => $customer,
             "store"         => $storeModel->getStore(),
-            "setting"       => $settingModel->getByStatus("active"),
+            "setting"       => $setting,
+            "qrCode"        => $result->getDataUri()
         ];
 
         return view("customers/print", $data);

@@ -23,6 +23,18 @@
             margin: 0;
         }
 
+        @media print {
+            #btn-print {
+                display: none;
+            }
+        }
+
+        .qr-code-wrapper {
+            position: absolute;
+            right: 9px;
+            top: 5px;
+        }
+
         .text-primary {
             color: var(--primary) !important;
         }
@@ -34,7 +46,7 @@
         }
 
         .h7 {
-            font-size: calc(1.110rem + .1vw);
+            font-size: 1rem;
         }
 
         .h8 {
@@ -86,6 +98,7 @@
             top: 8rem;
             position: absolute;
             z-index: 2;
+            width: 100%;
         }
 
         .description-box {
@@ -102,7 +115,7 @@
     </style>
 </head>
 
-<body onload="window.print()">
+<body onload="">
     <div class="face face-front p-relative">
         <div class="header-box ">
             <h2 class="text-white pt-2 ps-3 h4 pb-1">Kartu Member</h2>
@@ -130,8 +143,13 @@
         </div>
         <div class="content  customer-box">
             <div class="d-flex ms-3 flex-column mt-3">
+                <h2 class="h7">No. ID: <?= $customer->code ?></h2>
                 <h2 class="h7">Nama: <?= $customer->name ?></h2>
                 <h2 class="h7">Alamat: <?= $customer->address ?></h2>
+
+            </div>
+            <div class="qr-code-wrapper">
+                <img src="<?= $qrCode ?>" alt="qr-code">
             </div>
         </div>
         <div class="description-box p-2">
@@ -139,6 +157,7 @@
             <h2 class="h8 text-primary">Kartu hanya berlaku untuk nama yang Tercantum di dalam kartu ini.</h2>
         </div>
     </div>
+    <button class="btn btn-primary mt-3" id="btn-print" onclick="window.print()">Print</button>
 </body>
 
 </html>

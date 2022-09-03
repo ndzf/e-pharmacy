@@ -14,7 +14,7 @@ class CustomerModel extends Model
     protected $returnType       = \App\Entities\CustomerEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["name", "phone_number", "email", "address", "role"];
+    protected $allowedFields    = ["name", "code", "phone_number", "email", "address", "role"];
 
     // Dates
     protected $useTimestamps = true;
@@ -62,5 +62,15 @@ class CustomerModel extends Model
         }
         $data = $builder->get();
         return $data->getCustomResultObject("\App\Entities\CustomerEntity");
+    }
+
+    public function getLastId()
+    {
+        $builder = $this->table("customers");
+        $builder->select("id");
+        $builder->orderBy("id", "DESC");
+        $row = $builder->get();
+        $data = $row->getRowArray();
+        return $data["id"] ?? 0;
     }
 }

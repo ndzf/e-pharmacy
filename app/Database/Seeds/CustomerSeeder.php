@@ -8,9 +8,13 @@ class CustomerSeeder extends Seeder
 {
     public function run()
     {
+        $str1 = rand();
+        $str2 = rand();
+        $str3 = rand();
         $customers = [
             [
                 "name"          => "Mamat manja",
+                "code"          => sha1($str1),
                 "phone_number"  => "620123908",
                 "email"         => "",
                 "address"       => "Kendal City",
@@ -18,6 +22,7 @@ class CustomerSeeder extends Seeder
             ],
             [
                 "name"          => "Anthony Martial",
+                "code"          => sha1($str2),
                 "phone_number"  => "620123908",
                 "email"         => "",
                 "address"       => "Franc",
@@ -25,6 +30,7 @@ class CustomerSeeder extends Seeder
             ],
             [
                 "name"          => "Donny Van De Beek",
+                "code"          => sha1($str3),
                 "phone_number"  => "620123908",
                 "email"         => "donny@gmail.com",
                 "address"       => "Holland",

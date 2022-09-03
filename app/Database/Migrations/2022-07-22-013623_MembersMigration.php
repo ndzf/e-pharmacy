@@ -11,6 +11,7 @@ class MembersMigration extends Migration
         $this->forge->addField([
             "id"                => ["type" => "int", "constraint" => 11, "auto_increment" => true],
             "name"              => ["type" => "varchar", "constraint" => 100],
+            "code"              => ["type" => "varchar", "constraint" => 255, "null" => true],
             "phone_number"      => ["type" => "varchar", "constraint" => 15, "null" => true],
             "email"             => ["type" => "varchar", "constraint" => 100, "null" => true],
             "address"           => ["type" => "varchar", "constraint" => 255, "null" => true],

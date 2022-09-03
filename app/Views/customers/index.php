@@ -122,6 +122,10 @@
                 <form action="" id="form-edit" method="post">
                     <input type="hidden" name="_method" value="PUT">
                     <div class="mb-2">
+                        <label for="code" class="col-form-label text-gray-800 fw-500">Kode</label>
+                        <input type="tel" name="code" id="code" value="" disabled class="form-control solid fw-500">
+                    </div>
+                    <div class="mb-2">
                         <label for="edit-name" class="col-form-label text-gray-800 fw-500"><?= lang("Customer.name")  ?></label>
                         <input type="text" name="name" id="edit-name" class="form-control fw-500 solid <?= (isset($validation["name"]) ? "is-invalid" : "")  ?>">
                         <div class="invalid-feedback fw-500"><?= $validation["name"] ?? ""  ?></div>
@@ -196,6 +200,7 @@
         }).then(res => {
             const customer = res.data;
             document.querySelector("#edit-name").value = customer.name;
+            document.querySelector("#code").value = customer.code;
             document.querySelector("#edit-phone-number").value = customer.phone_number;
             document.querySelector("#edit-email").value = customer.email;
             document.querySelector("#edit-address").innerHTML = customer.address;
