@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\StoreModel;
 use App\Models\UserModel;
 
 class AuthController extends BaseController
@@ -18,9 +19,11 @@ class AuthController extends BaseController
     public function login()
     {
         $validation = service("validation");
+        $storeModel = new StoreModel();
 
         $data = [
             "validation"        => $validation->getErrors(),
+            "store"             => $storeModel->getStore(),
         ];
 
         return view("auth/login", $data);
@@ -39,7 +42,7 @@ class AuthController extends BaseController
         $passwordVerify = password_verify($inputs["password"], $hash);
 
         if (empty($user) || !$passwordVerify) {
-            dd("Invalid username and password");
+            return redirect()->to("/login")->withInput()->with("errorMessage", "Email atau password salah");
         }
 
         $payload = [

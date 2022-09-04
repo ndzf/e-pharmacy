@@ -13,6 +13,12 @@
             --text-color: <?= $setting->text_color ?>;
         }
 
+        @media print {
+            #btn-print {
+                display: none;
+            }
+        }
+
         @page {
             /* dimensions for the whole page */
             size: A5 !important;
@@ -136,9 +142,13 @@
                                 <i class="fas fa-phone r-90"></i>
                                 <span><?= $store->phone_number ?></span>
                             </div>
+                            <div class="fw-500 me-3">
+                                <i class="fab fa-whatsapp"></i>
+                                <span><?= $store->whatsapp_number ?></span>
+                            </div>
                             <div class="fw-500">
-                                <i class="fas fa-envelope"></i>
-                                <span><?= $store->email ?></span>
+                                <i class="fab fa-instagram"></i>
+                                <span><?= $store->instagram ?></span>
                             </div>
                         </div>
                     </div>
@@ -280,6 +290,15 @@
                                         <?= $payment ?>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="3" style="border-right-width: 0;">
+                                        Sisa
+                                    </td>
+                                    <td colspan="1" style="border-left-width: 0;">
+                                        <?php $sisa = $transaction->grand_total - $payment; ?>
+                                        <?= ($sisa >= 0) ? $sisa : "-" ?>
+                                    </td>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -287,6 +306,7 @@
             </div>
         </div>
     </div>
+    <button class="btn btn-primary mt-4" id="btn-print" onclick="window.print()">Print</button>
 </body>
 
 </html>

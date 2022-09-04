@@ -133,10 +133,10 @@
                             <i class="fas fa-phone"></i>
                             <span><?= $store->phone_number ?></span>
                         </div>
-                        <!-- <div class="">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>-</span>
-                        </div> -->
+                        <div class="">
+                            <i class="fab fa-whatsapp"></i>
+                            <span><?= $store->whatsapp_number ?></span>
+                        </div>
                     </div>
                 </div>
             </div>
