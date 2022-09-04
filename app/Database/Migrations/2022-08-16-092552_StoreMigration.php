@@ -17,6 +17,8 @@ class StoreMigration extends Migration
             "banner"                => ["type" => "text", "null" => true],
             "invoice_banner"        => ["type" => "text", "null" => true],
             "text_color"            => ["type" => "varchar", "constraint" => 20, "null" => true],
+            "instagram"             => ["type" => "varchar", "constraint" => 100, "null" => true],
+            "whatsapp_number"       => ["type" => "varchar", "constraint" => 20, "null" => true],
         ]);
         $this->forge->addKey("id", true);
         $this->forge->createTable("store");

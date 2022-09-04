@@ -47,6 +47,8 @@ class StoreController extends BaseController
         $store->phone_number = $inputs["phoneNumber"];
         $store->email = $inputs["email"];
         $store->address = $inputs["address"];
+        $store->instagram = $inputs["instagram"];
+        $store->whatsapp_number = $inputs["whatsapp_number"];
 
         try {
             $this->storeModel->save($store);

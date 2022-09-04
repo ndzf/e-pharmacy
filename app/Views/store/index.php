@@ -22,9 +22,17 @@
                             <label for="email" class="col-form-label text-gray-500 fw-500">Email</label>
                             <input type="email" name="email" id="email" class="form-control solid fw-500" value="<?= old("email", $store->email) ?>">
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-2">
                             <label for="address" class="col-form-label text-gray-500 fw-500">Address</label>
                             <textarea name="address" id="address" rows="3" class="form-control solid fw-500"><?= old("address", $store->address) ?></textarea>
+                        </div>
+                        <div class="mb-2">
+                            <label for="instagram" class="col-form-label text-gray-500 fw-500">Instagram</label>
+                            <input type="text" name="instagram" id="instagram" class="form-control fw-500 solid" value="<?= old("instagram", $store->instagram) ?>">
+                        </div>
+                        <div class="mb-4">
+                            <label for="whatsapp_number" class="col-form-label text-gray-500 fw-500">Whatsapp Number</label>
+                            <input type="number" name="whatsapp_number" id="whatsapp_number" value="<?= old("whatsapp_number", $store->whatsapp_number) ?>" class="form-control solid fw-500">
                         </div>
                         <div class="mb-2 d-flex justify-content-end">
                             <button class="btn btn-primary fw-500">Simpan</button>
