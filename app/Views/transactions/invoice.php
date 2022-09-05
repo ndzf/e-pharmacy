@@ -228,7 +228,10 @@
                                 <tr>
                                     <th>Lensa</th>
                                     <th>:</th>
-                                    <td>&NegativeMediumSpace; <?= implode(",", $lens) ?></td>
+                                    <?php $lensString = implode(",", $lens); ?>
+                                    <!-- <td>&NegativeMediumSpace; <?= implode(",", $lens) ?? "-" ?></td> -->
+                                    <td>&NegativeMediumSpace; <?= ($lensString != "") ? $lensString : "-" ?></td>
+
                                 </tr>
                                 <tr>
                                     <th>Resep</th>
@@ -243,7 +246,7 @@
                                 <tr>
                                     <th>Faced</th>
                                     <th>:</th>
-                                    <td class="text-truncate">&NegativeMediumSpace; <?= esc($user->faced ?? "-") ?></td>
+                                    <td class="text-truncate">&NegativeMediumSpace; <?= esc($transaction->faced ?? "-") ?></td>
                                 </tr>
                             </table>
                         </div>
