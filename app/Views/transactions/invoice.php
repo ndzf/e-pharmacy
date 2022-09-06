@@ -120,6 +120,18 @@
             font-weight: 500 !important;
         }
 
+        .table-inline th:first-child {
+            width: 4rem;
+        }
+
+        .table-inline.update th:first-child {
+            width: 6rem;
+        }
+
+        .table-inline.update.table>:not(caption)>*>* {
+            padding: 0;
+        }
+
         .r-90 {
             transform: rotate(90deg);
         }
@@ -175,7 +187,7 @@
                                     <td class="text-truncate">&NegativeMediumSpace; <?= esc($customer->address) ?></td>
                                 </tr>
                             </table>
-                            <table class="table table-products table-bordered mb-1">
+                            <table class="table table-products table-bordered mb-1" <?= ($showTable) ? "" : "hidden" ?>>
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -209,10 +221,10 @@
                                             <?php array_push($lens, "regular") ?>
                                             <tr>
                                                 <td></td>
-                                                <td>1,4</td>
-                                                <td>1,4</td>
-                                                <td>1,4</td>
-                                                <td>1,4</td>
+                                                <td><?= esc($product->sph) ?></td>
+                                                <td><?= esc($product->cyl) ?></td>
+                                                <td><?= esc($product->axis) ?></td>
+                                                <td><?= esc($product->add) ?></td>
                                             </tr>
                                         <?php endif; ?>
                                     <?php endforeach ?>
@@ -303,6 +315,18 @@
                                     </td>
                                 </tr>
                             </tfoot>
+                        </table>
+                        <table class="table table-inline update table-borderless">
+                            <tr>
+                                <th>Tgl Ambil</th>
+                                <th>:</th>
+                                <td><?= $transaction->pick_up_date ?></td>
+                            </tr>
+                            <tr>
+                                <th>Ket</th>
+                                <th>:</th>
+                                <td><?= esc($transaction->note ?? "-") ?></td>
+                            </tr>
                         </table>
                     </div>
                 </div>

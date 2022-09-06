@@ -208,15 +208,21 @@ class TransactionController extends BaseController
 		$storeModel = new StoreModel();
 		$transactionPaymentModel = new TransactionPaymentModel();
 		$settingModel = new CustomerCardSettingModel();
+		$products = $transactionDetailModel->getProductsByTransaction($transaction->id);
+		$productTypes = [];
+		foreach ($products as $product) {
+			array_push($productTypes, $product->type);
+		}
 
 		$data = [
 			"transaction"		=> $transaction,
 			"user"				=> $userModel->find($transaction->user_id),
 			"customer"			=> $customerModel->where("id", $transaction->customer_id)->select("*")->get()->getRowObject(),
-			"products"			=> $transactionDetailModel->getProductsByTransaction($transaction->id),
+			"products"			=> $products,
 			"store"				=> $storeModel->getStore(),
 			"payment"			=> $transactionPaymentModel->getTotalByTransaction($transaction->id),
 			"setting"			=> $settingModel->getByStatus("active"),
+			"showTable"			=> in_array("lens", $productTypes),
 		];
 
 		return view("transactions/invoice", $data);
