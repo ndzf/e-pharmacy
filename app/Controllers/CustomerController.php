@@ -66,7 +66,7 @@ class CustomerController extends BaseController
 
         $customer = new CustomerEntity();
         $customer->name = $inputs["name"];
-        $customer->code = $this->getCode(10) . $this->customerModel->getLastId();
+        $customer->code = $this->customerModel->getLastId() . "-" . $this->getCode(10);
         $customer->phone_number = $inputs["phoneNumber"];
         $customer->email = $inputs["email"];
         $customer->role = $inputs["role"];
