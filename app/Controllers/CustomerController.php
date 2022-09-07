@@ -134,7 +134,7 @@ class CustomerController extends BaseController
         $hex = $setting->surface_color ?? "#fff";
         list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
 
-        $qrCode = QrCode::create($customer->name, $customer->code, $customer->address)
+        $qrCode = QrCode::create("$customer->name, $customer->phone_number, $customer->address")
             ->setEncoding(new Encoding("UTF-8"))
             ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
             ->setSize(48)
