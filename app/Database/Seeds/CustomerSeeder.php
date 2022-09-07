@@ -14,6 +14,7 @@ class CustomerSeeder extends Seeder
         $customerModel = new CustomerModel();
 
         $lastId = $customerModel->getLastId();
+
         $customer = [
             "name"          => "Mamat manja",
             "code"          => $lastId . "-" . $customerController->getCode(10),

@@ -71,6 +71,6 @@ class CustomerModel extends Model
         $builder->orderBy("id", "DESC");
         $row = $builder->get();
         $data = $row->getRowArray();
-        return $data["id"] ?? 0;
+        return (isset($data["id"])) ? $data["id"] + 1 : 1;
     }
 }
