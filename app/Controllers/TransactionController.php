@@ -33,6 +33,7 @@ class TransactionController extends BaseController
 		$data = [
 			"transactions"		=> $transactions->paginate(100, "transactions"),
 			"customers"			=> $customerModel->getNames("customer", "member"),
+			"pager"				=> $transactions->pager->links("transactions", "default"),
 		];
 
 		return view("transactions/index", $data);

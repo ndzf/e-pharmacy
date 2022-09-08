@@ -51,8 +51,8 @@
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
-                        <?= $pager  ?>
                     </div>
+                    <?= $pager  ?>
                 </div>
             </div>
         </div>

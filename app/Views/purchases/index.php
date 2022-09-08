@@ -61,7 +61,7 @@
 							</tbody>
 						</table>
 					</div>
-					<!-- Pagination -->
+					<?= $pager ?>
 				</div>
 			</div>
 		</div>

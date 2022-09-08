@@ -53,7 +53,7 @@ class CategoryController extends BaseController
     {
         $category = $this->categoryModel->find($id);
 
-        if(empty($category)) {
+        if (empty($category)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(lang("Category.message.error.categoryNotFound"));
         }
 
@@ -79,7 +79,6 @@ class CategoryController extends BaseController
         $this->categoryModel->save($category);
 
         return redirect()->to("/categories")->with("successMessage", lang("Category.message.success.update"));
-
     }
 
     public function delete(int $id)

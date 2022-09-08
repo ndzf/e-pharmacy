@@ -56,10 +56,9 @@
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
-                        <div class="mt-4">
-                            <?= $pager  ?>
-                        </div>
+
                     </div>
+                    <?= $pager  ?>
                 </div>
             </div>
         </div>

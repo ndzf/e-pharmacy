@@ -114,6 +114,7 @@
 							</tbody>
 						</table>
 					</div>
+					<?= $pager ?>
 					<!-- Pagination -->
 				</div>
 			</div>
